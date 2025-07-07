@@ -6,11 +6,12 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:28:08 by skuik             #+#    #+#             */
-/*   Updated: 2025/06/23 14:24:46 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/07 19:18:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 static void append_token(t_token **head, t_token *new_tok)
 {
@@ -118,84 +119,65 @@ void free_tokens(t_token *head)
     }
 }
 
-int main(int argc, char *argv[])
+t_token *argv_to_token_list(int argc, char **argv)
 {
+    t_token *head = NULL;
+    t_token *tail = NULL;
     int i;
-
+    
     i = 1;
-    if (argc < 2)
-    {
-        fprintf(stderr, "You should: %s [command args...]\n", argv[0]);
-        return (1);
-    }
-    printf("Args given: %d\n", argc - 1);
     while (i < argc)
     {
-        t_token_type token_type = get_token_type(argv[i]);
-        printf("Token %d: %s\t(Type: %s)\n", i, argv[i], token_type_to_string(token_type));
+        t_token_type tp = get_token_type(argv[i]);
+        t_token *n = new_token(argv[i], strlen(argv[i]), tp);
+        append_token(&head, n);
         i++;
     }
-    return (0);
+    return head;
 }
 
+static void process_argv(int argc, char **argv)
+{
+    if (argc <= 1)
+        return;
+    printf("Args given: %d\n", argc - 1);
+    t_token *toks = argv_to_token_list(argc, argv);
+    print_tokens(toks);
+    free_tokens(toks);
+}
 
+static void main_loop(void)
+{
+    char *line = NULL;
+    size_t buffer_capacity = 0;
+    ssize_t n;
 
-// int determine_token_type(const char *token)
-// {
-//     int is_numeric = 1;
-//     int is_alpha = 1;
+    while (1)
+    {
+        printf("$ ");
+        fflush(stdout);
+        n = getline(&line, &buffer_capacity, stdin);
+        if (n == -1)
+            break;
+        if (n == 2 && line[0] == '\x11')
+            break;
+        if (!strncmp(line, "exit", 4))
+            break;
+        if (n && line[n - 1] == '\n') line[n - 1] = '\0';
+        if (line[0] == '\0')
+            continue;
+        t_token *toks = tokenize(line);
+        print_tokens(toks);
+        free_tokens(toks);
+    }
+    free(line);
+}
 
-//     for (int i = 0; token[i] != '\0'; i++)
-//     {
-//         if (!isdigit(token[i]))
-//             is_numeric = 0;
-//         if (!isalpha(token[i]))
-//             is_alpha = 0;
-//     }
-
-//     if (is_numeric)
-//         return 1; // Numeric type
-//     else if (is_alpha)
-//         return 2; // Alphabetic type
-//     else
-//         return 3; // Other type
-// }
-
-// int main(int argc, char *argv[])
-// {
-//     int i;
-
-//     i = 1;
-//     if (argc < 2)
-//     {
-//         fprintf(stderr, "You should: %s [command args...]\n", argv[0]);
-//         return 1;
-//     }
-//     printf("Args given: %d\n", argc - 1);
-//     while (i < argc)
-//     {
-//         int token_type = determine_token_type(argv[i]);
-//         printf("Token %d: %s\t(Type: %d)\n", i, argv[i], token_type);
-//         i++;
-//     }
-//     return 0;
-// }
-
-// // int main(int argc, char *argv[])
-// // {
-// //     int i;
-    
-// //     i = 1;
-// //     if (argc < 2)
-// //     {
-// //         fprintf(stderr, "You should: %s [command args...]\n", argv[0]);
-// //         return 1;
-// //     }
-// //     printf("Args given: %d\n", argc - 1);
-// //     while (i < argc)
-// //     {
-// //         printf("Token %d: %s\n", i, argv[i]);
-// //         i++;
-// //     }
-// //     return (0);
-// // }
+int main(int argc, char **argv)
+{
+    process_argv(argc, argv);
+    puts("To quit program use: 'exit', or Ctrl-D");
+    main_loop();
+    puts("program exits...");
+    return 0;
+}

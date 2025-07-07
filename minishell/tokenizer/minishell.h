@@ -6,9 +6,13 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:01:00 by skuik             #+#    #+#             */
-/*   Updated: 2025/06/23 14:19:48 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/07 13:19:55 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define _GNU_SOURCE
+
+#include "helper_funcs/libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,7 +91,5 @@ static const char *token_type_to_string(t_token_type type) {
     }
 }
 
-
 void skip_leading_whitespace(char **str);
-
 
