@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 10:21:14 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/08 11:54:11 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int what_builtin(char *argv, char *envp[])
     //     run_unset();
     //
     // if (ft_strcmp(arguments[0], "test") == 0) // for tests
-    //     redirecting(arguments[1]);
+    //      redirecting_in(arguments[1]);
+    //      appending(arguments[1]);
     if (ft_strcmp(arguments[0], "test") == 0)
-        appending(arguments[1]);
-
+        redirecting_out(arguments[1]);
+    
     return (0);
 }
 

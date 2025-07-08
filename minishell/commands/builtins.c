@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 09:55:35 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/08 15:21:00 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int run_export(char *envp[], char *arguments)
         i++;
         }  
     }
+    // cant use setenv, probably will have to modify existing file consisting with environment variables 
+    // saved from main 
     else
         setenv(name, value, 0); //if not 0 and name already exists, overwrites name
     return (0);
