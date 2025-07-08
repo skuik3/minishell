@@ -6,13 +6,13 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 09:45:40 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/08 09:55:35 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/../minishell.h"
+#include "../minishell.h"
 
-int run_cd(char *path) //issues with absolute path?
+int run_cd(char *path) //issues with absolute path? todo
 {
     if (chdir(path) != 0)
     {
