@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 15:25:41 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 10:20:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,13 @@ int run_export(char *envp[], char *arguments)
     char *value;
 
     if (arguments == NULL)
-    {
-        i = 0;
-        while (envp[i] != NULL)
-        {
-        printf("%s\n", envp[i]);
-        i++;
-        }  
-    }
+        run_env(envp);
     // cant use setenv, probably will have to modify existing file consisting with environment variables 
     // saved from main
     // when printing or working with env >> using new version (probably struct pointer with old/new verisons)
-    else
-        setenv(name, value, 0); //if not 0 and name already exists, overwrites name
-    return (0);
     //check if added correctly, in shell by abc
+    else
+        find_start(envp, arguments);
+    return (0);
+
 }

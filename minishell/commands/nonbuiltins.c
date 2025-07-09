@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 10:02:15 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 10:13:03 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int executing(char *str, char *evnp[])
     else if (pid == 0)
         execve("/bin/ls", argv, evnp); 
     else if (pid > 0)
-        waitpid(pid, &status, 0);
+        waitpid(pid, &status, 0); // if not use for check, status not needed >> NULL
     return (0);
 }
 

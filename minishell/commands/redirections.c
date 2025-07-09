@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 14:28:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 10:10:38 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int redirecting_in(char *str)
     close(fd);
     return (0);
 }
+
+// int redirecting_error(char *str)
+// {
+
+// }
 
 int appending(char *str)
 {
