@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 11:07:46 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 10:10:38 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // if no number infront, automatically 1 (could use 2> for redirecting error output)
 
-int redirecting(char *str)
+int redirecting_in(char *str)
 {
     int fd;
     int buff_len;
@@ -38,6 +38,11 @@ int redirecting(char *str)
     return (0);
 }
 
+// int redirecting_error(char *str)
+// {
+
+// }
+
 int appending(char *str)
 {
     int fd;
@@ -59,4 +64,12 @@ int appending(char *str)
     close(fd);
     return (0);
 }
+
+// int redirecting_out(char *str)
+// {
+//     int fd;
+//     int buff_len;
+
+//     return (0);
+// }
 

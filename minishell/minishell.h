@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/07 21:07:09 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/08 11:54:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ int run_env(char *envp[]);
 int run_exit(void);
 int run_export(char *envp[], char *arguments);
 
-int simple_redirecting(char *str);
-int redirecting_add(char *str);
+int redirecting_in(char *str);
+int redirecting_out(char *str);
+int appending(char *str);
 
 //libft_later
 int	ft_strcmp(const char *s1, const char *s2);
