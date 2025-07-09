@@ -6,9 +6,15 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:57:39 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/08 15:58:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 11:53:30 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// int pipes(char *input)
+// {
+//     char *output;
+
+    
+// }
