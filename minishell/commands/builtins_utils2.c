@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:21:28 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 11:10:40 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 11:21:56 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,25 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (ft_strlen(src));
 }
 
-int find_start(char *envp[], char *arguments)
-{
-	int i;
-	int k;
-	char *variable;
+// IF ENV WERE ORDERED BY ABC
+//
+// int find_start(char *envp[], char *arguments)
+// {
+// 	int i;
+// 	int k;
+// 	char *variable;
 
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		k = 0;
-		while (envp[i][k] < arguments[k])
-			i++;
-		if (envp[i][k] == arguments[k])
-		{
-			while[envp[i][k] != arguments[k]]
-		}
-	}
-	return (i);
-}
+// 	i = 0;
+// 	while (envp[i] != NULL)
+// 	{
+// 		k = 0;
+// 		while (envp[i][k] < arguments[k])
+// 			i++;
+// 		if (envp[i][k] == arguments[k])
+// 		{
+// 			while(envp[i][k + 1] < arguments[k + 1])
+// 				i++;
+// 		}
+// 	}
+// 	return (i);
+// }

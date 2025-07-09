@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 10:20:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 11:27:00 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,36 @@ int run_exit(void)
 
 int run_export(char *envp[], char *arguments)
 {
-    int i;
-    char *name;
-    char *value;
-
-    if (arguments == NULL)
-        run_env(envp);
-    // cant use setenv, probably will have to modify existing file consisting with environment variables 
-    // saved from main
-    // when printing or working with env >> using new version (probably struct pointer with old/new verisons)
-    //check if added correctly, in shell by abc
-    else
-        find_start(envp, arguments);
+    run_env(envp);
+    printf("%s\n", arguments);
     return (0);
-
 }
+
+// OLD VERSION WITH ABC ORDER
+//
+// order by abc, might not be needed
+// int run_export(char *envp[], char *arguments)
+// {
+//     int i;
+//     int start;
+
+//     i = 0;
+//     if (arguments == NULL)
+//         run_env(envp);
+//     else
+//     {
+//         start = find_start(envp, arguments); 
+//         while (i <= start)
+//         {
+//             printf("%s\n", envp[i]);
+//             i++;
+//         }
+//         printf("%s\n", arguments);
+//         while (envp[i] != NULL)
+//         {
+//             printf("%s\n", envp[i]);
+//             i++;
+//         }
+//     }
+//     return (0);
+// }
