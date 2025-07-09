@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 10:13:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/09 11:38:23 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
