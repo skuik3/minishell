@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:21:28 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 16:27:15 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/14 15:41:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,59 +59,46 @@ int put_envp(char *envp, char *new_envp[], int i)
 	return (0);
 }
 
-// int inner_check(char *envp)
-// {
-// 	int i;
+int inner_check(char *envp[], int i)
+{
+	int j;
+	char *temp;
 
-// 	i = 0;
-// 	while ()
-// }
+	j = 0;
+	while (envp[i][j] != '\0' && envp[i + 1][j] != '\0')
+	{
+		if (envp[i][j] > envp[i + 1][j])
+			return (1);
+		j++;
+	}
+	if (envp[i][j] != '\0' && envp[i + 1][j] == '\0')
+		return (1);
+	return (0);
+}
 
 int get_order(char *envp[])
 {
 	int i;
 	int k;
-	int len;
 	char *temp;
+	int swapped;
 
 	i = 0;
 	k = 0;
-	len = counting_envlen(envp);
-		while (envp[i + 1] != NULL)
+	while (envp[i + 1] != NULL)
+	{
+		// swapped = 0;
+		// if (envp[i][k] == envp[i + 1][k])
+		// 	swapped = inner_check(envp, i);
+		if (/* swapped == 1 ||  */envp[i][k] > envp[i + 1][k])
 		{
-			if (envp[i][k] > envp[i + 1][k])
-			{
-				temp = envp[i];
-				envp[i] = envp[i + 1];
-				envp[i + 1] = temp;
-				i = 0;
-			}
-			// if (envp[i][k] == envp[i + 1][k])
-			// 	inner_check(envp);
-			i++;
+			temp = envp[i];
+			envp[i] = envp[i + 1];
+			envp[i + 1] = temp;
+			i = 0;
 		}
+		i++;
+	}
 	return (0);
 }
 
-// IF ENV WERE ORDERED BY ABC
-//
-// int find_start(char *envp[], char *arguments)
-// {
-// 	int i;
-// 	int k;
-// 	char *variable;
-
-// 	i = 0;
-// 	while (envp[i] != NULL)
-// 	{
-// 		k = 0;
-// 		while (envp[i][k] < arguments[k])
-// 			i++;
-// 		if (envp[i][k] == arguments[k])
-// 		{
-// 			while(envp[i][k + 1] < arguments[k + 1])
-// 				i++;
-// 		}
-// 	}
-// 	return (i);
-// }

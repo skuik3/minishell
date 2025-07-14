@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 15:36:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/14 15:43:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,26 @@ int run_env(char *envp[])
     }
     return (0);
 }
+
+// adds only first arg, after putting another deletes previous args > just be ok after creating a struct;
 // now takes is as a string, without recognizing what is variable, value
-// export behaves diff > order by abc, env not and missing some variables?
 int run_export(char *envp[], char *arguments)
 {
     char **new_envp;
     int   envp_len;
-    int   len;
     int   i;
 
+    envp_len = counting_envlen(envp) + 2;
+    new_envp = malloc(sizeof(char *) * envp_len); 
+    if (new_envp == NULL)   
+        return (write (STDERR_FILENO, "Mallocing failed\n", 18), 1);
+    i = 0;
     if (arguments == NULL)
     {
+        get_order(envp);
         run_env(envp);
         return (0);
     }
-    envp_len = counting_envlen(envp) + 2;
-    new_envp = malloc(sizeof(char *) * envp_len); 
-    i = 0;
-    get_order(envp);
     while (envp[i] != NULL)
     {
         put_envp(envp[i], new_envp, i);
@@ -49,40 +51,33 @@ int run_export(char *envp[], char *arguments)
     }
     put_envp(arguments, new_envp, i);
     new_envp[i + 1] = NULL;
+    // just fo easy check, delete later >> export with args is not printed
+    get_order(new_envp);
     run_env(new_envp);
     return (0);
 }
 
 // int run_unset(char *envp[], char *arguments)
 // {
-
-// }
-
-// OLD VERSION WITH ABC ORDER
-//
-// order by abc, might not be needed
-// int run_export(char *envp[], char *arguments)
-// {
 //     int i;
-//     int start;
+//     int j;
+//     int unset;
+//     int   envp_len;
+//     char **new_envp;
+//     char *variable;
 
 //     i = 0;
-//     if (arguments == NULL)
-//         run_env(envp);
-//     else
+//     j = 0;
+//     variable = find_variable(arguments);
+//     envp_len = counting_envlen(envp);
+//     while(envp[i] != NULL)
 //     {
-//         start = find_start(envp, arguments); 
-//         while (i <= start)
-//         {
-//             printf("%s\n", envp[i]);
-//             i++;
-//         }
-//         printf("%s\n", arguments);
-//         while (envp[i] != NULL)
-//         {
-//             printf("%s\n", envp[i]);
-//             i++;
-//         }
+//         if (envp[i][j] == variable[j])
+//             unset = unset_variable(envp[i], variable, i);
+//         i++;
 //     }
+//     put_unset(envp, new_envp, unset);
+//     get_order(new_envp);
+//     run_env(new_envp);
 //     return (0);
 // }
