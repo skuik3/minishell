@@ -6,13 +6,13 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 10:15:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/16 19:13:46 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int what_builtin(char *argv, char *envp[])
+int what_builtin(char *argv, env_t *env)
 {
     char **arguments;
 
@@ -24,14 +24,14 @@ int what_builtin(char *argv, char *envp[])
     if (ft_strcmp(arguments[0], "cd") == 0)
         run_cd(arguments[1]);
     if (ft_strcmp(arguments[0], "env") == 0)
-        run_env(envp);
+        run_env(env->mod);
     if (ft_strcmp(arguments[0], "exit") == 0)
         run_exit();
     if (ft_strcmp(arguments[0], "export") == 0)
-        run_export(envp, arguments[1]);
+        run_export(env, arguments[1]);
     //TODO UNSET, REDIRECTING_OUT
     // if (ft_strcmp(arguments[0], "unset") == 0)
-    //     run_unset(); //same issue as export
+    //     run_unset(env, arguments[1]); //same issue as export
     //     redirecting_out(arguments[1]);
 
     // if (ft_strcmp(arguments[0], "test") == 0) // for tests, OK
@@ -45,14 +45,22 @@ int what_builtin(char *argv, char *envp[])
     return (0);
 }
 
-int main(int argc, char *argv[], char *envp[]) // need to save envp somewhere for later use
+
+int main(int argc, char *argv[], char *envp[])
 {
     char *promt;
+    env_t *env;
+    int i;
 
+    env = malloc(sizeof(env_t));
+    if (env == NULL)
+        return (write (STDERR_FILENO, "Mallocing failed\n", 18), 1);
+    saving_env(&env->start, envp);
+    saving_env(&env->mod, envp);
     while (1)
     {
         promt = readline("");
-        what_builtin(promt, envp);
+        what_builtin(promt, env);
         add_history(promt);
     }
     return (0);
