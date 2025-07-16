@@ -6,14 +6,17 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 22:15:29 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/16 22:50:45 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+//now works, later have to add cd without arguments >> using environment variables to set it, when cc done with tokens and struct finished
 int run_cd(char *path)
 {
+    // if (path == NULL)
+    //     path = "/home"
     if (chdir(path) != 0)
     {
         write(STDERR_FILENO, "Error\n", 6);

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 21:54:47 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/16 23:03:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int what_builtin(char *argv, env_t *env)
         run_exit();
     if (ft_strcmp(arguments[0], "export") == 0)
         run_export(env, arguments[1]);
-    //TODO UNSET, REDIRECTING_OUT
     if (ft_strcmp(arguments[0], "unset") == 0)
         run_unset(env, arguments[1]);
 

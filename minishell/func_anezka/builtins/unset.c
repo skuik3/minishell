@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 21:46:34 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/16 23:00:46 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ char **put_unset(char **old_env, int unset)
        new_envp[i] = old_env[i];
        i++; 
     }
-    i = unset + 1;
-    while (old_env[i] != NULL)
+    while (old_env[i + 1] != NULL)
     {
-        new_envp[i] = old_env[i];
+        new_envp[i] = old_env[i + 1];
         i++; 
     }
     new_envp[i] = NULL;
+    // run_env(new_envp);
     free(old_env);
     return (new_envp);
 }
@@ -82,28 +82,29 @@ char **put_unset(char **old_env, int unset)
 int run_unset(env_t *envp, char *arguments)
 {
     int i;
-    int j;
     int unset;
     int   envp_len;
     char *variable;
 
     i = 0;
-    j = 0;
+    unset = -1;
     if (arguments == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+        return (ft_putstr_fd(ERR_ARG, 2), 1);
     variable = find_variable(arguments);
     envp_len = counting_envlen(envp->mod);
     while(envp->mod[i] != NULL)
     {
-        if (envp->mod[i][j] == variable[j])
+        if (envp->mod[i][0] == variable[0])
         {
             if (unset_variable(envp->mod[i], variable, i) != -2)
                 unset = unset_variable(envp->mod[i], variable, i);
         }
         i++;
     }
+    if (unset == -1)
+        return (0);
     envp->mod = put_unset(envp->mod, unset);
-    // get_order(new_envp->mod);
-    // run_env(new_envp->mod);
+    // get_order(envp->mod);
+    // run_env(envp->mod);
     return (0);
 }
