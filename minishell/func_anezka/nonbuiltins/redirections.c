@@ -6,11 +6,11 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/09 10:10:38 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/16 21:52:24 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 // if no number infront, automatically 1 (could use 2> for redirecting error output)
 
