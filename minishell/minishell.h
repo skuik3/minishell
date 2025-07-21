@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 17:17:36 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 17:40:15 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,73 +20,27 @@
 #include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-#include "tokenizer/helper_funcs/libft.h"
-
-typedef struct environment_variables
-{
-    char **start;
-    char **mod;
-} env_t;
-
-
-//builtin fce
-int what_builtin(char *argv, env_t *env);
-int run_pwd(void);
-int run_echo(char **string);
-int run_cd(char *path, env_t *env); //todo home
-int run_env(char **envp);
-int run_exit(void); //todo s ciselkami
-int run_export(env_t *env, char *arguments);
-int run_unset(env_t *env, char *arguments); 
-
-//utils
-int saving_env(char ***env, char *envp[]);
-int copy_string(char **env, char *orig_env);
-int find_start(char *envp[], char *arguments);
-int counting_envlen(char **envp);
-char  **put_envp(char **old_envp, char *new_arg);
-int get_order(char **envp);
-char *find_variable(char *arguments);
-char **put_unset(char **old_env, int unset);
-int unset_variable(char *envp, char *variable, int i);
-void	ft_putstr_fd(char *s, int fd);
-char *find_envar(env_t *env, char *find);
-
-int redirecting_in(char *str);
-int redirecting_out(char *str);
-int appending(char *str);
-
-int executing(char *str, char *evnp[]);
-
-//libft_later
-int	ft_strcmp(const char *s1, const char *s2);
-size_t	ft_strlen(const char *str);
-int	ft_numstrings(const char *s, int c);
-unsigned int	findend(const char *s, int c, int i);
-char	**ft_split(char const *s, char c);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-
-//for readability
-#define SHELL_DEFAULT 00644
-
-#define ERR_MALLOC "Malloc failure\n"
-#define ERR_ARG "Not enough arguments\n"
-
-
-
-#define _GNU_SOURCE
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
 #include <ctype.h>
 
+#include "tokenizer/helper_funcs/libft.h"
+
+#define _GNU_SOURCE
 #define MAX_TOKENS 256
+
+//for readability
+#define SHELL_DEFAULT 00644
+#define ERR_MALLOC "Malloc failure\n"
+#define ERR_ARG "Not enough arguments\n"
+
+//structs
+typedef struct environment_variables
+{
+    char **start;
+    char **mod;
+} env_t;
 
 typedef enum e_token_type {
     T_WORD,       //hello
@@ -115,7 +69,7 @@ typedef struct s_command {
     char *heredoc;
     char *append;
     struct s_command *next;
-    //env_t *env_ptr;  // add aneskas env
+    env_t *envar;  // add aneskas env
 } t_command;
 
 typedef struct s_pipeline {
@@ -136,7 +90,45 @@ typedef struct s_node
     struct s_list *next;
 } t_node;
 
+// ANEZKAS_PART
 
+//builtin fce
+int what_builtin(char *argv, env_t *env);
+int run_pwd(void);
+int run_echo(char **string);
+int run_cd(char *path, env_t *env); //todo home
+int run_env(char **envp);
+int run_exit(void); //todo s ciselkami
+int run_export(env_t *env, char *arguments);
+int run_unset(env_t *env, char *arguments); 
+//utils
+int saving_env(char ***env, char *envp[]);
+int copy_string(char **env, char *orig_env);
+int find_start(char *envp[], char *arguments);
+int counting_envlen(char **envp);
+char  **put_envp(char **old_envp, char *new_arg);
+int get_order(char **envp);
+char *find_variable(char *arguments);
+char **put_unset(char **old_env, int unset);
+int unset_variable(char *envp, char *variable, int i);
+void	ft_putstr_fd(char *s, int fd);
+char *find_envar(env_t *env, char *find);
+//redirect
+int redirecting_in(char *str);
+int redirecting_out(char *str);
+int appending(char *str);
+//nonbuiltins
+int executing(char *str, char *evnp[]);
+//libft_later
+int	ft_strcmp(const char *s1, const char *s2);
+size_t	ft_strlen(const char *str);
+int	ft_numstrings(const char *s, int c);
+unsigned int	findend(const char *s, int c, int i);
+char	**ft_split(char const *s, char c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+
+
+// SISIS_PART
 
 //tokenizing.c
 void append_token(t_token **head, t_token *new_tok);
@@ -169,7 +161,6 @@ void init_pipeline(t_pipeline **head, t_token *tokens);
 //process.c
 const char *token_type_to_string(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
-
 
 void print_list(char **arr, const char *label);
 void print_command(t_command *cmd, int index);

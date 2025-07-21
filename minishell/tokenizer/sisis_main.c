@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 17:17:38 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 18:12:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void run_shell_line(char *line)
 	print_pipeline(pipeline);
 	free_pipeline(pipeline);
 	free_tokens(tokens);
+	//command_find
 }
+
+
 
 // int sisis_main(void)
 // {
@@ -110,6 +113,7 @@ void run_shell_line(char *line)
 // 		if (line[0] != '\0')
 // 			run_shell_line(line);
 // 	}
+
 // 	free(line);
 // 	printf("exit\n");
 // 	return (0);
