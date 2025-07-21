@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 23:05:35 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 10:15:56 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct environment_variables
 int what_builtin(char *argv, env_t *env);
 int run_pwd(void);
 int run_echo(char **string);
-int run_cd(char *path); //todo home
+int run_cd(char *path, env_t *env); //todo home
 int run_env(char **envp);
 int run_exit(void); //todo s ciselkami
 int run_export(env_t *env, char *arguments);
@@ -49,6 +49,7 @@ char *find_variable(char *arguments);
 char **put_unset(char **old_env, int unset);
 int unset_variable(char *envp, char *variable, int i);
 void	ft_putstr_fd(char *s, int fd);
+char *find_envar(env_t *env, char *find);
 
 int redirecting_in(char *str);
 int redirecting_out(char *str);

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 23:03:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/17 20:29:55 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int what_builtin(char *argv, env_t *env)
     if (ft_strcmp(arguments[0], "pwd") == 0)
         run_pwd();
     if (ft_strcmp(arguments[0], "cd") == 0)
-        run_cd(arguments[1]);
+        run_cd(arguments[1], env);
     if (ft_strcmp(arguments[0], "env") == 0)
         run_env(env->mod);
     if (ft_strcmp(arguments[0], "exit") == 0)
