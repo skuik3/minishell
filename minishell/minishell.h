@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/17 20:22:24 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 10:15:56 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char *find_variable(char *arguments);
 char **put_unset(char **old_env, int unset);
 int unset_variable(char *envp, char *variable, int i);
 void	ft_putstr_fd(char *s, int fd);
+char *find_envar(env_t *env, char *find);
 
 int redirecting_in(char *str);
 int redirecting_out(char *str);
