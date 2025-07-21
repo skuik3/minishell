@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 17:10:16 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 18:42:28 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,22 @@ int saving_env(char ***env, char *envp[])
     return (0);
 }
 
-int what_builtin(char *argv, env_t *env)
+int what_builtin(t_command *cmd)
 {
-    char **arguments;
-
-    arguments = ft_split(argv,' ');
-    if (ft_strcmp(arguments[0], "echo") == 0)
-        run_echo(arguments);
-    if (ft_strcmp(arguments[0], "pwd") == 0)
+    if (ft_strcmp(cmd->command, "echo") == 0)
+        run_echo(cmd->arguments);
+    if (ft_strcmp(cmd->command, "pwd") == 0)
         run_pwd();
-    if (ft_strcmp(arguments[0], "cd") == 0)
-        run_cd(arguments[1], env);
-    if (ft_strcmp(arguments[0], "env") == 0)
-        run_env(env->mod);
-    if (ft_strcmp(arguments[0], "exit") == 0)
+    if (ft_strcmp(cmd->command, "cd") == 0)
+        run_cd(cmd->arguments, cmd->envar);
+    if (ft_strcmp(cmd->command, "env") == 0)
+        run_env(cmd->envar->mod);
+    if (ft_strcmp(cmd->command, "exit") == 0)
         run_exit();
-    if (ft_strcmp(arguments[0], "export") == 0)
-        run_export(env, arguments[1]);
-    if (ft_strcmp(arguments[0], "unset") == 0)
-        run_unset(env, arguments[1]);
+    if (ft_strcmp(cmd->command, "export") == 0)
+        run_export(cmd->envar, cmd->arguments);
+    if (ft_strcmp(cmd->command, "unset") == 0)
+        run_unset(cmd->envar, cmd->arguments);
 
     // if (ft_strcmp(arguments[0], "test") == 0) // for tests, OK
     //      redirecting_in(arguments[1]);

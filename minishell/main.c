@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 17:21:26 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 18:36:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@ int main(int argc, char *argv[], char *envp[])
 {
     char *promt;
     env_t *env;
-    int i;
+    t_command *cmd;
 
-    env = malloc(sizeof(env_t));
-    if (env == NULL)
+    cmd->envar = malloc(sizeof(env_t));
+    if (cmd->envar == NULL)
         return (ft_putstr_fd(ERR_MALLOC, 2), 1);
-    saving_env(&env->start, envp);
-    saving_env(&env->mod, envp);
+    saving_env(&cmd->envar->start, envp);
+    saving_env(&cmd->envar->mod, envp);
     while (1)
     {
         promt = readline("");
-        run_shell_line(promt);
+        cmd = run_shell_line(promt);
+        what_builtin(cmd, env);
         add_history(promt);
     }
     return (0);

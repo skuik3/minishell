@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 23:00:46 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 18:23:35 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int run_unset(env_t *envp, char *arguments)
     if (unset == -1)
         return (0);
     envp->mod = put_unset(envp->mod, unset);
-    // get_order(envp->mod);
-    // run_env(envp->mod);
+    get_order(envp->mod);
+    run_env(envp->mod);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 17:40:15 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 18:43:26 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ typedef struct s_node
 // ANEZKAS_PART
 
 //builtin fce
-int what_builtin(char *argv, env_t *env);
+int what_builtin(t_command *cmd);
 int run_pwd(void);
 int run_echo(char **string);
 int run_cd(char *path, env_t *env); //todo home
 int run_env(char **envp);
 int run_exit(void); //todo s ciselkami
 int run_export(env_t *env, char *arguments);
-int run_unset(env_t *env, char *arguments); 
+int run_unset(env_t *env, char *arguments);
+env_t *adding_env(env_t *cmd, char **envp);
 //utils
 int saving_env(char ***env, char *envp[]);
 int copy_string(char **env, char *orig_env);
