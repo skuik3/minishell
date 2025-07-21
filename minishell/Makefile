@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/21 17:21:54 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/07/21 17:30:44 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,19 +30,19 @@ SRC = tokenizer/sisis_main.c \
 	  func_anezka/main/libft_utils.c\
 	  main.c\
 
-	  
-
-FLAGS = -pthread -lreadline #-Wall -Wextra -Werror
 
 OBJ = $(SRC:.c=.o)
+CC = cc
+#FLAGS = -Wall -Wextra -Werror
+LIBS = -pthread -lreadline 
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(FLAGS) $(OBJ) -o $(NAME)
+	cc $(FLAGS) $(LIBS) $(OBJ) -o $(NAME)
 
 %.o: %.c
-	gcc $(FLAGS) -c $< -o $@
+	cc $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
