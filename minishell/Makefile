@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
+#    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/18 23:57:51 by skuik            ###   ########.fr        #
+#    Updated: 2025/07/21 17:21:54 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = tokenizer/main.c \
+SRC = tokenizer/sisis_main.c \
       tokenizer/free.c \
 	  tokenizer/parse_pipes.c \
 	  tokenizer/parse_tok_loop.c \
@@ -21,9 +21,18 @@ SRC = tokenizer/main.c \
 	  tokenizer/process.c \
 	  tokenizer/special_cases.c \
 	  tokenizer/tokenizing.c \
+	  func_anezka/builtins/cd_pwd.c\
+	  func_anezka/builtins/echo.c\
+	  func_anezka/builtins/env.c\
+	  func_anezka/builtins/export.c\
+	  func_anezka/builtins/unset.c\
+	  func_anezka/main/command_find.c\
+	  func_anezka/main/libft_utils.c\
+	  main.c\
+
 	  
 
-FLAGS = -Wall -Wextra -Werror -pthread
+FLAGS = -pthread -lreadline #-Wall -Wextra -Werror
 
 OBJ = $(SRC:.c=.o)
 

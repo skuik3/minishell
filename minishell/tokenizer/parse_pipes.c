@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:59:49 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 00:15:41 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/21 17:02:39 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void find_segment_end(t_token **end, t_token *tokens)
 {

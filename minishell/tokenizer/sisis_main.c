@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sisis_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 16:32:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/21 17:17:38 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-static void print_list(char **arr, const char *label)
+void print_list(char **arr, const char *label)
 {
 	int i;
 
@@ -28,7 +28,7 @@ static void print_list(char **arr, const char *label)
 	printf("\n");
 }
 
-static void print_command(t_command *cmd, int index)
+void print_command(t_command *cmd, int index)
 {
    
 	printf("Command %d: %s\n", index, cmd->command);
@@ -41,7 +41,7 @@ static void print_command(t_command *cmd, int index)
 		printf("  Append: [%s]\n", cmd->append);
 }
 
-static void print_pipeline(t_pipeline *pipe)
+void print_pipeline(t_pipeline *pipe)
 {
 	int i;
     
@@ -56,7 +56,7 @@ static void print_pipeline(t_pipeline *pipe)
     printf("%d commands in pipeline.\n", i - 1);
 }
 
-static int is_exit_input(const char *line, ssize_t n)
+int is_exit_input(const char *line, ssize_t n)
 {
 	if (n == -1)
 		return (1);
@@ -67,7 +67,7 @@ static int is_exit_input(const char *line, ssize_t n)
 	return (0);
 }
 
-static void run_shell_line(char *line)
+void run_shell_line(char *line)
 {
 	t_token *tokens;
 	t_pipeline *pipeline;
@@ -91,26 +91,26 @@ static void run_shell_line(char *line)
 	free_tokens(tokens);
 }
 
-int main(void)
-{
-	char *line = NULL;
-	size_t bufsize = 0;
-	ssize_t n;
+// int sisis_main(void)
+// {
+// 	char *line = NULL;
+// 	size_t bufsize = 0;
+// 	ssize_t n;
 
-	puts("To quit use: 'exit', Ctrl-D or Ctrl-Q");
-	while (1)
-	{
-		printf("minishell$ ");
-		fflush(stdout);
-		n = getline(&line, &bufsize, stdin);
-		if (is_exit_input(line, n))
-			break;
-		if (n && line[n - 1] == '\n')
-			line[n - 1] = '\0';
-		if (line[0] != '\0')
-			run_shell_line(line);
-	}
-	free(line);
-	printf("exit\n");
-	return (0);
-}
+// 	puts("To quit use: 'exit', Ctrl-D or Ctrl-Q");
+// 	while (1)
+// 	{
+// 		printf("minishell$ ");
+// 		fflush(stdout);
+// 		n = getline(&line, &bufsize, stdin);
+// 		if (is_exit_input(line, n))
+// 			break;
+// 		if (n && line[n - 1] == '\n')
+// 			line[n - 1] = '\0';
+// 		if (line[0] != '\0')
+// 			run_shell_line(line);
+// 	}
+// 	free(line);
+// 	printf("exit\n");
+// 	return (0);
+// }

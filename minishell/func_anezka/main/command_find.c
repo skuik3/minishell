@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/17 20:29:55 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 17:10:16 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,22 @@ int what_builtin(char *argv, env_t *env)
     return (0);
 }
 
-int main(int argc, char *argv[], char *envp[])
-{
-    char *promt;
-    env_t *env;
-    int i;
+// int anezkas_main(int argc, char *argv[], char *envp[])
+// {
+//     char *promt;
+//     env_t *env;
+//     int i;
 
-    env = malloc(sizeof(env_t));
-    if (env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
-    saving_env(&env->start, envp);
-    saving_env(&env->mod, envp);
-    while (1)
-    {
-        promt = readline("");
-        what_builtin(promt, env);
-        add_history(promt);
-    }
-    return (0);
-}
+//     env = malloc(sizeof(env_t));
+//     if (env == NULL)
+//         return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+//     saving_env(&env->start, envp);
+//     saving_env(&env->mod, envp);
+//     while (1)
+//     {
+//         promt = readline("");
+//         what_builtin(promt, env);
+//         add_history(promt);
+//     }
+//     return (0);
+// }

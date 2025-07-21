@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tok_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 14:03:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/21 17:02:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void parse_token_loop(t_token *tok, t_cmd_builder *b)
 {
