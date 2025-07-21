@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 18:43:26 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 20:49:44 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,6 @@ typedef struct s_command {
     struct s_command *next;
     env_t *envar;  // add aneskas env
 } t_command;
-
-typedef struct s_pipeline {
-    t_command           *cmd;
-    struct s_pipeline   *next;
-} t_pipeline;
 
 typedef struct s_cmd_builder {
     t_command   *cmd;
@@ -143,7 +138,7 @@ void handle_in_redir(t_token *tok, t_cmd_builder *b);
 void handle_out_redir(t_token *tok, t_cmd_builder *b);
 //free.c
 void free_tokens(t_token *head);
-void free_pipeline(t_pipeline *pipe);
+void free_commands(t_command *cmd);
 void free_array(char **arr);
 void free_argv(char **argv);
 //parse_token.c
@@ -158,15 +153,15 @@ void parse_token_loop(t_token *tok, t_cmd_builder *b);
 char **list_to_array(t_list *list);
 //parse_pipes.c
 void find_segment_end(t_token **end, t_token *tokens);
-void init_pipeline(t_pipeline **head, t_token *tokens);
+void init_commands(t_command **head, t_token *tokens);
 //process.c
 const char *token_type_to_string(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
 
 void print_list(char **arr, const char *label);
 void print_command(t_command *cmd, int index);
-void print_pipeline(t_pipeline *pipe);
+void print_commands(t_command *cmd);
 int is_exit_input(const char *line, ssize_t n);
-void run_shell_line(char *line);
+t_command *run_shell_line(char *line);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 17:02:21 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 20:44:46 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void free_tokens(t_token *head)
     }
 }
 
-void free_pipeline(t_pipeline *pipe)
+void free_commands(t_command *cmd)
 {
-    while (pipe)
+    while (cmd)
     {
-        t_pipeline *next = pipe->next;
-        t_command *cmd = pipe->cmd;
+        t_command *next = cmd->next;
+        
         free(cmd->command);
         free_array(cmd->arguments);
         free_array(cmd->redir_in);
@@ -36,8 +36,7 @@ void free_pipeline(t_pipeline *pipe)
         free(cmd->heredoc);
         free(cmd->append);
         free(cmd);
-        free(pipe);
-        pipe = next;
+        cmd = next;
     }
 }
 
