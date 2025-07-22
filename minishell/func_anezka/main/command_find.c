@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 18:42:28 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/22 10:51:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ int what_builtin(t_command *cmd)
     if (ft_strcmp(cmd->command, "pwd") == 0)
         run_pwd();
     if (ft_strcmp(cmd->command, "cd") == 0)
-        run_cd(cmd->arguments, cmd->envar);
+    {
+        if (cmd->arguments[1] != NULL)
+            return (write(STDERR_FILENO, "Error\n", 6), 1);
+        run_cd(cmd->arguments[0], cmd->envar);
+    }
     if (ft_strcmp(cmd->command, "env") == 0)
         run_env(cmd->envar->mod);
     if (ft_strcmp(cmd->command, "exit") == 0)

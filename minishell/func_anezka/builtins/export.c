@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 21:42:54 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/22 10:48:34 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int get_order(char **envp)
 }
 
 //now added as a string, without recognizing variable and value, pr. JANA / should be JANA=''
-int run_export(env_t *envp, char *arguments)
+int run_export(env_t *envp, char **arguments)
 {
     int   i;
 
@@ -110,7 +110,11 @@ int run_export(env_t *envp, char *arguments)
         run_env(envp->mod);
         return (0);
     }
-    envp->mod = put_envp(envp->mod, arguments);
+	while (arguments[i] != NULL)
+	{
+    	envp->mod = put_envp(envp->mod, arguments[i]);
+		i++;
+	}
  // just fo easy check, delete later >> export with args is not printed
     get_order(envp->mod);
     run_env(envp->mod);

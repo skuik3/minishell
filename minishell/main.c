@@ -6,28 +6,35 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 18:36:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/22 10:51:56 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+env_t *adding_env(t_command *cmd, char **envp)
+{
+    env_t *env;
+
+    env = malloc(sizeof(env_t));
+    if (env == NULL)
+        return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+    saving_env(&env->start, envp);
+    saving_env(&env->mod, envp);
+    return (env);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
     char *promt;
-    env_t *env;
     t_command *cmd;
 
-    cmd->envar = malloc(sizeof(env_t));
-    if (cmd->envar == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
-    saving_env(&cmd->envar->start, envp);
-    saving_env(&cmd->envar->mod, envp);
     while (1)
     {
         promt = readline("");
         cmd = run_shell_line(promt);
-        what_builtin(cmd, env);
+        cmd->envar = adding_env(cmd, envp);
+        what_builtin(cmd);
         add_history(promt);
     }
     return (0);
