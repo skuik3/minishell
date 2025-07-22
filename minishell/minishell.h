@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 18:43:26 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/22 10:30:41 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int run_echo(char **string);
 int run_cd(char *path, env_t *env); //todo home
 int run_env(char **envp);
 int run_exit(void); //todo s ciselkami
-int run_export(env_t *env, char *arguments);
+int run_export(env_t *envp, char **arguments);
 int run_unset(env_t *env, char *arguments);
-env_t *adding_env(env_t *cmd, char **envp);
+env_t *adding_env(t_command *cmd, char **envp);
 //utils
 int saving_env(char ***env, char *envp[]);
 int copy_string(char **env, char *orig_env);
