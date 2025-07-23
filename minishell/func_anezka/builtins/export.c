@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 19:47:10 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/23 10:34:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ int run_export(env_t *envp, char **arguments)
         run_env(envp->mod);
         return (0);
     }
-	while (arguments[i] != NULL){
+	while (arguments[i] != NULL)
+	{
     	envp->mod = put_envp(envp->mod, arguments[i]);
 		i++;
 	}
