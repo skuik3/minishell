@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/22 10:30:41 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/23 12:32:54 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@
 
 //for readability
 #define SHELL_DEFAULT 00644
-#define ERR_MALLOC "Malloc failure\n"
-#define ERR_ARG "Not enough arguments\n"
+#define ERR_MALLOC  "Malloc failure\n"
+#define ERR_ARG     "Not enough arguments\n"
+#define ERR_FILE    "Error opening/creating a file\n"
 
 //structs
 typedef struct environment_variables
@@ -100,7 +101,7 @@ int run_cd(char *path, env_t *env); //todo home
 int run_env(char **envp);
 int run_exit(void); //todo s ciselkami
 int run_export(env_t *envp, char **arguments);
-int run_unset(env_t *env, char *arguments);
+int run_unset(env_t *envp, char **arguments);
 env_t *adding_env(t_command *cmd, char **envp);
 //utils
 int saving_env(char ***env, char *envp[]);
@@ -115,9 +116,9 @@ int unset_variable(char *envp, char *variable, int i);
 void	ft_putstr_fd(char *s, int fd);
 char *find_envar(env_t *env, char *find);
 //redirect
-int redirecting_in(char *str);
+int redirecting_in(t_command *cmd);
 int redirecting_out(char *str);
-int appending(char *str);
+int appending(t_command *cmd);
 //nonbuiltins
 int executing(char *str, char *evnp[]);
 //libft_later
