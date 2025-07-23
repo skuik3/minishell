@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 20:50:31 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/23 19:23:15 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,16 @@ void print_command(t_command *cmd, int index)
 		printf("  Append: [%s]\n", cmd->append);
 }
 
-void print_commands(t_command *cmd)
+void print_cmd(t_command *cmd)
 {
 	int i;
     
     i = 1;
 	while (cmd)
 	{
-		if (cmd->command)
-			print_command(cmd, i);
-		cmd = cmd->next;
+		print_command(cmd, i);
 		i++;
+		cmd = cmd->next;
 	}
     printf("%d commands in pipeline.\n", i - 1);
 }
@@ -71,7 +70,7 @@ int is_exit_input(const char *line, ssize_t n)
 t_command *run_shell_line(char *line)
 {
 	t_token *tokens;
-	t_command *cmd;
+	t_command *cmd_list = NULL;
 
 	tokens = tokenize(line);
 	if (!tokens)
@@ -79,20 +78,16 @@ t_command *run_shell_line(char *line)
 		fprintf(stderr, "Tokenization failed.\n");
 		return (NULL);
 	}
-	cmd = NULL;
-	init_commands(&cmd, tokens);
-	if (!cmd)
+	if (!init_commands(&cmd_list, tokens))
 	{
 		fprintf(stderr, "Parsing failed.\n");
 		free_tokens(tokens);
 		return (NULL);
 	}
-	print_commands(cmd);
-	free_commands(cmd);
+	print_cmd(cmd_list);
 	free_tokens(tokens);
+	return (cmd_list);
 }
-
-
 
 // int sisis_main(void)
 // {
