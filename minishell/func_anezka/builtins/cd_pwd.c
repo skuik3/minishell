@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 14:18:02 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 23:11:32 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *find_path(env_t *env, char *find_var)
             dest_var = malloc(sizeof(char) * (ft_strlen(env->mod[i] + 2)));
             if (dest_var == NULL)
                 return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-            ft_strlcpy(dest_var, &env->mod[i][len + 1], ft_strlen(env->mod[i - len]));
+            ft_strlcpy(dest_var, &env->mod[i][len + 1], ft_strlen(env->mod[i]) - len);
         }
         i++;
     }
