@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 14:12:22 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 16:21:14 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,10 @@ int run_export(env_t *envp, char **arguments)
 	while (arguments[i] != NULL)
 	{
 		add_variable = adding_variable(arguments[i]);
-		if (find_variable() == 0)
-			//run this and return if variable already present
-    	envp->mod = put_envp(envp->mod, add_variable);
+		if (variable_present(find_variable(add_variable), envp) == 0)
+			envp->mod = exchange_values(envp->mod, add_variable);
+    	else 
+			envp->mod = put_envp(envp->mod, add_variable);
 		i++;
 	}
  // just fo easy check, delete later >> export with args is not printed

@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/28 13:25:04 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/07/28 16:28:17 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC = tokenizer/sisis_main.c \
 	  func_anezka/main/libft_utils.c\
 	  func_anezka/nonbuiltins/nonbuiltins.c\
 	  main_test.c\
+	  func_anezka/builtins/export_utils.c\
 
 
 
