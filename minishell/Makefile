@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/28 16:28:17 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/07/28 21:48:08 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC = tokenizer/sisis_main.c \
 	  tokenizer/special_cases.c \
 	  tokenizer/tokenizing.c \
 	  tokenizer/helper_funcs/ft_strjoin.c\
+	  tokenizer/helper_funcs/ft_strdup.c\
 	  func_anezka/builtins/cd_pwd.c\
 	  func_anezka/builtins/echo.c\
 	  func_anezka/builtins/env.c\

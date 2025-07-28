@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 16:21:25 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 22:43:36 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 #define ERR_FILE    "Error opening/creating a file\n"
 #define ERR_FORK    "Error forking\n"
 #define ERR_BC      "Error\n" 
+
+#define INVALID_PAR "Invalid parameter name\n"
 
 //structs
 typedef struct environment_variables
@@ -144,6 +146,8 @@ char *find_path(env_t *env, char *find_var);
 char *adding_variable(char *argument);
 int variable_present(char *variable, env_t *envp);
 char **exchange_values(char **envp, char *exchange);
+char **prepare_unset(char *argument);
+int value_present(char *argument);
 //redirect
 int redirecting_in(t_command *cmd);
 int redirecting_out(char *str);

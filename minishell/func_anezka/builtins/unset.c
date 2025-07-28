@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 16:30:38 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 22:50:07 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,15 @@ int *find_unset(int *unset, char **arguments, env_t *envp)
     while (arguments[j] != NULL)
     {
         variable = find_variable(arguments[j]);
+        if (ft_strcmp(variable, arguments[j]) != 0)
+            return (ft_putstr_fd(INVALID_PAR, STDERR_FILENO), NULL);
         i = 0;
         unset[j] = -1;
         while (envp->mod[i] != NULL)
         {
             if (envp->mod[i][0] == variable[0])
             {
-                if (unset_variable(envp->mod[i], variable, i) != -2)
+                if (unset_variable(envp->mod[i], arguments[j], i) != -2)
                     unset[j] = unset_variable(envp->mod[i], variable, i);
             }
             i++;
@@ -116,16 +118,16 @@ int run_unset(env_t *envp, char **arguments)
 
     i = 0;
     j = 0;
-    if (arguments == NULL)
-        return (ft_putstr_fd(ERR_ARG, 2), 1);
+    if (arguments[0] == NULL)
         return (ft_putstr_fd(ERR_ARG, STDERR_FILENO), 1);
     arglen = counting_envlen(arguments);
     envplen = counting_envlen(envp->mod);
     unset = malloc(sizeof(int) * (arglen * envplen + 1));
     if (unset == NULL)
-        return(ft_putstr_fd(ERR_MALLOC, 2), 1);
         return(ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
     unset = find_unset(unset, arguments, envp);
+    if (unset == NULL) //check, dont delete
+        return (0);
     while (unset[i] != '\0')
     {
         if (unset[i] != -1)

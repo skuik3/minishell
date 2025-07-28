@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 16:21:14 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 22:27:05 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ char *adding_variable(char *argument)
 			break;
 		i++;
 	}
-	if (i != len)
+	if (i != len && argument[i + 1] != '\0')
 		return (argument);
-	new_arg = ft_strjoin(argument, "=''");
+	if (argument[i] != '\0')
+		new_arg = ft_strjoin(argument, "''");
+	else if (argument[i] == '\0')
+		new_arg = ft_strjoin(argument, "=''");
 	return (new_arg);
 }
 
@@ -113,6 +116,7 @@ int run_export(env_t *envp, char **arguments)
 {
     int   i;
 	char *add_variable;
+	char **unset;
 
     i = 0;
     if (arguments == NULL)
@@ -125,9 +129,16 @@ int run_export(env_t *envp, char **arguments)
 	{
 		add_variable = adding_variable(arguments[i]);
 		if (variable_present(find_variable(add_variable), envp) == 0)
-			envp->mod = exchange_values(envp->mod, add_variable);
-    	else 
-			envp->mod = put_envp(envp->mod, add_variable);
+		{
+			if (value_present(arguments[i]) == 0)
+			{
+				unset = prepare_unset(arguments[i]);
+				run_unset(envp, unset);
+			}
+			else
+				return (0);
+		}
+		envp->mod = put_envp(envp->mod, add_variable);
 		i++;
 	}
  // just fo easy check, delete later >> export with args is not printed
