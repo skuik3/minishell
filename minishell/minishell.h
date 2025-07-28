@@ -6,6 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
+/*   Updated: 2025/07/23 16:19:11 by skuik            ###   ########.fr       */
 /*   Updated: 2025/07/28 13:59:57 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -72,7 +73,7 @@ typedef struct s_command {
     char *heredoc;
     char *append;
     struct s_command *next;
-    env_t *envar;  // add aneskas env
+    env_t *envar;
 } t_command;
 
 
@@ -173,7 +174,7 @@ void handle_in_redir(t_token *tok, t_cmd_builder *b);
 void handle_out_redir(t_token *tok, t_cmd_builder *b);
 //free.c
 void free_tokens(t_token *head);
-void free_commands(t_command *cmd);
+void free_cmd(t_command *cmd);
 void free_array(char **arr);
 void free_argv(char **argv);
 //parse_token.c
@@ -183,19 +184,19 @@ size_t parse_quoted(const char *input, size_t i, t_token **tokens);
 size_t parse_operator(const char *input, size_t i, t_token **tokens);
 size_t parse_word(const char *input, size_t i, t_token **tokens);
 //parse_tok_loop.c
-void parse_tokens(t_token *tok, t_command **out);
+bool parse_tokens(t_token *tok, t_command **out);
 void parse_token_loop(t_token *tok, t_cmd_builder *b);
 char **list_to_array(t_list *list);
 //parse_pipes.c
 void find_segment_end(t_token **end, t_token *tokens);
-void init_commands(t_command **head, t_token *tokens);
+bool init_commands(t_command **head, t_token *tokens);
 //process.c
 const char *token_type_to_string(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
 
 void print_list(char **arr, const char *label);
 void print_command(t_command *cmd, int index);
-void print_commands(t_command *cmd);
+void print_cmd(t_command *cmd);
 int is_exit_input(const char *line, ssize_t n);
 t_command *run_shell_line(char *line);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tok_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 17:02:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/23 19:24:09 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,49 @@ char **list_to_array(t_list *list)
     return (arr);
 }
 
-void parse_tokens(t_token *tok, t_command **out)
+char **args_to_array(t_list *list)
+{
+    t_list *tmp = list->next;
+    int count;
+    int i;
+
+    i = 0;
+    count = 0;
+    while (tmp)
+    {
+        count++;
+        tmp = tmp->next;
+    }
+    char **arr = malloc(sizeof(char *) * (count + 1));
+    if (!arr)
+        return (NULL);
+    tmp = list->next;
+    while (i < count)
+    {
+        arr[i] = strdup((char *)tmp->content);
+        tmp = tmp->next;
+        i++;
+    }
+    arr[count] = NULL;
+    return (arr);
+}
+
+bool parse_tokens(t_token *tok, t_command **out)
 {
     t_cmd_builder b;
+
+    *out = NULL;
     b.cmd = malloc(sizeof(t_command));
     if (!b.cmd)
-        return;
+        return false;
     memset(b.cmd, 0, sizeof(t_command));
-    b.args = b.redir_in = b.redir_out = NULL;
+    b.args = NULL;
+    b.redir_in = NULL;
+    b.redir_out = NULL;
     parse_token_loop(tok, &b);
-    b.cmd->arguments = list_to_array(b.args);
+    b.cmd->arguments = args_to_array(b.args);
     b.cmd->redir_in = list_to_array(b.redir_in);
     b.cmd->redir_out = list_to_array(b.redir_out);
     *out = b.cmd;
+    return true;
 }

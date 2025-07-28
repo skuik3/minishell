@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 20:44:46 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/23 18:59:40 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@ void free_tokens(t_token *head)
     }
 }
 
-void free_commands(t_command *cmd)
+void free_cmd(t_command *cmd)
 {
     while (cmd)
     {
         t_command *next = cmd->next;
-        
+
         free(cmd->command);
         free_array(cmd->arguments);
         free_array(cmd->redir_in);
         free_array(cmd->redir_out);
         free(cmd->heredoc);
         free(cmd->append);
+
         free(cmd);
         cmd = next;
     }
