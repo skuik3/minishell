@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 14:18:07 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 23:01:39 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int run_echo(char **arguments)
     int k;
 
     i = 0;
-    if (arguments == NULL)
+    if (arguments[0] == NULL)
     {
-        ft_putstr_fd(ERR_BC, STDERR_FILENO);
+        ft_putstr_fd("\n", STDOUT_FILENO);
         return (0);
     }
     if (ft_strcmp(arguments[0], "-n") == 0)
