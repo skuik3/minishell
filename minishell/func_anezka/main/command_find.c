@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 19:07:55 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 10:30:49 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int copy_string(char **env, char *orig_env)
         i++;
     *env = malloc(sizeof(char) * (i + 1));
     if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
     i = 0;
     while (orig_env[i] != '\0')
     {
@@ -41,7 +41,7 @@ int saving_env(char ***env, char *envp[])
         i++;
     *env = malloc(sizeof(char *) * (i + 1));
     if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
     i = 0;
     while (envp[i] != NULL)
     {
@@ -61,7 +61,7 @@ int what_builtin(t_command *cmd)
     if (ft_strcmp(cmd->command, "cd") == 0)
     {
         if (cmd->arguments[1] != NULL)
-            return (write(STDERR_FILENO, "Error\n", 6), 1);
+            return (ft_putstr_fd(ERR_BC, STDERR_FILENO), 1);
         run_cd(cmd->arguments[0], cmd->envar);
     }
     if (ft_strcmp(cmd->command, "env") == 0)
@@ -72,7 +72,8 @@ int what_builtin(t_command *cmd)
         run_export(cmd->envar, cmd->arguments);
     if (ft_strcmp(cmd->command, "unset") == 0)
         run_unset(cmd->envar, cmd->arguments);
-
+    else if (cmd->command != NULL)
+        executing(cmd);
     // if (ft_strcmp(arguments[0], "test") == 0) // for tests, OK
     //      redirecting_in(arguments[1]);
     //      appending(arguments[1]);

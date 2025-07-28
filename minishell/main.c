@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 19:47:12 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 10:23:22 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ env_t *adding_env(t_command *cmd, char **envp)
 
     env = malloc(sizeof(env_t));
     if (env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
     saving_env(&env->start, envp);
     saving_env(&env->mod, envp);
     return (env);

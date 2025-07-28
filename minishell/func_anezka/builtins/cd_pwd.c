@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/23 10:35:14 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 10:29:17 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char *find_home(env_t *env)
         {
             home = malloc(sizeof(char) * (ft_strlen(env->mod[i] + 2)));
             if (home == NULL)
-                return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+                return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
             ft_strlcpy(home, &env->mod[i][5], ft_strlen(env->mod[i - 4]));
         }
         i++;
@@ -40,7 +40,7 @@ int run_cd(char *path, env_t *env)
         path = find_home(env);
     if (chdir(path) != 0)
     {
-        write(STDERR_FILENO, "Error\n", 6);
+        ft_putstr_fd(ERR_BC, STDERR_FILENO);
         return (1);
     }
     //just for easy check

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/23 16:06:09 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 09:48:53 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ int appending(t_command *cmd)
 }
 
 // pulls input from a file
-int redirecting_out(t_command *cmd)
-{
-    int fd;
-    int buff_len;
+// int redirecting_out(t_command *cmd)
+// {
+//     int fd;
+//     int buff_len;
 
-    if (access(cmd->heredoc)
-    return (0);
-}
+//     if (access(cmd->heredoc)
+//     return (0);
+// }
 

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/23 12:32:54 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 10:49:50 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 #define ERR_MALLOC  "Malloc failure\n"
 #define ERR_ARG     "Not enough arguments\n"
 #define ERR_FILE    "Error opening/creating a file\n"
+#define ERR_FORK    "Error forking\n"
+#define ERR_BC      "Error\n" 
 
 //structs
 typedef struct environment_variables
@@ -120,7 +122,10 @@ int redirecting_in(t_command *cmd);
 int redirecting_out(char *str);
 int appending(t_command *cmd);
 //nonbuiltins
-int executing(char *str, char *evnp[]);
+int executing(t_command *cmd);
+int is_path(char *command);
+char *find_path(env_t *env);
+char *command_path(t_command *cmd);
 //libft_later
 int	ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(const char *str);
