@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 12:01:58 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 13:29:23 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ int what_builtin(t_command *cmd)
 {
     if (ft_strcmp(cmd->command, "echo") == 0)
         run_echo(cmd->arguments);
-    if (ft_strcmp(cmd->command, "pwd") == 0)
+    else if (ft_strcmp(cmd->command, "pwd") == 0)
         run_pwd();
-    if (ft_strcmp(cmd->command, "cd") == 0)
+    else if (ft_strcmp(cmd->command, "cd") == 0)
     {
         if (cmd->arguments[1] != NULL)
             return (ft_putstr_fd(ERR_BC, STDERR_FILENO), 1);
         run_cd(cmd->arguments[0], cmd->envar);
     }
-    if (ft_strcmp(cmd->command, "env") == 0)
+    else if (ft_strcmp(cmd->command, "env") == 0)
         run_env(cmd->envar->mod);
-    if (ft_strcmp(cmd->command, "exit") == 0)
+    else if (ft_strcmp(cmd->command, "exit") == 0)
         run_exit();
-    if (ft_strcmp(cmd->command, "export") == 0)
+    else if (ft_strcmp(cmd->command, "export") == 0)
         run_export(cmd->envar, cmd->arguments);
-    if (ft_strcmp(cmd->command, "unset") == 0)
+    else if (ft_strcmp(cmd->command, "unset") == 0)
         run_unset(cmd->envar, cmd->arguments);
     else if (cmd->command != NULL)
         executing(cmd);

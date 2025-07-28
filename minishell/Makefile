@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/28 12:20:03 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/07/28 13:25:04 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC = tokenizer/sisis_main.c \
 	  tokenizer/process.c \
 	  tokenizer/special_cases.c \
 	  tokenizer/tokenizing.c \
+	  tokenizer/helper_funcs/ft_strjoin.c\
 	  func_anezka/builtins/cd_pwd.c\
 	  func_anezka/builtins/echo.c\
 	  func_anezka/builtins/env.c\
@@ -29,7 +30,8 @@ SRC = tokenizer/sisis_main.c \
 	  func_anezka/main/command_find.c\
 	  func_anezka/main/libft_utils.c\
 	  func_anezka/nonbuiltins/nonbuiltins.c\
-	  main.c\
+	  main_test.c\
+
 
 
 OBJ = $(SRC:.c=.o)

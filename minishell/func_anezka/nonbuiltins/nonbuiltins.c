@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 12:12:31 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 13:49:06 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,6 @@ int is_path(char *command)
         return (1);
     return (0);
 }
-// same as find_home, modify later
-char *find_path(env_t *env)
-{
-    int i;
-    char *variable;
-    char *path;
-
-    i = 0;
-    while (env->mod[i] != NULL)
-    {
-        variable = find_variable(env->mod[i]);
-        if (ft_strcmp(variable, "PATH") == 0)
-        {
-            path = malloc(sizeof(char) * (ft_strlen(env->mod[i] + 2)));
-            if (path == NULL)
-                return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-            ft_strlcpy(path, &env->mod[i][5], ft_strlen(env->mod[i - 4]));
-        }
-        i++;
-    }
-    return (path);
-}
 
 char *command_path(t_command *cmd)
 {
@@ -60,7 +38,7 @@ char *command_path(t_command *cmd)
     char *path;
 
     i = 0;
-    env_path = find_path(cmd->envar);
+    env_path = find_path(cmd->envar, "PATH");
     arr_path = ft_split(env_path, ':');
     while (arr_path[i] != NULL)
     {

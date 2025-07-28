@@ -6,38 +6,38 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 21:28:11 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 13:49:36 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int run_echo(char **string)
+int run_echo(char **arguments)
 {
     int i;
     int k;
 
-    i = 2;
-    if (string[2] == NULL)
+    i = 0;
+    if (arguments == NULL)
     {
-        write(STDOUT_FILENO, "\n", 1);
+        ft_putstr_fd(ERR_BC, STDERR_FILENO);
         return (0);
     }
-    if (ft_strcmp(string[2], "-n") == 0)
+    if (ft_strcmp(arguments[0], "-n") == 0)
         i++;
-    while (string[i] != NULL)
+    while (arguments[i] != NULL)
     {
         k = 0;
-        while (string[i][k] != '\0')
+        while (arguments[i][k] != '\0')
         {
-            write(STDOUT_FILENO, &string[i][k], 1);
+            write(STDOUT_FILENO, &arguments[i][k], 1);
             k++;
         }
-        if (string[i + 1] != NULL)
+        if (arguments[i + 1] != NULL)
             write(STDOUT_FILENO, " ", 1);
         i++;
     }
-    if (ft_strcmp(string[2], "-n") != 0) //adding flag
+    if (ft_strcmp(arguments[0], "-n") != 0)
         write(STDOUT_FILENO, "\n", 1);
     return (0);
 }

@@ -6,45 +6,48 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 10:29:17 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 13:49:28 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char *find_home(env_t *env)
+
+char *find_path(env_t *env, char *find_var)
 {
     int i;
+    int len;
     char *variable;
-    char *home;
+    char *dest_var;
 
     i = 0;
+    len = ft_strlen(find_var);
     while (env->mod[i] != NULL)
     {
         variable = find_variable(env->mod[i]);
-        if (ft_strcmp(variable, "HOME") == 0)
+        if (ft_strcmp(variable, find_var) == 0)
         {
-            home = malloc(sizeof(char) * (ft_strlen(env->mod[i] + 2)));
-            if (home == NULL)
+            dest_var = malloc(sizeof(char) * (ft_strlen(env->mod[i] + 2)));
+            if (dest_var == NULL)
                 return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-            ft_strlcpy(home, &env->mod[i][5], ft_strlen(env->mod[i - 4]));
+            ft_strlcpy(dest_var, &env->mod[i][len + 1], ft_strlen(env->mod[i - len]));
         }
         i++;
     }
-    return (home);
+    return (dest_var);
 }
 
 int run_cd(char *path, env_t *env)
 {
     if (path == NULL || path[0] == '~')
-        path = find_home(env);
+        path = find_path(env, "HOME");
     if (chdir(path) != 0)
     {
         ft_putstr_fd(ERR_BC, STDERR_FILENO);
         return (1);
     }
     //just for easy check
-    run_pwd();
+    // run_pwd();
     return (0);
 }
 
