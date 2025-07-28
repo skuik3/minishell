@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 10:49:50 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 12:20:34 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,27 @@ typedef struct s_command {
     struct s_command *next;
     env_t *envar;  // add aneskas env
 } t_command;
+
+//TEST VERSION
+// Your command structure (unchanged from previous version)
+// typedef struct s_command {
+//     char *command;         // name of the command
+//     char **arguments;      // all arguments needed for running the command or NULL
+//     char **redir_in;       // redirecting in
+//     char **redir_out;      //redirecting out
+//     char *heredoc;         // heredoc delimiter
+//     char *append;          // appending mode
+//     struct s_command *next; // pointer to a next struct if pipes present
+//     env_t *envar;          // environment variables
+// } t_command;
+
+// size_t count_env_vars(char **env);
+// env_t *create_environment(char *envp[]);
+// int modify_environment(env_t *env, const char *key, const char *value);
+// void free_environment(env_t *env);
+// t_command *parse_input(const char *line);
+// void free_command(t_command *cmd);
+//END OF TEST VERSION   
 
 typedef struct s_pipeline {
     t_command           *cmd;

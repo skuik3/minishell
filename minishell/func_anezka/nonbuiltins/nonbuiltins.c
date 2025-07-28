@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 10:54:49 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 12:12:31 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int is_path(char *command)
     return (0);
 }
 // same as find_home, modify later
-char *find_home(env_t *env)
+char *find_path(env_t *env)
 {
     int i;
     char *variable;
@@ -57,21 +57,21 @@ char *command_path(t_command *cmd)
     char *env_path;
     char **arr_path;
     int i;
+    char *path;
 
     i = 0;
     env_path = find_path(cmd->envar);
     arr_path = ft_split(env_path, ':');
     while (arr_path[i] != NULL)
     {
-        if (access(cmd->command, F_OK) == 0)
-            return (arr_path[i]);
+        path = ft_strjoin(arr_path[i], cmd->command);
+        if (access(path, F_OK) == 0)
+            return (path);
         i++;
     }
     return (NULL);
 }
 
-// needed commands recognition
-// very very basic functionality
 
 // maybe check with acces if file exist >> possible error
 // maybe check status if child process works correctly
@@ -93,7 +93,7 @@ int executing(t_command *cmd)
         execve(cmd->command, cmd->arguments, cmd->envar);
     else if (is_path(cmd->command) != 0 && pid == 0)
     {
-        path = find_path(cmd);
+        path = command_path(cmd);
         execve(path, cmd->arguments, cmd->envar);
     }
     else if (pid > 0)
