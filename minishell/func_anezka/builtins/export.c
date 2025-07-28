@@ -6,20 +6,30 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/23 10:34:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 14:12:22 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int counting_envlen(char **envp)
+char *adding_variable(char *argument)
 {
 	int i;
+	int len;
+	char *new_arg;
 
 	i = 0;
-	while (envp[i] != NULL)
+	len = ft_strlen(argument);
+	while ((argument[i] != '\0'))
+	{
+		if (argument[i] == '=')
+			break;
 		i++;
-	return (i);
+	}
+	if (i != len)
+		return (argument);
+	new_arg = ft_strjoin(argument, "=''");
+	return (new_arg);
 }
 
 char  **put_envp(char **old_envp, char *new_arg)
@@ -102,6 +112,7 @@ int get_order(char **envp)
 int run_export(env_t *envp, char **arguments)
 {
     int   i;
+	char *add_variable;
 
     i = 0;
     if (arguments == NULL)
@@ -112,7 +123,10 @@ int run_export(env_t *envp, char **arguments)
     }
 	while (arguments[i] != NULL)
 	{
-    	envp->mod = put_envp(envp->mod, arguments[i]);
+		add_variable = adding_variable(arguments[i]);
+		if (find_variable() == 0)
+			//run this and return if variable already present
+    	envp->mod = put_envp(envp->mod, add_variable);
 		i++;
 	}
  // just fo easy check, delete later >> export with args is not printed
