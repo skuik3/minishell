@@ -13,6 +13,7 @@
 #include "minishell.h"
 
 env_t *adding_env(t_command *cmd, char **envp)
+
 {
     env_t *env;
 
@@ -23,6 +24,7 @@ env_t *adding_env(t_command *cmd, char **envp)
     saving_env(&env->mod, envp);
     return (env);
 }
+
 
 // int main(int argc, char *argv[], char *envp[])
 // {

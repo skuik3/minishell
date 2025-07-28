@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sisis_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 18:12:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/21 20:50:31 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,21 @@ void print_command(t_command *cmd, int index)
 		printf("  Append: [%s]\n", cmd->append);
 }
 
-void print_pipeline(t_pipeline *pipe)
+void print_commands(t_command *cmd)
 {
 	int i;
     
     i = 1;
-	while (pipe)
+	while (cmd)
 	{
-		if (pipe->cmd)
-			print_command(pipe->cmd, i);
+		if (cmd->command)
+			print_command(cmd, i);
+		cmd = cmd->next;
 		i++;
-		pipe = pipe->next;
 	}
     printf("%d commands in pipeline.\n", i - 1);
 }
+
 
 int is_exit_input(const char *line, ssize_t n)
 {
@@ -67,29 +68,28 @@ int is_exit_input(const char *line, ssize_t n)
 	return (0);
 }
 
-void run_shell_line(char *line)
+t_command *run_shell_line(char *line)
 {
 	t_token *tokens;
-	t_pipeline *pipeline;
+	t_command *cmd;
 
 	tokens = tokenize(line);
 	if (!tokens)
 	{
 		fprintf(stderr, "Tokenization failed.\n");
-		return;
+		return (NULL);
 	}
-	pipeline = NULL;
-	init_pipeline(&pipeline, tokens);
-	if (!pipeline)
+	cmd = NULL;
+	init_commands(&cmd, tokens);
+	if (!cmd)
 	{
 		fprintf(stderr, "Parsing failed.\n");
 		free_tokens(tokens);
-		return;
+		return (NULL);
 	}
-	print_pipeline(pipeline);
-	free_pipeline(pipeline);
+	print_commands(cmd);
+	free_commands(cmd);
 	free_tokens(tokens);
-	//command_find
 }
 
 
