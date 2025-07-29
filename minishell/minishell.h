@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 22:43:36 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/29 14:06:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int variable_present(char *variable, env_t *envp);
 char **exchange_values(char **envp, char *exchange);
 char **prepare_unset(char *argument);
 int value_present(char *argument);
+char **adding_command(t_command *cmd);
 //redirect
 int redirecting_in(t_command *cmd);
 int redirecting_out(char *str);
