@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 22:08:20 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/29 09:47:07 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,17 @@ int counting_envlen(char **envp)
 char **prepare_unset(char *argument)
 {
     char **unset;
+    char *variable;
     int len;
 
-    len = ft_strlen(argument);
+    variable = find_variable(argument);
+    len = ft_strlen(variable);
     unset = malloc(sizeof(char *) * 2);
     if (unset == NULL)
 		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
-    unset[0] = ft_strdup(argument);
+    unset[0] = ft_strdup(variable);
     unset[1] = NULL;
-    printf("\n\n%s\n\n", unset[0]);
+    // printf("\n\n%s\n\n", unset[0]);
     return (unset);
 }
 

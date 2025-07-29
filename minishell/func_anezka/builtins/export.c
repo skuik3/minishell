@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 22:27:05 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/29 09:47:12 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int run_export(env_t *envp, char **arguments)
 		add_variable = adding_variable(arguments[i]);
 		if (variable_present(find_variable(add_variable), envp) == 0)
 		{
+			// printf("\n\n\nHEREEEE\n\n\n\n");
 			if (value_present(arguments[i]) == 0)
 			{
 				unset = prepare_unset(arguments[i]);
