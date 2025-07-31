@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 12:20:08 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/31 14:53:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,48 @@ void free_command(t_command *cmd)
     free(cmd);
 }
 
+char *ft_strtrim_spaces(char *str)
+{
+    char *start, *end, *trimmed;
+    int len;
+    
+    if (!str)
+        return (NULL);
+    
+    // Find start (skip leading spaces)
+    start = str;
+    while (*start && (*start == ' ' || *start == '\t' || *start == '\n' || *start == '\r'))
+        start++;
+    
+    // If string is all spaces
+    if (*start == '\0')
+        return (ft_strdup(""));
+    
+    // Find end (skip trailing spaces)
+    end = str + strlen(str) - 1;
+    while (end > start && (*end == ' ' || *end == '\t' || *end == '\n' || *end == '\r'))
+        end--;
+    
+    // Calculate length and allocate
+    len = end - start + 1;
+    trimmed = malloc(len + 1);
+    if (!trimmed)
+        return (NULL);
+    
+    // Copy trimmed string
+    strncpy(trimmed, start, len);
+    trimmed[len] = '\0';
+    
+    return (trimmed);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
     char *prompt;
+    char **prompt_split;
+    t_command *cmd_head = NULL;
     t_command *cmd;
+    t_command *cmd_temp;
 
     (void)argc; // unused parameter
     (void)argv; // unused parameter
@@ -135,24 +173,56 @@ int main(int argc, char *argv[], char *envp[])
             
         if (*prompt) // Only process non-empty input
         {
-            cmd = parse_simple_command(prompt);
-            // print parsed command
-            printf("Command: %s\n", cmd->command);
-            printf("Arguments: ");
-            if (cmd->arguments)
+            prompt_split = ft_split(prompt, '|');
+            for (int i = 0; prompt_split[i]; i++)
             {
-                for (int i = 0; cmd->arguments[i]; i++)
-                {
-                    printf("%s ", cmd->arguments[i]);
-                }
-                }
-            printf("\n");
-            if (cmd)
-            {
+                char *original = prompt_split[i];
+                prompt_split[i] = ft_strtrim_spaces(prompt_split[i]);
+                free(original); // Free the original untrimmed string
+                cmd = parse_simple_command(prompt_split[i]);
                 cmd->envar = env;
-                what_builtin(cmd);
-                free_command(cmd);
+
+                if (i == 0)
+                    cmd_head = cmd;
+                else
+                    cmd_temp->next = cmd;
+                cmd_temp = cmd;
             }
+            
+            // Print the commands
+            cmd = cmd_head;
+            for (int i = 0; cmd; i++, cmd = cmd->next)
+            {
+                printf("Command %d: %s\n", i, cmd->command);
+                printf("Arguments: ");
+                if (cmd->arguments)
+                {
+                    for (int j = 0; cmd->arguments[j]; j++)
+                    {
+                        printf("%s ", cmd->arguments[j]);
+                    }
+                    printf("\n");
+                }
+            }
+            
+            if (cmd_head)
+            {
+                command_execution(cmd_head);
+            }
+            
+            // Free the entire command list
+            cmd = cmd_head;
+            while (cmd)
+            {
+                t_command *next = cmd->next;
+                free_command(cmd);
+                cmd = next;
+            }
+            
+            // Free prompt_split array
+            for (int i = 0; prompt_split[i]; i++)
+                free(prompt_split[i]);
+            free(prompt_split);
             add_history(prompt);
         }
         
@@ -162,3 +232,4 @@ int main(int argc, char *argv[], char *envp[])
     printf("\nExiting minishell...\n");
     return (0);
 }
+

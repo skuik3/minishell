@@ -84,3 +84,23 @@
 //     close(fd);
 //     return (0);
 // }
+
+// int anezkas_main(int argc, char *argv[], char *envp[])
+// {
+//     char *promt;
+//     env_t *env;
+//     int i;
+
+//     env = malloc(sizeof(env_t));
+//     if (env == NULL)
+//         return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+//     saving_env(&env->start, envp);
+//     saving_env(&env->mod, envp);
+//     while (1)
+//     {
+//         promt = readline("");
+//         what_builtin(promt, env);
+//         add_history(promt);
+//     }
+//     return (0);
+// }

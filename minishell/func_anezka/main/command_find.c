@@ -6,51 +6,11 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 16:38:32 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/31 23:31:14 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int copy_string(char **env, char *orig_env)
-{
-    int i;
-
-    i = 0;
-    while (orig_env[i] != '\0')
-        i++;
-    *env = malloc(sizeof(char) * (i + 1));
-    if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
-    i = 0;
-    while (orig_env[i] != '\0')
-    {
-        (*env)[i] = orig_env[i];
-        i++;
-    }
-    (*env)[i] = '\0';
-    return (0);
-}
-
-int saving_env(char ***env, char *envp[])
-{
-    int i;
-
-    i = 0;
-    while (envp[i] != NULL)
-        i++;
-    *env = malloc(sizeof(char *) * (i + 1));
-    if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
-    i = 0;
-    while (envp[i] != NULL)
-    {
-        copy_string(&(*env)[i], envp[i]);
-        i++;
-    }
-    env[i] = NULL;
-    return (0);
-}
 
 int what_builtin(t_command *cmd)
 {
@@ -59,11 +19,7 @@ int what_builtin(t_command *cmd)
     else if (ft_strcmp(cmd->command, "pwd") == 0)
         run_pwd();
     else if (ft_strcmp(cmd->command, "cd") == 0)
-    {
-        // if (cmd->arguments[1] != NULL)
-        //     return (ft_putstr_fd(ERR_BC, STDERR_FILENO), 1);
         run_cd(cmd->arguments[0], cmd->envar);
-    }
     else if (ft_strcmp(cmd->command, "env") == 0)
         run_env(cmd->envar->mod);
     else if (ft_strcmp(cmd->command, "exit") == 0)
@@ -74,30 +30,102 @@ int what_builtin(t_command *cmd)
         run_unset(cmd->envar, cmd->arguments);
     else if (cmd->command != NULL)
         executing(cmd);
-    // if (ft_strcmp(arguments[0], "test") == 0) // for tests, OK
-    //      redirecting_in(arguments[1]);
-    //      appending(arguments[1]);
-    //      executing(arguments[1], envp);
-    //     redirecting_out(arguments[1]);
     return (0);
 }
 
-// int anezkas_main(int argc, char *argv[], char *envp[])
-// {
-//     char *promt;
-//     env_t *env;
-//     int i;
 
-//     env = malloc(sizeof(env_t));
-//     if (env == NULL)
-//         return (ft_putstr_fd(ERR_MALLOC, 2), 1);
-//     saving_env(&env->start, envp);
-//     saving_env(&env->mod, envp);
-//     while (1)
-//     {
-//         promt = readline("");
-//         what_builtin(promt, env);
-//         add_history(promt);
-//     }
-//     return (0);
-// }
+int is_builtint(char *command)
+{
+    if (ft_strcmp(command, "echo") == 0)
+        return (0);
+    else if (ft_strcmp(command, "env") == 0)
+        return (0);
+    else if (ft_strcmp(command, "export") == 0)
+        return (0);
+    else if (ft_strcmp(command, "unset") == 0)
+        return (0);
+    else if (ft_strcmp(command, "exit") == 0)
+        return (0);
+    else if (ft_strcmp(command, "cd") == 0)
+        return (0);
+    else if (ft_strcmp(command, "pwd") == 0)
+        return (0);
+    return (1);
+}
+
+int single_command(t_command *cmd)
+{
+    int pid;
+    int status;
+
+    if (is_builtint(cmd->command) == 0)
+        what_builtin(cmd);
+    else
+    {
+        pid = fork();
+        if (pid < -1)
+            return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+        else if (pid == 0)
+            executing(cmd);
+        else if (pid > 0)
+            waitpid(pid, &status, 0); // if not use for check, status not needed >> NULL
+    }
+    return (0);
+}
+
+int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
+{
+    int pid;
+    int orig_stdout;
+
+    orig_stdout = dup(STDOUT_FILENO);
+    if (orig_stdout == -1)
+        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    while (cmd->next != NULL)
+    {
+        pid = fork();
+        if (pid < -1)
+            return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+        else if (pid == 0)
+        {
+            if (cmd->is_first == 1)
+                first_multiple(cmd, pipe_cmd);
+            else
+                other_multiple(cmd, pipe_cmd);
+        }
+        cmd = cmd->next;
+        // if (pid > 0)
+    }
+    return (0);
+}
+        // close(pipe_cmd->pipe[0]); //read end
+        // if (dup2(pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
+        //     return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+// close(STDOUT_FILENO); // need to close after finishing??
+    //     if (cmd->next == NULL)
+    //     {
+    //         if (dup2(orig_stdout, STDOUT_FILENO) == -1)
+    //             return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    //     }
+    // }
+
+
+int command_execution(t_command *cmd)
+{
+    t_pipe *pipe_cmd;
+
+    pipe_cmd = prepare_pipes(cmd);
+    if (cmd->next == NULL)
+    {
+        single_command(cmd);
+        return (0);
+    }
+    cmd->is_first = 1;
+    while(cmd->next != NULL)
+    {
+        multiple_commands(cmd, pipe_cmd);
+        cmd = cmd->next;
+        cmd->is_first = 0;
+    }
+    return(0);
+}

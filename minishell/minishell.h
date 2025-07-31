@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/29 14:06:48 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/31 22:38:58 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 #define ERR_FILE    "Error opening/creating a file\n"
 #define ERR_FORK    "Error forking\n"
 #define ERR_BC      "Error\n" 
+#define ERR_PIPE    "Error creating a pipe\n"
+#define ERR_DUP     "Error duplicating\n"
 
 #define INVALID_PAR "Invalid parameter name\n"
 
@@ -46,6 +48,13 @@ typedef struct environment_variables
     char **start;
     char **mod;
 } env_t;
+
+typedef struct pipe
+{
+    int *pipe;
+    struct pipe *next;
+}   t_pipe;
+
 
 typedef enum e_token_type {
     T_WORD,       //hello
@@ -68,6 +77,7 @@ typedef struct s_token {
 
 typedef struct s_command {
     char *command;
+    int is_first;
     char **arguments;
     char **redir_in;
     char **redir_out;
@@ -120,8 +130,16 @@ typedef struct s_node
 
 // ANEZKAS_PART
 
-//builtin fce
+//main_execution
 int what_builtin(t_command *cmd);
+env_t *adding_env(t_command *cmd, char **envp);
+int command_execution(t_command *cmd);
+int single_command(t_command *cmd);
+int multiple_commands(t_command *cmd, t_pipe *pipe_cmd);
+//utils for main_execution
+int saving_env(char ***env, char *envp[]);
+int is_builtint(char *command);
+//builtin fce
 int run_pwd(void);
 int run_echo(char **string);
 int run_cd(char *path, env_t *env); //todo home
@@ -129,9 +147,7 @@ int run_env(char **envp);
 int run_exit(void); //todo s ciselkami
 int run_export(env_t *envp, char **arguments);
 int run_unset(env_t *envp, char **arguments);
-env_t *adding_env(t_command *cmd, char **envp);
-//utils
-int saving_env(char ***env, char *envp[]);
+//utils for builtin fce
 int copy_string(char **env, char *orig_env);
 int find_start(char *envp[], char *arguments);
 int counting_envlen(char **envp);
@@ -140,7 +156,6 @@ int get_order(char **envp);
 char *find_variable(char *arguments);
 char **put_unset(char **old_env, int unset);
 int unset_variable(char *envp, char *variable, int i);
-void	ft_putstr_fd(char *s, int fd);
 char *find_envar(env_t *env, char *find);
 char *find_path(env_t *env, char *find_var);
 char *adding_variable(char *argument);
@@ -149,12 +164,16 @@ char **exchange_values(char **envp, char *exchange);
 char **prepare_unset(char *argument);
 int value_present(char *argument);
 char **adding_command(t_command *cmd);
+//pipes
+int counting_pipes(t_command *cmd);
+t_pipe *prepare_pipes(t_command *cmd);
 //redirect
 int redirecting_in(t_command *cmd);
 int redirecting_out(char *str);
 int appending(t_command *cmd);
 //nonbuiltins
 int executing(t_command *cmd);
+//nonbuiltins utils
 int is_path(char *command);
 char *command_path(t_command *cmd);
 //libft_later
@@ -164,7 +183,7 @@ int	ft_numstrings(const char *s, int c);
 unsigned int	findend(const char *s, int c, int i);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-
+void	ft_putstr_fd(char *s, int fd);
 
 // SISIS_PART
 
