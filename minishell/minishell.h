@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/31 22:38:58 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/01 10:52:07 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,9 @@ env_t *adding_env(t_command *cmd, char **envp);
 int command_execution(t_command *cmd);
 int single_command(t_command *cmd);
 int multiple_commands(t_command *cmd, t_pipe *pipe_cmd);
+int last_multiple(t_command *cmd, t_pipe *pipe_cmd);
+int other_multiple(t_command *cmd, t_pipe *pipe_cmd);
+int first_multiple(t_command *cmd, t_pipe *pipe_cmd);
 //utils for main_execution
 int saving_env(char ***env, char *envp[]);
 int is_builtint(char *command);

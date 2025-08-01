@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/31 22:43:30 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/08/01 10:52:25 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC = tokenizer/sisis_main.c \
 	  func_anezka/builtins/export_utils.c\
 	  func_anezka/main/env_variables.c\
 	  func_anezka/nonbuiltins/pipes.c\
+	  func_anezka/main/forks.c\
 
 
 

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/31 23:31:14 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/01 10:53:19 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,12 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
 {
     int pid;
     int orig_stdout;
+    int status;
 
     orig_stdout = dup(STDOUT_FILENO);
     if (orig_stdout == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-    while (cmd->next != NULL)
+    while (cmd->next != NULL) //last command not included
     {
         pid = fork();
         if (pid < -1)
@@ -94,8 +95,11 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
                 other_multiple(cmd, pipe_cmd);
         }
         cmd = cmd->next;
-        // if (pid > 0)
+        pipe_cmd = pipe_cmd->next;
+        if (pid > 0)
+            waitpid(pid, &status, 0); // maybe not
     }
+    last_multiple(cmd, pipe_cmd);
     return (0);
 }
         // close(pipe_cmd->pipe[0]); //read end
