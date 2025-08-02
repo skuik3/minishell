@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/02 13:43:57 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/02 22:11:50 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,38 +75,46 @@ typedef struct s_token {
     struct s_token *next;
 } t_token;
 
+// typedef struct s_command {
+//     char *command;
+//     int is_first;
+//     char **arguments;
+//     char **redir_in;
+//     char **redir_out;
+//     char *heredoc;
+//     char *append;
+//     struct s_command *next;
+//     env_t *envar;  // add aneskas env
+// } t_command;
+
+
+//TEST VERSION
+typedef enum e_redir_type {
+    REDIR_IN,     // <
+    REDIR_OUT,    // >
+    REDIR_APPEND, // >>
+    REDIR_HEREDOC // <<
+} t_redir_type;
+
+typedef struct s_redir {
+    char *filename;
+    t_redir_type type; 
+    int position; // position in the original command
+} t_redir;
+
 typedef struct s_command {
     char *command;
     int is_first;
     char **arguments;
-    char **redir_in;
-    char **redir_out;
+    t_redir **redir_in;      // array of pointers to input redirections (< and <<)
+    int redir_in_count;
+    t_redir **redir_out;     // array of pointers to output redirections (> and >>)
+    int redir_out_count;
     char *heredoc;
     char *append;
     struct s_command *next;
     env_t *envar;  // add aneskas env
 } t_command;
-
-
-//TEST VERSION
-// Your command structure (unchanged from previous version)
-// typedef struct s_command {
-//     char *command;         // name of the command
-//     char **arguments;      // all arguments needed for running the command or NULL
-//     char **redir_in;       // redirecting in
-//     char **redir_out;      //redirecting out
-//     char *heredoc;         // heredoc delimiter
-//     char *append;          // appending mode
-//     struct s_command *next; // pointer to a next struct if pipes present
-//     env_t *envar;          // environment variables
-// } t_command;
-
-// size_t count_env_vars(char **env);
-// env_t *create_environment(char *envp[]);
-// int modify_environment(env_t *env, const char *key, const char *value);
-// void free_environment(env_t *env);
-// t_command *parse_input(const char *line);
-// void free_command(t_command *cmd);
 //END OF TEST VERSION   
 
 typedef struct s_pipeline {
@@ -174,8 +182,11 @@ t_pipe *creating_first_pipe(t_pipe *pipe_cmd);
 t_pipe *adding_pipe(t_pipe *pipe_cmd);
 //redirect
 int redirecting_in(t_command *cmd);
-int redirecting_out(char *str);
-int appending(t_command *cmd);
+int redirect_out(t_command *cmd);
+int last_redirect_out(t_redir *last);
+int appending(t_redir *append);
+int redirecting_out(t_redir *redirout);
+int check_redirect(t_command *cmd);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils
