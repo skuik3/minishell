@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:57:39 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/31 22:44:31 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/02 13:44:02 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,60 @@ int counting_pipes(t_command *cmd)
         cmd = cmd->next;
         count++;
     }
-    return (count - 1);
+    return (count);
+}
+
+t_pipe *adding_pipe(t_pipe *pipe_cmd)
+{
+    t_pipe *new;
+
+    new = malloc(sizeof(t_pipe));
+    if (new == NULL)
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    new->pipe = malloc(sizeof(int) * 2);
+    if (new->pipe == NULL)
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    new->next = NULL;
+    while (pipe_cmd->next != NULL)
+        pipe_cmd = pipe_cmd->next;
+    pipe_cmd->next = new;
+    return(pipe_cmd);
+}
+
+t_pipe *creating_first_pipe(t_pipe *pipe_cmd)
+{
+    pipe_cmd = malloc(sizeof(t_pipe));
+    if (pipe_cmd == NULL)
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    pipe_cmd->pipe = malloc(sizeof(int) * 2);
+    if (pipe_cmd->pipe == NULL)
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    pipe_cmd->next = NULL;
+    return (pipe_cmd);
 }
 
 t_pipe *prepare_pipes(t_command *cmd)
 {
     int pipe_count;
     t_pipe *pipe_cmd;
+    t_pipe *head;
+    int i;
 
     pipe_count = counting_pipes(cmd);
-    if (pipe_count > 0)
+    i = 0;
+    pipe_cmd = creating_first_pipe(pipe_cmd);
+    head = pipe_cmd;
+    while (i < pipe_count - 1)
     {
-        pipe_cmd = malloc(sizeof(t_pipe) * (pipe_count + 1));
-        if (pipe_cmd == NULL)
-            return(ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-        while(pipe_cmd->next != NULL)
-        {
-            pipe_cmd->pipe = malloc(sizeof(int) * (2 + 1));
-            if (pipe_cmd->pipe == NULL)
-                return(ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-            if (pipe(pipe_cmd->pipe) == -1)
-                return (ft_putstr_fd(ERR_PIPE, STDERR_FILENO), NULL);
-            pipe_cmd = pipe_cmd->next;
-        }
+        pipe_cmd = adding_pipe(pipe_cmd);
+        i++;
     }
-    return(pipe_cmd);
+    pipe_cmd = head;
+    while (pipe_cmd != NULL)
+    {
+        if (pipe(pipe_cmd->pipe))
+            return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), NULL);
+        pipe_cmd = pipe_cmd->next;
+    }
+    return(head);
 }

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/01 10:53:19 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/02 15:25:09 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,28 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         }
         cmd = cmd->next;
         pipe_cmd = pipe_cmd->next;
-        if (pid > 0)
-            waitpid(pid, &status, 0); // maybe not
+        if (cmd->is_first == 1)
+            close(pipe_cmd->pipe[1]);
+        else
+        {
+            close(pipe_cmd->pipe[0]);
+            close(pipe_cmd->next->pipe[1]);
+            pipe_cmd = pipe_cmd->next;
+        }
     }
     last_multiple(cmd, pipe_cmd);
     return (0);
 }
-        // close(pipe_cmd->pipe[0]); //read end
-        // if (dup2(pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
-        //     return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-// close(STDOUT_FILENO); // need to close after finishing??
-    //     if (cmd->next == NULL)
-    //     {
-    //         if (dup2(orig_stdout, STDOUT_FILENO) == -1)
-    //             return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-    //     }
-    // }
+
+//first
+//middle
+//last
 
 
 int command_execution(t_command *cmd)
 {
     t_pipe *pipe_cmd;
+    t_command *head;
 
     pipe_cmd = prepare_pipes(cmd);
     if (cmd->next == NULL)
@@ -125,11 +126,13 @@ int command_execution(t_command *cmd)
         return (0);
     }
     cmd->is_first = 1;
-    while(cmd->next != NULL)
+    head = cmd;
+    while (cmd->next != NULL)
     {
-        multiple_commands(cmd, pipe_cmd);
         cmd = cmd->next;
         cmd->is_first = 0;
     }
+    cmd = head;
+        multiple_commands(cmd, pipe_cmd);
     return(0);
 }

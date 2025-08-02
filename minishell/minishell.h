@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/01 10:52:07 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/02 13:43:57 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ char **adding_command(t_command *cmd);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);
+t_pipe *creating_first_pipe(t_pipe *pipe_cmd);
+t_pipe *adding_pipe(t_pipe *pipe_cmd);
 //redirect
 int redirecting_in(t_command *cmd);
 int redirecting_out(char *str);
