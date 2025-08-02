@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/02 15:56:09 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/02 17:16:09 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
             what_builtin(cmd);
         else if (is_builtint(cmd->command) == 1)
             executing(cmd);
+        exit(0);
     }
     close(pipe_cmd->pipe[0]);
     while (wait(&status) != -1)
