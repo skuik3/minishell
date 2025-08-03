@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/02 22:16:44 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/03 13:23:54 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,8 @@ int check_redirect(t_command *cmd)
 {
     if (cmd->redir_out != NULL)
         redirect_out(cmd);
-    // if (cmd->redir_out != NULL)
-    //     redirecting_out(cmd);
-    // if (cmd->append != NULL)
-    //     appending(cmd);
-    // if (cmd->heredoc != NULL)
-    //     heredocing(cmd);
+    // if (cmd->redir_in != NULL)
+    //     redirect_in(cmd);
     return (0);
 }
 
