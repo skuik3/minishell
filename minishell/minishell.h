@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/02 22:11:50 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/03 16:26:11 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 #define ERR_MALLOC  "Malloc failure\n"
 #define ERR_ARG     "Not enough arguments\n"
 #define ERR_FILE    "Error opening/creating a file\n"
+#define ERR_NOTFILE "No such file or directory\n"
 #define ERR_FORK    "Error forking\n"
 #define ERR_BC      "Error\n" 
 #define ERR_PIPE    "Error creating a pipe\n"
@@ -181,12 +182,14 @@ t_pipe *prepare_pipes(t_command *cmd);
 t_pipe *creating_first_pipe(t_pipe *pipe_cmd);
 t_pipe *adding_pipe(t_pipe *pipe_cmd);
 //redirect
-int redirecting_in(t_command *cmd);
 int redirect_out(t_command *cmd);
 int last_redirect_out(t_redir *last);
 int appending(t_redir *append);
 int redirecting_out(t_redir *redirout);
 int check_redirect(t_command *cmd);
+int redirecting_in(t_redir *redirin);
+int last_redirect_in(t_redir *last);
+int redirect_in(t_command *cmd);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils

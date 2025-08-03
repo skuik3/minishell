@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/03 13:23:53 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/03 16:37:06 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ int single_command(t_command *cmd)
 {
     int pid;
     int status;
-    int std_orig;
+    int stdout_orig;
+    int stdin_orig;
 
-    std_orig = dup(STDOUT_FILENO);
+    stdout_orig = dup(STDOUT_FILENO);
+    stdin_orig = dup(STDIN_FILENO);
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
-        // || cmd->append != NULL || cmd->heredoc != NULL)
         check_redirect(cmd);
     if (is_builtint(cmd->command) == 0)
         what_builtin(cmd);
@@ -74,7 +75,8 @@ int single_command(t_command *cmd)
             executing(cmd);
         waitpid(pid, &status, 0);
     }
-    if (dup2(std_orig, STDOUT_FILENO) == -1)
+    if (dup2(stdout_orig, STDOUT_FILENO) == -1 
+        || dup2(stdin_orig, STDIN_FILENO) == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
     return (0);
 }
