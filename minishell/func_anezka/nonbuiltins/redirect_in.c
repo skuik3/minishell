@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/03 22:19:44 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/04 11:13:30 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int last_heredoc(t_redir *last)
         return (0);
     close(pipe_hdc[0]);
     close(pipe_hdc[1]);
-    waitpid(pid, &status, 0);
+    waitpid(pid, status, 0);
     return (0);
 }
 

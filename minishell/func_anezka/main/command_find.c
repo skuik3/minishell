@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/03 22:10:59 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/04 11:13:51 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,12 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
 {
     int pid;
     int orig_stdout;
+    int orig_stdin;
     int status;
 
     orig_stdout = dup(STDOUT_FILENO);
-    if (orig_stdout == -1)
+    orig_stdin = dup(STDIN_FILENO);
+    if (orig_stdout == -1 || orig_stdin == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
     while (cmd->next != NULL) //last command not included
     {

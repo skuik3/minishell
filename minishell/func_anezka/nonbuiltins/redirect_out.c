@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/03 16:34:10 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/04 12:15:59 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,15 @@ int last_redirect_out(t_redir *last)
 {
     int fd;
 
-    fd = open(last->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
+    if (last->type == REDIR_OUT)
+    {
+        if (access(last->filename, F_OK) == 0)
+        {
+            if (unlink(last->filename) == -1)
+                return(ft_putstr_fd(ERR_FILE, STDERR_FILENO), 1);  
+        }
+    }
+    fd = open(last->filename, O_RDWR | O_CREAT | O_APPEND, SHELL_DEFAULT);
     if (fd == -1)
         return (ft_putstr_fd(ERR_FILE, 2), 1);
     if (dup2(fd, STDOUT_FILENO) == -1)

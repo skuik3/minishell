@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/03 13:49:32 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/04 12:21:14 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,14 @@ int other_multiple(t_command *cmd, t_pipe *pipe_cmd)
 {
     if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-    close(pipe_cmd->pipe[0]); //need to read but stdout now
-    if (dup2(pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
-        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    close(pipe_cmd->pipe[0]); 
+    if (cmd->redir_in != NULL || cmd->redir_out != NULL)
+        check_redirect(cmd);
+    if (cmd->redir_out == NULL)
+    {
+        if (dup2(pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
+            return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    }
     close(pipe_cmd->next->pipe[0]);
     close(pipe_cmd->next->pipe[1]);
     if (is_builtint(cmd->command) == 0)
@@ -60,6 +65,8 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
         if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
             return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
         close(pipe_cmd->pipe[0]);
+        if (cmd->redir_in != NULL || cmd->redir_out != NULL)
+            check_redirect(cmd);
         if (is_builtint(cmd->command) == 0)
             what_builtin(cmd);
         else if (is_builtint(cmd->command) == 1)
