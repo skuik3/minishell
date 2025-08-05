@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/04 11:13:30 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/05 10:51:46 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int redirecting_heredoc(t_redir *herdoc)
 
     while (1)
     {
-        promt = readline(""); 
+        promt = readline("> "); 
         if (ft_strcmp(promt, herdoc->filename) == 0)
             break ;
+        promt = ft_strjoin(promt, "\n");
     }
     return (0);
 }
