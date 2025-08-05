@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/04 11:13:51 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/05 15:35:41 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 
 int what_builtin(t_command *cmd)
 {
+    int returned;
+
+    returned = 0;
     if (ft_strcmp(cmd->command, "echo") == 0)
-        run_echo(cmd->arguments);
+        returned = run_echo(cmd->arguments);
     else if (ft_strcmp(cmd->command, "pwd") == 0)
-        run_pwd();
+        returned = run_pwd();
     else if (ft_strcmp(cmd->command, "cd") == 0)
-        run_cd(cmd->arguments[0], cmd->envar);
+        returned = run_cd(cmd->arguments[0], cmd->envar);
     else if (ft_strcmp(cmd->command, "env") == 0)
-        run_env(cmd->envar->mod);
+        returned = run_env(cmd->envar->mod);
     else if (ft_strcmp(cmd->command, "exit") == 0)
-        run_exit();
+        returned = run_exit();
     else if (ft_strcmp(cmd->command, "export") == 0)
-        run_export(cmd->envar, cmd->arguments);
+        returned = run_export(cmd->envar, cmd->arguments);
     else if (ft_strcmp(cmd->command, "unset") == 0)
-        run_unset(cmd->envar, cmd->arguments);
+        returned = run_unset(cmd->envar, cmd->arguments);
     else if (cmd->command != NULL)
-        executing(cmd);
-    return (0);
+        returned = executing(cmd);
+    return (returned);
 }
 
 
@@ -53,6 +56,15 @@ int is_builtint(char *command)
     return (1);
 }
 
+int restore_fd(int stdout_orig, int stdin_orig)
+{
+    if (dup2(stdout_orig, STDOUT_FILENO) == -1 
+        || dup2(stdin_orig, STDIN_FILENO) == -1)
+        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    close(stdout_orig);
+    close(stdin_orig);
+}
+
 int single_command(t_command *cmd)
 {
     int pid;
@@ -62,10 +74,12 @@ int single_command(t_command *cmd)
 
     stdout_orig = dup(STDOUT_FILENO);
     stdin_orig = dup(STDIN_FILENO);
+    if (stdout_orig == -1 || stdin_orig == -1)
+        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
         check_redirect(cmd);
     if (is_builtint(cmd->command) == 0)
-        what_builtin(cmd);
+        status = what_builtin(cmd);
     else
     {
         pid = fork();
@@ -75,9 +89,7 @@ int single_command(t_command *cmd)
             executing(cmd);
         waitpid(pid, &status, 0);
     }
-    if (dup2(stdout_orig, STDOUT_FILENO) == -1 
-        || dup2(stdin_orig, STDIN_FILENO) == -1)
-        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    restore_fd(stdout_orig, stdin_orig);
     return (0);
 }
 

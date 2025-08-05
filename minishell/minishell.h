@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/03 16:26:11 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/05 15:31:36 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 #define ERR_BC      "Error\n" 
 #define ERR_PIPE    "Error creating a pipe\n"
 #define ERR_DUP     "Error duplicating\n"
+#define ERR_READ    "Error reading\n"
 
 #define INVALID_PAR "Invalid parameter name\n"
 

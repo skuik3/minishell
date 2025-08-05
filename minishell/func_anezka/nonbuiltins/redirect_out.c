@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/04 12:15:59 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/05 15:35:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 
 int check_redirect(t_command *cmd)
 {
+    int returned;
+
+    returned = 0;
     if (cmd->redir_out != NULL)
-        redirect_out(cmd);
+        returned = redirect_out(cmd);
     if (cmd->redir_in != NULL)
-        redirect_in(cmd);
-    return (0);
+        returned = redirect_in(cmd);
+    return (returned);
 }
 
 int redirecting_out(t_redir *redirout)
@@ -68,23 +71,25 @@ int last_redirect_out(t_redir *last)
         return (ft_putstr_fd(ERR_FILE, 2), 1);
     if (dup2(fd, STDOUT_FILENO) == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-    close(fd); //maybe not
+    close(fd);
     return (0);
 }
 
 int redirect_out(t_command *cmd)
 {
     int i;
+    int returned;
 
     i = 0;
+    returned = 0;
     while (cmd->redir_out[i + 1] != NULL)
     {
         if (cmd->redir_out[i]->type == REDIR_OUT)
-            redirecting_out(cmd->redir_out[i]);
+            returned = redirecting_out(cmd->redir_out[i]);
         else if (cmd->redir_out[i]->type ==  REDIR_APPEND)
-            appending(cmd->redir_out[i]);
+            returned = appending(cmd->redir_out[i]);
         i++;
     }
-    last_redirect_out(cmd->redir_out[i]);
-    return (0);
+    returned = last_redirect_out(cmd->redir_out[i]);
+    return (returned);
 }
