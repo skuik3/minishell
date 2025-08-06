@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/05 15:35:48 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/05 22:31:05 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,19 @@ int check_redirect(t_command *cmd)
     int returned;
 
     returned = 0;
-    if (cmd->redir_out != NULL)
-        returned = redirect_out(cmd);
     if (cmd->redir_in != NULL)
+    {
         returned = redirect_in(cmd);
+        if (returned == 1)
+            return (1);
+
+    }
+    if (cmd->redir_out != NULL)
+    {
+        returned = redirect_out(cmd);
+        if (returned == 1)
+            return (1);
+    }
     return (returned);
 }
 

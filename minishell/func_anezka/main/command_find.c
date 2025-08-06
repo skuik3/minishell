@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/05 15:35:41 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/06 11:54:34 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ int single_command(t_command *cmd)
     if (stdout_orig == -1 || stdin_orig == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
-        check_redirect(cmd);
+    {
+        if (check_redirect(cmd) == 1)
+            return(restore_fd(stdout_orig, stdin_orig), 1);
+    }
     if (is_builtint(cmd->command) == 0)
         status = what_builtin(cmd);
     else
@@ -126,6 +129,7 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
             pipe_cmd = pipe_cmd->next;
         }
         cmd = cmd->next;
+        wait(&status);
     }
     last_multiple(cmd, pipe_cmd);
     return (0);

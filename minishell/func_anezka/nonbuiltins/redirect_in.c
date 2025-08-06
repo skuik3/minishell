@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/05 15:35:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/05 22:52:16 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int redirecting_heredoc(t_redir *herdoc)
 int last_heredoc(t_redir *last)
 {
     int pid;
-    int *pipe_hdc;
+    int pipe_hdc[2];
     char *promt;
-    int *status;
+    int status;
 
     if (pipe(pipe_hdc) == -1)
         return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), 1);
@@ -64,11 +64,11 @@ int last_heredoc(t_redir *last)
         close(pipe_hdc[1]);
         exit(0);
     }
-    if (dup2(pipe_hdc[0], STDIN_FILENO))
-        return (0);
     close(pipe_hdc[0]);
     close(pipe_hdc[1]);
-    waitpid(pid, status, 0);
+    waitpid(pid, &status, 0);
+    if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
+        return (0);
     return (0);
 }
 
@@ -80,7 +80,7 @@ int last_redirect_in(t_redir *last)
 
     if (last->type == REDIR_IN)
     {
-        if (access(last->filename, F_OK) == -1) //issue here
+        if (access(last->filename, F_OK) == -1)
             return(ft_putstr_fd(ERR_NOTFILE, STDOUT_FILENO), 1);
         fd = open(last->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
         if (dup2(fd, STDIN_FILENO) == -1)
