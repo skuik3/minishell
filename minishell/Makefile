@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/08/03 13:34:01 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/08/09 11:41:53 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,13 +38,15 @@ SRC = tokenizer/sisis_main.c \
 	  func_anezka/main/forks.c\
 	  func_anezka/nonbuiltins/redirect_out.c\
 	  func_anezka/nonbuiltins/redirect_in.c\
+	  func_anezka/main/signals.c\
 
 
 
 OBJ = $(SRC:.c=.o)
 CC = cc
 #FLAGS = -Wall -Wextra -Werror
-LIBS = -pthread -lreadline 
+FLAGS = -I/usr/local/opt/readline/include
+LIBS = -pthread -lreadline -L/usr/local/opt/readline/lib
 
 all: $(NAME)
 

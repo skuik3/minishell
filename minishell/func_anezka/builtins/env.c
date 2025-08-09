@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 16:37:24 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/06 14:17:15 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int run_env(char **envp)
     }
     while (envp[i] != NULL)
     {
-        printf("%s\n", envp[i]);
+        printf("%s\n", envp[i]); //ft_printf
         i++;
     }
     return (0);

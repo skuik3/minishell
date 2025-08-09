@@ -6,11 +6,13 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/02 20:06:23 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/09 16:02:31 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_signal = 0;
 
 env_t *adding_env(t_command *cmd, char **envp)
 {
@@ -350,10 +352,16 @@ int main(int argc, char *argv[], char *envp[])
 
     while (1)
     {
+
+        //SIGNALS
+        signal(SIGINT, handle_sigint);
+        // signal(SIGQUIT, handle_sigintma);
+        signal(EOF, handle_sigint);  
+        
         prompt = readline("minishell> ");
         
-        if (!prompt) // EOF (Ctrl+D)
-            break;
+        // if (!prompt) // EOF (Ctrl+D)
+        //     break;
             
         if (*prompt) // Only process non-empty input
         {

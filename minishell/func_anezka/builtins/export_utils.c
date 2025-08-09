@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/29 09:47:07 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/06 14:18:18 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,6 @@ int counting_envlen(char **envp)
 	return (i);
 }
 
-// char **exchange_values(char **old_envp, char *exchange)
-// {
-//     int i;
-//     int spot;
-//     char *variable;
-//     char **new_envp;
-
-//     i = 0;
-//     new_envp = malloc(sizeof(char *) * (counting_envlen(old_envp) + 1));
-//     if (new_envp == NULL)
-// 		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
-//     variable = find_variable(exchange);
-//     while (old_envp[i] != NULL)
-//     {
-//         if (unset_variable(old_envp[i], exchange, i) != -2)
-//             spot = unset_variable(old_envp[i], exchange, i);
-//         i++;
-//     }
-//     i = 0;
-//     while (old_envp[i] != NULL)
-//     {
-//         new_envp[i] = old_envp[i];
-//         if (i == spot)
-//             new_envp[i] = exchange;
-//         i++;
-//     }
-//     new_envp[i] = NULL;
-//     free(old_envp);
-//     return (new_envp);
-// }
-
-
 char **prepare_unset(char *argument)
 {
     char **unset;
@@ -83,7 +51,6 @@ char **prepare_unset(char *argument)
 		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
     unset[0] = ft_strdup(variable);
     unset[1] = NULL;
-    // printf("\n\n%s\n\n", unset[0]);
     return (unset);
 }
 

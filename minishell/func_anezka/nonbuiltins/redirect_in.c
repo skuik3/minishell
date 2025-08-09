@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/05 22:52:16 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/09 17:07:30 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int last_heredoc(t_redir *last)
         close(pipe_hdc[1]);
         exit(0);
     }
-    close(pipe_hdc[0]);
     close(pipe_hdc[1]);
     waitpid(pid, &status, 0);
     if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
-        return (0);
+        return (1);
+    close(pipe_hdc[0]);
     return (0);
 }
 
@@ -77,6 +77,7 @@ int last_redirect_in(t_redir *last)
     int fd;
     char *input;
     char *promt;
+    int returned;
 
     if (last->type == REDIR_IN)
     {
@@ -88,8 +89,8 @@ int last_redirect_in(t_redir *last)
         close (fd);
     }
     else
-        last_heredoc(last);
-    return (0);
+        returned = last_heredoc(last);
+    return (returned);
 }
 
 int redirect_in(t_command *cmd)
@@ -109,4 +110,18 @@ int redirect_in(t_command *cmd)
     }
     returned = last_redirect_in(cmd->redir_in[i]);
     return (returned);
+}
+
+int heredoc_present(t_redir **redir)
+{
+    int i;
+
+    i = 0;
+    while (redir[i] != NULL)
+    {
+        if (redir[i]->type == REDIR_HEREDOC)
+            return (1);
+        i++;
+    }
+    return (0);
 }

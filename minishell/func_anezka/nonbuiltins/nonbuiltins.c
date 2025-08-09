@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/31 22:55:41 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/09 15:51:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,49 +72,27 @@ char **adding_command(t_command *cmd)
     return(cmdw_args);
 }
 
-// maybe check status if child process works correctly 
-//          >> probably needed for exit later
 int executing(t_command *cmd)
 {
     char *path;
     char **cmdw_args;
 
     cmdw_args = adding_command(cmd);
+    // write(1, "helllouuu", 10);
+    if (cmdw_args == NULL)
+        return(ft_putstr_fd(ERR_EXEC, STDERR_FILENO), 1);
     if (is_path(cmd->command) == 0)
-        execve(cmd->command, cmdw_args, cmd->envar->mod);
+    {
+        if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
+            return(ft_putstr_fd(ERR_EXEC, STDERR_FILENO), 1);
+
+    }
     else if (is_path(cmd->command) != 0)
     {
         path = command_path(cmd);
-        execve(path, cmdw_args, cmd->envar->mod);
+        if (execve(path, cmdw_args, cmd->envar->mod) == -1)
+            return(ft_putstr_fd(ERR_EXEC, STDERR_FILENO), 1);
     }
     return (0);
 }
-
-// // maybe check status if child process works correctly 
-// //          >> probably needed for exit later
-// int executing(t_command *cmd)
-// {       
-//     int pid;
-//     int status;
-//     char *path;
-//     char **cmdw_args;
-
-//     pid = fork();
-//     cmdw_args = adding_command(cmd);
-//     if (pid < -1)
-//     {
-//         ft_putstr_fd(ERR_FORK, STDERR_FILENO);
-//         return (1);
-//     }
-//     if (is_path(cmd->command) == 0 && pid == 0)
-//         execve(cmd->command, cmdw_args, cmd->envar->mod);
-//     else if (is_path(cmd->command) != 0 && pid == 0)
-//     {
-//         path = command_path(cmd);
-//         execve(path, cmdw_args, cmd->envar->mod);
-//     }
-//     else if (pid > 0)
-//         waitpid(pid, &status, 0); // if not use for check, status not needed >> NULL
-//     return (0);
-// }
 

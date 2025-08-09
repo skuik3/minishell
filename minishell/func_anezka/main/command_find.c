@@ -6,11 +6,12 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/06 11:54:34 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/09 17:12:00 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
 
 int what_builtin(t_command *cmd)
 {
@@ -63,6 +64,7 @@ int restore_fd(int stdout_orig, int stdin_orig)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
     close(stdout_orig);
     close(stdin_orig);
+    return (0);
 }
 
 int single_command(t_command *cmd)
@@ -85,15 +87,20 @@ int single_command(t_command *cmd)
         status = what_builtin(cmd);
     else
     {
+        signal(SIGINT, SIG_IGN);
+        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
             return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
         else if (pid == 0)
-            executing(cmd);
+        {
+            status = executing(cmd);
+            exit(0);
+        }
         waitpid(pid, &status, 0);
     }
     restore_fd(stdout_orig, stdin_orig);
-    return (0);
+    return (status);
 }
 
 int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
@@ -109,15 +116,17 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
     while (cmd->next != NULL) //last command not included
     {
+        signal(SIGINT, SIG_IGN);
+        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
             return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
         else if (pid == 0)
         {
             if (cmd->is_first == 1)
-                first_multiple(cmd, pipe_cmd);
+                status = first_multiple(cmd, pipe_cmd);
             else
-                other_multiple(cmd, pipe_cmd);
+                status = other_multiple(cmd, pipe_cmd);
             exit(0);
         }
         if (cmd->is_first == 1)
@@ -129,22 +138,24 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
             pipe_cmd = pipe_cmd->next;
         }
         cmd = cmd->next;
-        wait(&status);
+        if (heredoc_present(cmd->redir_in) == 1)
+            wait(&status);
     }
-    last_multiple(cmd, pipe_cmd);
-    return (0);
+    status = last_multiple(cmd, pipe_cmd);
+    return (status);
 }
 
 int command_execution(t_command *cmd)
 {
     t_pipe *pipe_cmd;
     t_command *head;
+    int status;
 
     pipe_cmd = prepare_pipes(cmd);
     if (cmd->next == NULL)
     {
-        single_command(cmd);
-        return (0);
+        status = single_command(cmd);
+        return (status);
     }
     cmd->is_first = 1;
     head = cmd;
@@ -154,6 +165,6 @@ int command_execution(t_command *cmd)
         cmd->is_first = 0;
     }
     cmd = head;
-        multiple_commands(cmd, pipe_cmd);
-    return(0);
+        status = multiple_commands(cmd, pipe_cmd);
+    return(status);
 }

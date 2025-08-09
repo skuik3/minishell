@@ -1,0 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
+/*   Updated: 2025/08/09 16:09:43 by anezkahavra      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../minishell.h"
+
+void handle_sigint(int signal)
+{
+
+    if (signal == SIGINT) //ctrl+c
+    {
+        g_signal = SIGINT;
+        write(STDOUT_FILENO, "\n", 1);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+    // else if (signal == SIGQUIT) //ctrl+
+    // {
+    //     g_signal = SIGQUIT;
+    //     kill(0, SIGINT);
+    // }
+    else if (signal == EOF) //ctrl+d
+        g_signal = EOF;
+}
+
+void handle_signal_child(int signal)
+{
+    if (signal == SIGINT) //ctrl+c
+    {
+        g_signal = SIGINT;
+        write(STDOUT_FILENO, "\n", 1);
+        // rl_on_new_line();
+        // rl_replace_line("", 0);
+        // rl_redisplay();
+    }
+}
