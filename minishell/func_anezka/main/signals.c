@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/11 11:13:47 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 14:50:23 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,5 @@ void handle_signal_child(int signal)
     {
         g_signal = SIGINT;
         write(STDOUT_FILENO, "\n", 1);
-        // rl_on_new_line();
-        // rl_replace_line("", 0);
-        // rl_redisplay();
     }
 }

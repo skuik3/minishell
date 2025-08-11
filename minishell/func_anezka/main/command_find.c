@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/11 10:22:23 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 14:51:24 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int single_command(t_command *cmd)
         status = what_builtin(cmd);
     else
     {
-        // signal(SIGINT, SIG_IGN);
         signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)

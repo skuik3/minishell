@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/11 11:21:51 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 15:02:06 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,48 @@ int redirecting_in(t_redir *redirin)
     return (0);   
 }
 
+char *get_line_heredoc(t_redir *last)
+{
+    char *line;
+    char *returned;
+
+    signal(SIGINT, SIG_DFL);
+    while (1 && g_signal != 2)
+    {
+        write (STDOUT_FILENO, "> ", 3);
+        line = get_next_line(STDIN_FILENO);
+        if (ft_strcmp(line, ft_strjoin(last->filename, "\n")) == 0)
+                break ;
+        returned = ft_strjoin(line, "\n");
+    }
+    return (returned);
+}
+
 int redirecting_heredoc(t_redir *heredoc)
 {
     char *promt;
+    int pid;
+    int status;
 
-    while (1)
+    pid = fork();
+    if (pid < -1)
+        return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+    else if (pid == 0)
     {
-        write (STDOUT_FILENO, "> ", 3);
-        promt = get_next_line(STDIN_FILENO);
-        if (promt == NULL)
-            return(ft_putstr_fd(ERR_READ, STDERR_FILENO), 1);
-        if (ft_strcmp(promt, ft_strjoin(heredoc->filename, "\n")) == 0)
-            break ;
-        promt = ft_strjoin(promt, "\n");
+        promt = get_line_heredoc(heredoc);
+        exit(0);
     }
+    waitpid(pid, &status, 0);
+    // while (1 && g_signal != 2)
+    // {
+    //     write (STDOUT_FILENO, "> ", 3);
+    //     promt = get_next_line(STDIN_FILENO);
+    //     if (promt == NULL)
+    //         return(ft_putstr_fd(ERR_READ, STDERR_FILENO), 1);
+    //     if (ft_strcmp(promt, ft_strjoin(heredoc->filename, "\n")) == 0)
+    //         break ;
+    //     promt = ft_strjoin(promt, "\n");
+    // }
     // free(promt);
     return (0);
 }
@@ -44,6 +72,8 @@ int last_heredoc(t_redir *last)
     char *promt;
     int status;
 
+    g_signal = 0;
+    signal(SIGINT, handle_signal_child);
     if (pipe(pipe_hdc) == -1)
         return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), 1);
     pid = fork();
@@ -51,29 +81,64 @@ int last_heredoc(t_redir *last)
         return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
     else if (pid == 0)
     {
-        signal(SIGINT, handle_signal_child);
         close(pipe_hdc[0]);
-        while (1)
-        {
-            write (STDOUT_FILENO, "> ", 3);
-            promt = get_next_line(STDIN_FILENO);
-            if (ft_strcmp(promt, ft_strjoin(last->filename, "\n")) == 0)
-                break ;
-            promt = ft_strjoin(promt, "\n");
+        promt = get_line_heredoc(last);
+        if (g_signal != 2 || promt == NULL)
             write(pipe_hdc[1], promt, ft_strlen(promt));
-            // free(promt);
-            
-        }
         close(pipe_hdc[1]);
         exit(0);
     }
     close(pipe_hdc[1]);
     waitpid(pid, &status, 0);
+    if (g_signal == 2)
+    {
+        close(pipe_hdc[0]);
+        return (1);
+    }
     if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
         return (1);
     close(pipe_hdc[0]);
     return (0);
 }
+
+// int last_heredoc(t_redir *last)
+// {
+//     int pid;
+//     int pipe_hdc[2];
+//     char *promt;
+//     int status;
+
+//     if (pipe(pipe_hdc) == -1)
+//         return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), 1);
+//     pid = fork();
+//     if (pid < -1)
+//         return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+//     else if (pid == 0)
+//     {
+//         g_signal = 0;
+//         signal(SIGINT, handle_signal_child);
+//         close(pipe_hdc[0]);
+//         while (1)
+//         {
+//             write (STDOUT_FILENO, "> ", 3);
+//             promt = get_next_line(STDIN_FILENO);
+//             if (ft_strcmp(promt, ft_strjoin(last->filename, "\n")) == 0)
+//                 break ;
+//             promt = ft_strjoin(promt, "\n");
+//             write(pipe_hdc[1], promt, ft_strlen(promt));
+//             // free(promt);
+            
+//         }
+//         close(pipe_hdc[1]);
+//         exit(0);
+//     }
+//     close(pipe_hdc[1]);
+//     waitpid(pid, &status, 0);
+//     if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
+//         return (1);
+//     close(pipe_hdc[0]);
+//     return (0);
+// }
 
 int last_redirect_in(t_redir *last)
 {
