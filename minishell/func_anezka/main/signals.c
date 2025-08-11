@@ -6,13 +6,13 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/09 16:09:43 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 11:13:47 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void handle_sigint(int signal)
+void handle_signal_main(int signal)
 {
 
     if (signal == SIGINT) //ctrl+c
@@ -22,6 +22,7 @@ void handle_sigint(int signal)
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
+
     }
     // else if (signal == SIGQUIT) //ctrl+
     // {

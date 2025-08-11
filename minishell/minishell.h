@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/09 17:07:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 11:10:17 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <ctype.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include "get_next_line/get_next_line.h"
 
 extern int g_signal;
 
@@ -159,7 +160,7 @@ int first_multiple(t_command *cmd, t_pipe *pipe_cmd);
 int saving_env(char ***env, char *envp[]);
 int is_builtint(char *command);
 //signals
-void handle_sigint(int signal);
+void handle_signal_main(int signal);
 void handle_signal_child(int signal);
 //builtin fce
 int run_pwd(void);

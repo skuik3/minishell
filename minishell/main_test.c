@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/09 16:02:31 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 11:21:57 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,9 +354,9 @@ int main(int argc, char *argv[], char *envp[])
     {
 
         //SIGNALS
-        signal(SIGINT, handle_sigint);
+        signal(SIGINT, handle_signal_main);
         // signal(SIGQUIT, handle_sigintma);
-        signal(EOF, handle_sigint);  
+        // signal(EOF, handle_signal_main);  
         
         prompt = readline("minishell> ");
         
@@ -427,6 +427,7 @@ int main(int argc, char *argv[], char *envp[])
             
             if (cmd_head)
             {
+                // g_signal = 0;
                 command_execution(cmd_head);
             }
             

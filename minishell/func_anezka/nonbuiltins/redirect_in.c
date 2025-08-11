@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/09 17:07:30 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/11 11:21:51 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ int redirecting_in(t_redir *redirin)
     return (0);   
 }
 
-int redirecting_heredoc(t_redir *herdoc)
+int redirecting_heredoc(t_redir *heredoc)
 {
     char *promt;
 
     while (1)
     {
-        promt = readline("> "); 
+        write (STDOUT_FILENO, "> ", 3);
+        promt = get_next_line(STDIN_FILENO);
         if (promt == NULL)
             return(ft_putstr_fd(ERR_READ, STDERR_FILENO), 1);
-        if (ft_strcmp(promt, herdoc->filename) == 0)
+        if (ft_strcmp(promt, ft_strjoin(heredoc->filename, "\n")) == 0)
             break ;
         promt = ft_strjoin(promt, "\n");
     }
@@ -50,11 +51,13 @@ int last_heredoc(t_redir *last)
         return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
     else if (pid == 0)
     {
+        signal(SIGINT, handle_signal_child);
         close(pipe_hdc[0]);
         while (1)
         {
-            promt = readline("> ");
-            if (ft_strcmp(promt, last->filename) == 0)
+            write (STDOUT_FILENO, "> ", 3);
+            promt = get_next_line(STDIN_FILENO);
+            if (ft_strcmp(promt, ft_strjoin(last->filename, "\n")) == 0)
                 break ;
             promt = ft_strjoin(promt, "\n");
             write(pipe_hdc[1], promt, ft_strlen(promt));

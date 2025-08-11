@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:38:47 by skuik             #+#    #+#             */
-/*   Updated: 2025/02/16 19:19:43 by skuik            ###   ########.fr       */
+/*   Updated: 2025/08/11 09:54:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ char	*ft_strjoin(char *left_str, char *buff)
 	while (buff[j] != '\0')
 		str[i++] = buff[j++];
 	str[ft_strlen(left_str) + ft_strlen(buff)] = '\0';
-	free(left_str);
+	// free(left_str);
 	return (str);
 }
