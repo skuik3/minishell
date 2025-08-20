@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/20 11:07:31 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/20 11:44:51 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int heredoc_present(t_redir **redir)
     int i;
 
     i = 0;
+    if (redir == NULL)
+        return (0);
     while (redir[i] != NULL)
     {
         if (redir[i]->type == REDIR_HEREDOC)
@@ -117,6 +119,7 @@ int check_heredoc (t_command *cmd)
 {
     int returned;
 
+    returned = 0;
     while (cmd->next != NULL)
     {
         if (heredoc_present(cmd->redir_in) == 1)
