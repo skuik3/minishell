@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/11 11:10:17 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/20 10:22:23 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,12 @@ int redirecting_in(t_redir *redirin);
 int last_redirect_in(t_redir *last);
 int redirect_in(t_command *cmd);
 int heredoc_present(t_redir **redir);
+int check_heredoc (t_command *cmd);
+int do_heredoc(t_command *cmd);
+char *get_line_heredoc(t_redir *last);
+int last_heredoc(t_redir *last);
+int redirecting_heredoc(t_redir *heredoc);
+int where_last_heredoc(t_command *cmd, int redi);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils

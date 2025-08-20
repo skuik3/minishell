@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/11 14:51:24 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/20 10:24:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int single_command(t_command *cmd)
     stdin_orig = dup(STDIN_FILENO);
     if (stdout_orig == -1 || stdin_orig == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    if (check_heredoc(cmd) == 1)
+        return(restore_fd(stdout_orig, stdin_orig), 1);
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
     {
         if (check_redirect(cmd) == 1)
@@ -87,7 +89,6 @@ int single_command(t_command *cmd)
         status = what_builtin(cmd);
     else
     {
-        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
             return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
@@ -113,17 +114,20 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
     orig_stdin = dup(STDIN_FILENO);
     if (orig_stdout == -1 || orig_stdin == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-    while (cmd->next != NULL) //last command not included
+    check_heredoc(cmd); //todo
+    while (cmd->next != NULL)
     {
-        // signal(SIGINT, SIG_IGN);
-        // signal(SIGINT, handle_signal_child);
+        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
             return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
         else if (pid == 0)
         {
-            if (cmd->is_first == 1)
+            if (cmd->is_first == 1){
                 status = first_multiple(cmd, pipe_cmd);
+                if (status == 1)
+                    return (exit(1), 1);
+            }
             else
                 status = other_multiple(cmd, pipe_cmd);
             exit(0);
@@ -153,6 +157,7 @@ int command_execution(t_command *cmd)
     pipe_cmd = prepare_pipes(cmd);
     if (cmd->next == NULL)
     {
+        cmd->is_first = 1;
         status = single_command(cmd);
         return (status);
     }
@@ -164,6 +169,6 @@ int command_execution(t_command *cmd)
         cmd->is_first = 0;
     }
     cmd = head;
-        status = multiple_commands(cmd, pipe_cmd);
+        // status = multiple_commands(cmd, pipe_cmd);
     return(status);
 }
