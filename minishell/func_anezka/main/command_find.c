@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/20 11:11:24 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/01 10:59:24 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
     orig_stdin = dup(STDIN_FILENO);
     if (orig_stdout == -1 || orig_stdin == -1)
         return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
-    check_heredoc(cmd); //todo
+    if (check_heredoc(cmd) == 1)
+        return(restore_fd(orig_stdout, orig_stdin), 1);
     while (cmd->next != NULL)
     {
-        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
             return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);

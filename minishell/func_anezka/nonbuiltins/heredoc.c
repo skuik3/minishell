@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/20 11:44:51 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/01 10:59:35 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,10 @@ int check_heredoc (t_command *cmd)
     while (cmd->next != NULL)
     {
         if (heredoc_present(cmd->redir_in) == 1)
-            returned = do_heredoc(cmd);
+            returned = do_heredoc_multiple(cmd);
         cmd = cmd->next;
     }
-    if (cmd->next == NULL && cmd->is_first == 1) // for single command
+    if (cmd->next == NULL && cmd->is_first == 1)
     {
         if (heredoc_present(cmd->redir_in) == 1)
             returned = do_heredoc(cmd);

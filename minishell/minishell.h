@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/20 10:22:23 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/08/20 15:59:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef enum e_redir_type {
 typedef struct s_redir {
     char *filename;
     t_redir_type type; 
+    int *pipe_forhdc;
     int position; // position in the original command
 } t_redir;
 
@@ -208,6 +209,8 @@ char *get_line_heredoc(t_redir *last);
 int last_heredoc(t_redir *last);
 int redirecting_heredoc(t_redir *heredoc);
 int where_last_heredoc(t_command *cmd, int redi);
+int last_heredoc_multiple(t_redir *last);
+int do_heredoc_multiple(t_command *cmd);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils

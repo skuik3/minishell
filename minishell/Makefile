@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/08/18 11:09:47 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/09/01 10:58:22 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = tokenizer/sisis_main.c \
 	  func_anezka/nonbuiltins/redirect_out.c\
 	  func_anezka/nonbuiltins/redirect_in.c\
 	  func_anezka/nonbuiltins/heredoc.c\
+	  func_anezka/nonbuiltins/heredoc_multipl.c\
 	  func_anezka/main/signals.c\
 	  get_next_line/get_next_line.c\
 	  get_next_line/get_next_line_utils.c\
