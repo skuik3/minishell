@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/20 11:23:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 14:09:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int last_redirect_in(t_redir *last)
     int returned;
 
     returned = 0;
-    if (access(last->filename, F_OK) == -1)
+    if (access(last->filename, F_OK) == -1) {
         return(ft_putstr_fd(ERR_NOTFILE, STDOUT_FILENO), 1);
+    }
     fd = open(last->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (dup2(fd, STDIN_FILENO) == -1)
         return(ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
@@ -67,8 +68,8 @@ int redirect_in(t_command *cmd)
 
     i = 0;
     returned = 0;
-    redir = where_last_heredoc(cmd, REDIR_IN);
-    while (i < redir)
+    // redir = where_last_heredoc(cmd, REDIR_IN);
+    while (cmd->redir_in[i + 1] != NULL)
     {
         if (cmd->redir_in[i]->type == REDIR_IN)
             returned = redirecting_in(cmd->redir_in[i]);
@@ -78,6 +79,11 @@ int redirect_in(t_command *cmd)
     {
         if (cmd->redir_in[i]->type == REDIR_IN)
             returned = last_redirect_in(cmd->redir_in[i]);
+        else {
+            if (cmd->redir_in[i]->pipe_forhdc != NULL)
+                dup2(cmd->redir_in[i]->pipe_forhdc[0], STDIN_FILENO);
+            returned = 0;
+        }
         i++;
     }
     return (returned);

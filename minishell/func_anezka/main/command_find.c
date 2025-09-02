@@ -6,12 +6,11 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/01 10:59:24 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 14:05:22 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 
 int what_builtin(t_command *cmd)
 {
@@ -103,6 +102,14 @@ int single_command(t_command *cmd)
     return (status);
 }
 
+void close_herepipe(t_command *cmd) {
+    int i = 0;
+    while (cmd->redir_in[i + 1] != NULL)
+        i++;
+    if (cmd->redir_in[i]->type == REDIR_HEREDOC)
+        close(cmd->redir_in[i]->pipe_forhdc[0]);    
+}
+
 int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
 {
     int pid;
@@ -140,11 +147,15 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
             close(pipe_cmd->next->pipe[1]);
             pipe_cmd = pipe_cmd->next;
         }
+        if (cmd->redir_in != NULL)
+            close_herepipe(cmd);
         cmd = cmd->next;
         // if (heredoc_present(cmd->redir_in) == 1) //uncomment here first
-        wait(&status);
+        
     }
     status = last_multiple(cmd, pipe_cmd);
+    // while (wait(&status) > 1)
+    //     ;
     return (status);
 }
 
@@ -155,13 +166,12 @@ int command_execution(t_command *cmd)
     int status;
 
     pipe_cmd = prepare_pipes(cmd);
+    cmd->is_first = 1;
     if (cmd->next == NULL)
     {
-        cmd->is_first = 1;
         status = single_command(cmd);
         return (status);
     }
-    cmd->is_first = 1;
     head = cmd;
     while (cmd->next != NULL)
     {
@@ -169,6 +179,6 @@ int command_execution(t_command *cmd)
         cmd->is_first = 0;
     }
     cmd = head;
-        // status = multiple_commands(cmd, pipe_cmd);
+    status = multiple_commands(cmd, pipe_cmd);
     return(status);
 }

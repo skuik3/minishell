@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/01 10:59:35 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 12:16:13 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ int do_heredoc(t_command *cmd)
 {
     int i;
     int returned;
-    int hdc;
+    // int hdc;
 
     i = 0;
     returned = 0;
-    hdc = where_last_heredoc(cmd, REDIR_HEREDOC);
-    while (i < hdc)
+    // hdc = where_last_heredoc(cmd, REDIR_HEREDOC);
+    while (cmd->redir_in[i + 1] != NULL)
     {
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = redirecting_heredoc(cmd->redir_in[i]);
@@ -115,21 +115,27 @@ int heredoc_present(t_redir **redir)
     return (0);
 }
 
-int check_heredoc (t_command *cmd)
+int check_heredoc(t_command *cmd)
 {
     int returned;
 
     returned = 0;
-    while (cmd->next != NULL)
-    {
-        if (heredoc_present(cmd->redir_in) == 1)
-            returned = do_heredoc_multiple(cmd);
-        cmd = cmd->next;
-    }
+    // exit(0);
     if (cmd->next == NULL && cmd->is_first == 1)
     {
         if (heredoc_present(cmd->redir_in) == 1)
             returned = do_heredoc(cmd);
+        return (returned);
     }
+    while (cmd != NULL)
+    {
+        // write(1, "B\n", 2);
+        // printf("%s\n", cmd->command);
+
+        if (heredoc_present(cmd->redir_in) == 1)
+            returned = do_heredoc_multiple(cmd);
+        cmd = cmd->next;
+    }
+    
     return (returned);
 }
