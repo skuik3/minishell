@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 14:09:48 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 14:49:21 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int redirect_in(t_command *cmd)
         if (cmd->redir_in[i]->type == REDIR_IN)
             returned = last_redirect_in(cmd->redir_in[i]);
         else {
-            if (cmd->redir_in[i]->pipe_forhdc != NULL)
+            if (cmd->redir_in[i]->pipe_forhdc != NULL && cmd->redir_in[i]->type == REDIR_IN)
                 dup2(cmd->redir_in[i]->pipe_forhdc[0], STDIN_FILENO);
             returned = 0;
         }

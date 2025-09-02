@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 12:16:13 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 14:51:29 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int redirecting_heredoc(t_redir *heredoc)
         exit(0);
     }
     waitpid(pid, &status, 0);
+    // printf("statusheredoc>%d", status);
     return (status);
 }
 
@@ -86,16 +87,19 @@ int do_heredoc(t_command *cmd)
     // hdc = where_last_heredoc(cmd, REDIR_HEREDOC);
     while (cmd->redir_in[i + 1] != NULL)
     {
+        // printf("\nBBBB\n");
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = redirecting_heredoc(cmd->redir_in[i]);
         i++;
     }
     while (cmd->redir_in[i] != NULL)
     {
+        // printf("\nCCCC\n");
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = last_heredoc(cmd->redir_in[i]);
         i++;
     }
+    // printf("\nDDDD>%d\n", returned);
     return (returned);
 }
 
@@ -123,6 +127,7 @@ int check_heredoc(t_command *cmd)
     // exit(0);
     if (cmd->next == NULL && cmd->is_first == 1)
     {
+        // printf("\nAAAA\n");
         if (heredoc_present(cmd->redir_in) == 1)
             returned = do_heredoc(cmd);
         return (returned);
@@ -136,6 +141,5 @@ int check_heredoc(t_command *cmd)
             returned = do_heredoc_multiple(cmd);
         cmd = cmd->next;
     }
-    
     return (returned);
 }

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/01 16:07:19 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 14:50:53 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int check_redirect(t_command *cmd)
         if (returned == 1)
             return (1);
     }
-    // printf("RETURNED>%d", returned);
     return (returned);
 }
 

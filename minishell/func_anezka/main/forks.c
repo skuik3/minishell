@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 12:15:38 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/02 14:51:02 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int first_multiple(t_command *cmd, t_pipe *pipe_cmd) //in child process
     int status;
 
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
-        status = check_redirect(cmd); // issues check
+    {
+        if (status = check_redirect(cmd) == 1)
+            return (1);
+    }
     if (cmd->redir_out == NULL)
     {
         if (dup2(pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
@@ -37,7 +40,10 @@ int other_multiple(t_command *cmd, t_pipe *pipe_cmd)
     int status;
 
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
-        status = check_redirect(cmd);
+    {
+        if (status = check_redirect(cmd) == 1)
+            return (1);
+    }
     if (cmd->redir_in == NULL)
     {
         if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
@@ -69,7 +75,10 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
     else if (pid == 0)
     {
         if (cmd->redir_in != NULL || cmd->redir_out != NULL)
-            status = check_redirect(cmd);
+        {
+            if (status = check_redirect(cmd) == 1)
+                return (1);
+        }
         if (cmd->redir_in == NULL)
         {
             if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
