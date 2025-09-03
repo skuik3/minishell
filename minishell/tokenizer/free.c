@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/23 18:59:40 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/03 15:59:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,72 @@
 
 void free_tokens(t_token *head)
 {
+    t_token *tmp;
+
     while (head)
     {
-        t_token *tmp = head;
+        tmp = head;
         head = head->next;
         free(tmp->value);
         free(tmp);
     }
 }
 
-void free_cmd(t_command *cmd)
+void free_redir_array(t_redir **arr, int count)
 {
-    while (cmd)
+    if (count <= 0 || !arr)
+        return;
+
+    t_redir **current = arr;
+    while (count--)
     {
-        t_command *next = cmd->next;
-
-        free(cmd->command);
-        free_array(cmd->arguments);
-        free_array(cmd->redir_in);
-        free_array(cmd->redir_out);
-        free(cmd->heredoc);
-        free(cmd->append);
-
-        free(cmd);
-        cmd = next;
+        if (*current)
+        {
+            free((*current)->filename);
+            free(*current);
+        }
+        current++;
     }
+    free(arr);
 }
 
 void free_array(char **arr)
 {
     if (!arr)
         return;
-    char **temp = arr;
-    while (*temp)
+
+    char **current = arr;
+    while (*current)
     {
-        free(*temp);
-        temp++;
+        free(*current);
+        current++;
     }
     free(arr);
 }
 
-void free_argv(char **argv)
+void free_cmd(t_command *cmd)
 {
-    if (argv == NULL)
-        return;
-    char **temp = argv;
-    while (*temp)
+    t_command *next;
+
+    while (cmd)
     {
-        free(*temp);
-        temp++;
+        next = cmd->next;
+        free_array(cmd->args);
+        free_redir_array(cmd->redirs, cmd->redir_count);
+        free(cmd);
+        cmd = next;
     }
-    free(argv);
 }
+
+void free_cmd_builder(t_cmd_builder *builder)
+{
+    if (!builder)
+        return;
+
+    free_cmd(builder->cmd);
+    // free_list(builder->args);
+    // free_list(builder->redir_in);
+    // free_list(builder->redir_out);
+    free(builder);
+}
+
