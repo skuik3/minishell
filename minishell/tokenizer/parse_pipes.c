@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:59:49 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/02 12:33:09 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/23 18:59:51 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ bool init_commands(t_command **head, t_token *tokens)
         }
         else
             tokens = NULL;
-        if (!parse_tokens(segment, &cmd))
-            return (false);
+        if (!parse_tokens(segment, &cmd) || !cmd)
+            return false;
         cmd->next = NULL;
         if (!(*head))
             *head = cmd;
@@ -48,5 +48,5 @@ bool init_commands(t_command **head, t_token *tokens)
             tail->next = cmd;
         tail = cmd;
     }
-    return (true);
+    return true;
 }

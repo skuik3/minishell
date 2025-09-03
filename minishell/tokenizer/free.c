@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/03 15:59:32 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/23 18:59:40 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,55 @@
 
 void free_tokens(t_token *head)
 {
-    t_token *tmp;
-
     while (head)
     {
-        tmp = head;
+        t_token *tmp = head;
         head = head->next;
         free(tmp->value);
         free(tmp);
     }
 }
 
-void free_redir_array(t_redir **arr, int count)
+void free_cmd(t_command *cmd)
 {
-    if (count <= 0 || !arr)
-        return;
-
-    t_redir **current = arr;
-    while (count--)
+    while (cmd)
     {
-        if (*current)
-        {
-            free((*current)->filename);
-            free(*current);
-        }
-        current++;
+        t_command *next = cmd->next;
+
+        free(cmd->command);
+        free_array(cmd->arguments);
+        free_array(cmd->redir_in);
+        free_array(cmd->redir_out);
+        free(cmd->heredoc);
+        free(cmd->append);
+
+        free(cmd);
+        cmd = next;
     }
-    free(arr);
 }
 
 void free_array(char **arr)
 {
     if (!arr)
         return;
-
-    char **current = arr;
-    while (*current)
+    char **temp = arr;
+    while (*temp)
     {
-        free(*current);
-        current++;
+        free(*temp);
+        temp++;
     }
     free(arr);
 }
 
-void free_cmd(t_command *cmd)
+void free_argv(char **argv)
 {
-    t_command *next;
-
-    while (cmd)
-    {
-        next = cmd->next;
-        free_array(cmd->args);
-        free_redir_array(cmd->redirs, cmd->redir_count);
-        free(cmd);
-        cmd = next;
-    }
-}
-
-void free_cmd_builder(t_cmd_builder *builder)
-{
-    if (!builder)
+    if (argv == NULL)
         return;
-
-    free_cmd(builder->cmd);
-    // free_list(builder->args);
-    // free_list(builder->redir_in);
-    // free_list(builder->redir_out);
-    free(builder);
+    char **temp = argv;
+    while (*temp)
+    {
+        free(*temp);
+        temp++;
+    }
+    free(argv);
 }
-
