@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/21 18:23:35 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/07/28 10:29:52 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,92 @@ char **put_unset(char **old_env, int unset)
     return (new_envp);
 }
 
-int run_unset(env_t *envp, char *arguments)
+int *find_unset(int *unset, char **arguments, env_t *envp)
 {
     int i;
-    int unset;
-    int   envp_len;
+    int j;
     char *variable;
 
-    i = 0;
-    unset = -1;
-    if (arguments == NULL)
-        return (ft_putstr_fd(ERR_ARG, 2), 1);
-    variable = find_variable(arguments);
-    envp_len = counting_envlen(envp->mod);
-    while(envp->mod[i] != NULL)
+    j = 0;
+    while (arguments[j] != NULL)
     {
-        if (envp->mod[i][0] == variable[0])
+        variable = find_variable(arguments[j]);
+        i = 0;
+        unset[j] = -1;
+        while (envp->mod[i] != NULL)
         {
-            if (unset_variable(envp->mod[i], variable, i) != -2)
-                unset = unset_variable(envp->mod[i], variable, i);
+            if (envp->mod[i][0] == variable[0])
+            {
+                if (unset_variable(envp->mod[i], variable, i) != -2)
+                    unset[j] = unset_variable(envp->mod[i], variable, i);
+            }
+            i++;
         }
+        j++;
+    }
+    unset[j] = '\0';
+    return (unset);
+}
+
+int run_unset(env_t *envp, char **arguments)
+{
+    int i;
+    int j;
+    int arglen;
+    int envplen;
+    int *unset;
+
+    i = 0;
+    j = 0;
+    if (arguments == NULL)
+        return (ft_putstr_fd(ERR_ARG, STDERR_FILENO), 1);
+    arglen = counting_envlen(arguments);
+    envplen = counting_envlen(envp->mod);
+    unset = malloc(sizeof(int) * (arglen * envplen + 1));
+    if (unset == NULL)
+        return(ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
+    unset = find_unset(unset, arguments, envp);
+    while (unset[i] != '\0')
+    {
+        if (unset[i] != -1)
+            envp->mod = put_unset(envp->mod, unset[i]);
         i++;
     }
-    if (unset == -1)
-        return (0);
-    envp->mod = put_unset(envp->mod, unset);
+    //for check
     get_order(envp->mod);
     run_env(envp->mod);
     return (0);
+}
+
+int *find_unset(int *unset, char **arguments, env_t *envp)
+{
+    int i;
+    char *variable;
+
+    i = 0;
+    while (arguments[i] != NULL)
+    {
+        variable = find_variable()
+    }
+}
+
+int run_unset(env_t *envp, char **arguments)
+{
+    int i;
+    int j;
+    int arglen;
+    int envplen;
+    int *unset;
+
+    i = 0;
+    j = 0;
+    if (arguments == NULL)
+        return (ft_putstr_fd(ERR_ARG, 2), 1);
+    arglen = counting_envlen(arguments);
+    envplen = counting_envlen(envp->mod);
+    unset = malloc(sizeof(int) * (arglen * envplen + 1));
+    if (unset == NULL)
+        return(ft_putstr_fd(ERR_MALLOC, 2), 1);
+    unset = find_unset(unset, arguments, envp);
+    
 }

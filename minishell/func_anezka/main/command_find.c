@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
 /*   Updated: 2025/07/22 13:33:45 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/28 13:29:23 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +22,7 @@ int copy_string(char **env, char *orig_env)
         i++;
     *env = malloc(sizeof(char) * (i + 1));
     if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
     i = 0;
     while (orig_env[i] != '\0')
     {
@@ -41,7 +42,7 @@ int saving_env(char ***env, char *envp[])
         i++;
     *env = malloc(sizeof(char *) * (i + 1));
     if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), 1);
+        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
     i = 0;
     while (envp[i] != NULL)
     {
@@ -52,30 +53,35 @@ int saving_env(char ***env, char *envp[])
     return (0);
 }
 
-// int what_builtin(t_command *cmd)
-// {
-//     if (ft_strcmp(cmd->command, "echo") == 0)
-//         run_echo(cmd->arguments);
-//     if (ft_strcmp(cmd->command, "pwd") == 0)
-//         run_pwd();
-//     if (ft_strcmp(cmd->command, "cd") == 0)
-//         run_cd(cmd->arguments, cmd->envar);
-//     if (ft_strcmp(cmd->command, "env") == 0)
-//         run_env(cmd->envar->mod);
-//     if (ft_strcmp(cmd->command, "exit") == 0)
-//         run_exit();
-//     if (ft_strcmp(cmd->command, "export") == 0)
-//         run_export(cmd->envar, cmd->arguments);
-//     if (ft_strcmp(cmd->command, "unset") == 0)
-//         run_unset(cmd->envar, cmd->arguments);
-
-//     // if (ft_strcmp(arguments[0], "test") == 0) // for tests, OK
-//     //      redirecting_in(arguments[1]);
-//     //      appending(arguments[1]);
-//     //      executing(arguments[1], envp);
-//     //     redirecting_out(arguments[1]);
-//     return (0);
-// }
+int what_builtin(t_command *cmd)
+{
+    if (ft_strcmp(cmd->command, "echo") == 0)
+        run_echo(cmd->arguments);
+    else if (ft_strcmp(cmd->command, "pwd") == 0)
+        run_pwd();
+    else if (ft_strcmp(cmd->command, "cd") == 0)
+    {
+        if (cmd->arguments[1] != NULL)
+            return (ft_putstr_fd(ERR_BC, STDERR_FILENO), 1);
+        run_cd(cmd->arguments[0], cmd->envar);
+    }
+    else if (ft_strcmp(cmd->command, "env") == 0)
+        run_env(cmd->envar->mod);
+    else if (ft_strcmp(cmd->command, "exit") == 0)
+        run_exit();
+    else if (ft_strcmp(cmd->command, "export") == 0)
+        run_export(cmd->envar, cmd->arguments);
+    else if (ft_strcmp(cmd->command, "unset") == 0)
+        run_unset(cmd->envar, cmd->arguments);
+    else if (cmd->command != NULL)
+        executing(cmd);
+    // if (ft_strcmp(arguments[0], "test") == 0) // for tests, OK
+    //      redirecting_in(arguments[1]);
+    //      appending(arguments[1]);
+    //      executing(arguments[1], envp);
+    //     redirecting_out(arguments[1]);
+    return (0);
+}
 
 // int anezkas_main(int argc, char *argv[], char *envp[])
 // {
