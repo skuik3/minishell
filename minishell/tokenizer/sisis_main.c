@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/03 16:02:45 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/23 19:23:15 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,47 @@
 
 void print_list(char **arr, const char *label)
 {
-    int i;
+	int i;
 
     i = 0;
-    if (!arr)
-        return;
-    printf("  %s: ", label);
-    while (arr[i])
-    {
-        printf("[%s] ", arr[i]);
-        i++;
-    }
-    printf("\n");
-}
-
-//only for seeing it now
-void print_redirs(t_redir **redirs, int redir_count)
-{
-    int i;
-
-    if (!redirs || redir_count == 0)
-        return;
-    printf("  Redirections:\n");
-    for (i = 0; i < redir_count; i++)
-    {
-        if (redirs[i]->type == REDIR_IN)
-            printf("    Input: [%s]\n", redirs[i]->filename);
-        else if (redirs[i]->type == REDIR_OUT)
-            printf("    Output: [%s]\n", redirs[i]->filename);
-        else if (redirs[i]->type == R_APPEND)
-            printf("    Append: [%s]\n", redirs[i]->filename);
-        else if (redirs[i]->type == R_HEREDOC)
-            printf("    Heredoc: [%s]\n", redirs[i]->filename);
-    }
+	if (!arr)
+		return;
+	printf("  %s: ", label);
+	while (arr[i])
+	{
+		printf("[%s] ", arr[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 void print_command(t_command *cmd, int index)
 {
-    printf("Command %d: %s\n", index, cmd->cmd_str ? cmd->cmd_str : "(null)");
-    print_list(cmd->args, "Args");
-    print_redirs(cmd->redirs, cmd->redir_count);
+   
+	printf("Command %d: %s\n", index, cmd->command);
+	print_list(cmd->arguments, "Args");
+	print_list(cmd->redir_in, "Redir In");
+	print_list(cmd->redir_out, "Redir Out");
+	if (cmd->heredoc)
+		printf("  Heredoc: [%s]\n", cmd->heredoc);
+	if (cmd->append)
+		printf("  Append: [%s]\n", cmd->append);
 }
 
 void print_cmd(t_command *cmd)
 {
-    int i;
-
+	int i;
+    
     i = 1;
-    while (cmd)
-    {
-        print_command(cmd, i);
-        i++;
-        cmd = cmd->next;
-    }
+	while (cmd)
+	{
+		print_command(cmd, i);
+		i++;
+		cmd = cmd->next;
+	}
     printf("%d commands in pipeline.\n", i - 1);
 }
+
 
 int is_exit_input(const char *line, ssize_t n)
 {
@@ -86,9 +72,7 @@ t_command *run_shell_line(char *line)
 	t_token *tokens;
 	t_command *cmd_list = NULL;
 
-	printf("Input line: [%s]\n", line);
 	tokens = tokenize(line);
-	printf("Tokens:\n");
 	if (!tokens)
 	{
 		fprintf(stderr, "Tokenization failed.\n");
@@ -104,3 +88,28 @@ t_command *run_shell_line(char *line)
 	free_tokens(tokens);
 	return (cmd_list);
 }
+
+// int sisis_main(void)
+// {
+// 	char *line = NULL;
+// 	size_t bufsize = 0;
+// 	ssize_t n;
+
+// 	puts("To quit use: 'exit', Ctrl-D or Ctrl-Q");
+// 	while (1)
+// 	{
+// 		printf("minishell$ ");
+// 		fflush(stdout);
+// 		n = getline(&line, &bufsize, stdin);
+// 		if (is_exit_input(line, n))
+// 			break;
+// 		if (n && line[n - 1] == '\n')
+// 			line[n - 1] = '\0';
+// 		if (line[0] != '\0')
+// 			run_shell_line(line);
+// 	}
+
+// 	free(line);
+// 	printf("exit\n");
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/08/28 13:32:06 by skuik            ###   ########.fr       */
+/*   Updated: 2025/07/21 17:03:02 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void append_token(t_token **head, t_token *new_tok)
 {
-    t_token *cur = *head;
-
     if (!*head)
     {
         *head = new_tok;
         return;
     }
+    t_token *cur = *head;
     while (cur->next)
         cur = cur->next;
     cur->next = new_tok;
