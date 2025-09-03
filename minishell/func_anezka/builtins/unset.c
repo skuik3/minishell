@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:06:08 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 14:37:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int run_unset(env_t *envp, char **arguments)
     if (unset == NULL)
     {
         perror("");
-        return (NULL);
+        return (1);
     }
     unset = find_unset(unset, arguments, envp);
     if (unset == NULL) //check, dont delete

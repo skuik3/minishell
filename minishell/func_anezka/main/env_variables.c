@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:29:02 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:12:50 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 14:36:36 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int saving_env(char ***env, char *envp[])
     if (*env == NULL)
     {
         perror("");
-        return (NULL);
+        return (1);
     }
     i = 0;
     while (envp[i] != NULL)

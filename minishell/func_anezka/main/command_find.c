@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:29:11 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 16:12:57 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int command_execution(t_command *cmd)
     t_command *head;
     int status;
 
+    g_signal = 0;
     pipe_cmd = prepare_pipes(cmd);
     cmd->is_first = 1;
     if (cmd->next == NULL)

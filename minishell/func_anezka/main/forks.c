@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:29:25 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 14:36:14 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int first_multiple(t_command *cmd, t_pipe *pipe_cmd) //in child process
 
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
     {
-        if (status = check_redirect(cmd) == 1)
+        if (check_redirect(cmd) == 1)
             return (1);
     }
     if (cmd->redir_out == NULL)
@@ -44,7 +44,7 @@ int other_multiple(t_command *cmd, t_pipe *pipe_cmd)
 
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
     {
-        if (status = check_redirect(cmd) == 1)
+        if (check_redirect(cmd) == 1)
             return (1);
     }
     if (cmd->redir_in == NULL)
@@ -88,7 +88,7 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
     {
         if (cmd->redir_in != NULL || cmd->redir_out != NULL)
         {
-            if (status = check_redirect(cmd) == 1)
+            if (check_redirect(cmd) == 1) //check previous commit
                 return (1);
         }
         if (cmd->redir_in == NULL)

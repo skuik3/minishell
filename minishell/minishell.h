@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/20 15:59:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 15:02:54 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include "get_next_line/get_next_line.h"
+#include <sys/ioctl.h>
 
 extern int g_signal;
 
@@ -163,6 +164,7 @@ int is_builtint(char *command);
 //signals
 void handle_signal_main(int signal);
 void handle_signal_child(int signal);
+void handle_signal_heredoc(int signal);
 //builtin fce
 int run_pwd(void);
 int run_echo(char **string);

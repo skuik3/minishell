@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:32:32 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 16:20:13 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int last_heredoc(t_redir *last)
         return (1);
     }
     close(pipe_hdc[0]);
+    printf("statusheredoc>%d", status);
+    if (g_signal == SIGINT)
+        return (1);
     return (0);
 }
 
@@ -55,7 +58,7 @@ char *get_line_heredoc(t_redir *last)
     char *returned;
 
     returned = NULL;
-    while (1)
+    while (1 && g_signal != SIGINT)
     {
         write (STDOUT_FILENO, "> ", 3);
         line = get_next_line(STDIN_FILENO);
@@ -72,6 +75,7 @@ int redirecting_heredoc(t_redir *heredoc)
     int pid;
     int status;
 
+    signal(SIGINT, handle_signal_heredoc);
     pid = fork();
     if (pid < -1)
     {
@@ -84,7 +88,7 @@ int redirecting_heredoc(t_redir *heredoc)
         exit(0);
     }
     waitpid(pid, &status, 0);
-    // printf("statusheredoc>%d", status);
+    printf("statusheredoclast>%d", status);
     return (status);
 }
 
