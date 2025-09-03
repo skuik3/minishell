@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/06 14:35:53 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:01:19 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ char  **put_envp(char **old_envp, char *new_arg)
 	len = counting_envlen(old_envp);
 	new_envp = malloc(sizeof(char *) * (len + 2));
 	if (new_envp == NULL)
-		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+	{
+		perror("");
+		return (NULL);
+	}
 	while (old_envp[i] != NULL)
 	{
 		new_envp[i] = old_envp[i];
@@ -54,7 +57,10 @@ char  **put_envp(char **old_envp, char *new_arg)
 	len = 0;
 	new_envp[i] = malloc(sizeof(char) * (ft_strlen(new_arg) + 1));
 	if (new_envp == NULL)
-		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+	{
+		perror("");
+		return (NULL);
+	}
 	while (new_arg[len] != '\0')
 	{
 		new_envp[i][len] = new_arg[len];
@@ -111,7 +117,6 @@ int get_order(char **envp)
 	return (0);
 }
 
-//now added as a string, without recognizing variable and value, pr. JANA / should be JANA=''
 int run_export(env_t *envp, char **arguments)
 {
     int   i;
@@ -130,19 +135,18 @@ int run_export(env_t *envp, char **arguments)
 		add_variable = adding_variable(arguments[i]);
 		if (variable_present(find_variable(add_variable), envp) == 0)
 		{
-			// printf("\n\n\nHEREEEE\n\n\n\n");
 			if (value_present(arguments[i]) == 0)
 			{
 				unset = prepare_unset(arguments[i]);
 				run_unset(envp, unset);
 			}
 			else
-				return (0); //1
+				return (0);
 		}
 		envp->mod = put_envp(envp->mod, add_variable);
 		i++;
 	}
- // just fo easy check, delete later >> export with args is not printed
+ // just fo easy check, delete later
     get_order(envp->mod);
     run_env(envp->mod);
     return (0);

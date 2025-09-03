@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/09 15:51:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:34:16 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ char **adding_command(t_command *cmd)
     arr_len = counting_envlen(cmd->arguments);
     cmdw_args = malloc(sizeof(char *) * (arr_len + 2));
     if (cmdw_args == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     cmdw_args[0] = ft_strdup(cmd->command);
     i = 1;
     while (cmd->arguments[i - 1] != NULL)
@@ -78,20 +81,27 @@ int executing(t_command *cmd)
     char **cmdw_args;
 
     cmdw_args = adding_command(cmd);
-    // write(1, "helllouuu", 10);
     if (cmdw_args == NULL)
-        return(ft_putstr_fd(ERR_EXEC, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     if (is_path(cmd->command) == 0)
     {
         if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
-            return(ft_putstr_fd(ERR_EXEC, STDERR_FILENO), 1);
-
+        {
+            perror("");
+            return (1);
+        }
     }
     else if (is_path(cmd->command) != 0)
     {
         path = command_path(cmd);
         if (execve(path, cmdw_args, cmd->envar->mod) == -1)
-            return(ft_putstr_fd(ERR_EXEC, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
     }
     return (0);
 }

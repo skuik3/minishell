@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 12:17:05 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:31:29 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,21 @@ int last_heredoc_multiple(t_redir *last)
 
     last->pipe_forhdc = malloc(sizeof(int) * 2);
     if (last->pipe_forhdc == NULL)
-        return(ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     if (pipe(last->pipe_forhdc) == -1)
-        return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     pid = fork();
     if (pid < -1)
-        return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     else if (pid == 0)
     {
         // dup2(last->pipe_forhdc[1], STDIN_FILENO);

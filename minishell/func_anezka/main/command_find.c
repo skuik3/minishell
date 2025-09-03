@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:19 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:29:11 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int restore_fd(int stdout_orig, int stdin_orig)
 {
     if (dup2(stdout_orig, STDOUT_FILENO) == -1 
         || dup2(stdin_orig, STDIN_FILENO) == -1)
-        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
     close(stdout_orig);
     close(stdin_orig);
     return (0);
@@ -76,25 +79,38 @@ int single_command(t_command *cmd)
     stdout_orig = dup(STDOUT_FILENO);
     stdin_orig = dup(STDIN_FILENO);
     if (stdout_orig == -1 || stdin_orig == -1)
-        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     if (check_heredoc(cmd) == 1)
-        return(restore_fd(stdout_orig, stdin_orig), 1);
+    {
+        perror("");
+        return (1); 
+    }
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
     {
         if (check_redirect(cmd) == 1)
-            return(restore_fd(stdout_orig, stdin_orig), 1);
+        {
+            perror("");
+            return (1); 
+        }
     }
     if (is_builtint(cmd->command) == 0)
         status = what_builtin(cmd);
     else
     {
+        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
-            return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
         else if (pid == 0)
         {
             status = executing(cmd);
-            exit(0);
+            exit(status);
         }
         waitpid(pid, &status, 0);
     }
@@ -110,6 +126,7 @@ void close_herepipe(t_command *cmd) {
         close(cmd->redir_in[i]->pipe_forhdc[0]);    
 }
 
+//check the exiting and statuses if not weird
 int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
 {
     int pid;
@@ -120,24 +137,34 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
     orig_stdout = dup(STDOUT_FILENO);
     orig_stdin = dup(STDIN_FILENO);
     if (orig_stdout == -1 || orig_stdin == -1)
-        return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     if (check_heredoc(cmd) == 1)
-        return(restore_fd(orig_stdout, orig_stdin), 1);
+    {
+        perror("");
+        return (1);
+    }
     while (cmd->next != NULL)
     {
         pid = fork();
         if (pid < -1)
-            return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
         else if (pid == 0)
         {
-            if (cmd->is_first == 1){
+            if (cmd->is_first == 1)
+            {
                 status = first_multiple(cmd, pipe_cmd);
                 if (status == 1)
-                    return (exit(1), 1);
+                    exit (1);
             }
             else
                 status = other_multiple(cmd, pipe_cmd);
-            exit(0);
+            exit(status);
         }
         if (cmd->is_first == 1)
             close(pipe_cmd->pipe[1]);

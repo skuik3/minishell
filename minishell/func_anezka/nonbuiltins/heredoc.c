@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 14:51:29 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:32:32 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@ int last_heredoc(t_redir *last)
     int status;
 
     if (pipe(pipe_hdc) == -1)
-        return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     pid = fork();
     if (pid < -1)
-        return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     else if (pid == 0)
     {
         close(pipe_hdc[0]);
@@ -35,7 +41,10 @@ int last_heredoc(t_redir *last)
     close(pipe_hdc[1]);
     waitpid(pid, &status, 0);
     if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
+    {
+        perror("");
         return (1);
+    }
     close(pipe_hdc[0]);
     return (0);
 }
@@ -65,7 +74,10 @@ int redirecting_heredoc(t_redir *heredoc)
 
     pid = fork();
     if (pid < -1)
-        return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     else if (pid == 0)
     {
         promt = get_line_heredoc(heredoc);

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:29:02 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/31 22:55:57 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:12:50 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int copy_string(char **env, char *orig_env)
         i++;
     *env = malloc(sizeof(char) * (i + 1));
     if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     i = 0;
     while (orig_env[i] != '\0')
     {
@@ -41,7 +44,10 @@ int saving_env(char ***env, char *envp[])
         i++;
     *env = malloc(sizeof(char *) * (i + 1));
     if (*env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (NULL);
+    }
     i = 0;
     while (envp[i] != NULL)
     {

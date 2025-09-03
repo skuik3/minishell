@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 14:49:21 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:43:19 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ int where_last_heredoc(t_command *cmd, int rdhc)
 
 int redirecting_in(t_redir *redirin)
 {
-    if (access(redirin->filename, F_OK) == -1)
-        return(ft_putstr_fd(ERR_NOTFILE, STDOUT_FILENO), 1);
+    if (access(redirin->filename, R_OK) == -1)
+    {
+        perror("");
+        return (1);
+    }
     return (0);   
 }
-
+//check if permission to write denied bahaviour
 int last_redirect_in(t_redir *last)
 {
     int fd;
@@ -50,12 +53,17 @@ int last_redirect_in(t_redir *last)
     int returned;
 
     returned = 0;
-    if (access(last->filename, F_OK) == -1) {
-        return(ft_putstr_fd(ERR_NOTFILE, STDOUT_FILENO), 1);
+    if (access(last->filename, R_OK) == -1)
+    {
+        perror("");
+        return (1);
     }
     fd = open(last->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (dup2(fd, STDIN_FILENO) == -1)
-        return(ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     close (fd);
     return (returned);
 }
@@ -80,8 +88,14 @@ int redirect_in(t_command *cmd)
         if (cmd->redir_in[i]->type == REDIR_IN)
             returned = last_redirect_in(cmd->redir_in[i]);
         else {
-            if (cmd->redir_in[i]->pipe_forhdc != NULL && cmd->redir_in[i]->type == REDIR_IN)
-                dup2(cmd->redir_in[i]->pipe_forhdc[0], STDIN_FILENO);
+            if (cmd->redir_in[i]->pipe_forhdc != NULL)
+            {
+                if (dup2(cmd->redir_in[i]->pipe_forhdc[0], STDIN_FILENO) == -1)
+                {
+                    perror("");
+                    return (1);
+                }
+            }
             returned = 0;
         }
         i++;

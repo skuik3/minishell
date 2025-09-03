@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:57:39 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/02 13:44:02 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:35:22 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,16 @@ t_pipe *adding_pipe(t_pipe *pipe_cmd)
 
     new = malloc(sizeof(t_pipe));
     if (new == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     new->pipe = malloc(sizeof(int) * 2);
     if (new->pipe == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     new->next = NULL;
     while (pipe_cmd->next != NULL)
         pipe_cmd = pipe_cmd->next;
@@ -46,10 +52,16 @@ t_pipe *creating_first_pipe(t_pipe *pipe_cmd)
 {
     pipe_cmd = malloc(sizeof(t_pipe));
     if (pipe_cmd == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     pipe_cmd->pipe = malloc(sizeof(int) * 2);
     if (pipe_cmd->pipe == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     pipe_cmd->next = NULL;
     return (pipe_cmd);
 }
@@ -74,7 +86,10 @@ t_pipe *prepare_pipes(t_command *cmd)
     while (pipe_cmd != NULL)
     {
         if (pipe(pipe_cmd->pipe))
-            return(ft_putstr_fd(ERR_PIPE, STDERR_FILENO), NULL);
+        {
+            perror("");
+            return (NULL);
+        }
         pipe_cmd = pipe_cmd->next;
     }
     return(head);

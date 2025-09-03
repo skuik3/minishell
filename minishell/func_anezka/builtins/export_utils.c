@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/06 14:18:18 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 10:58:32 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ char **prepare_unset(char *argument)
     len = ft_strlen(variable);
     unset = malloc(sizeof(char *) * 2);
     if (unset == NULL)
-		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+    {
+        perror("");
+		return (NULL);
+    }
     unset[0] = ft_strdup(variable);
     unset[1] = NULL;
     return (unset);

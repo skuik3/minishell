@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/06 14:17:27 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 10:54:50 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int run_cd(char *path, env_t *env)
         path = find_path(env, "HOME");
     if (chdir(path) != 0)
     {
-        ft_putstr_fd(ERR_BC, STDERR_FILENO);
+        perror("");
         return (1);
     }
     //just for easy check

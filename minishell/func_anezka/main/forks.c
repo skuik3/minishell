@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/02 14:51:02 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:29:25 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int first_multiple(t_command *cmd, t_pipe *pipe_cmd) //in child process
     if (cmd->redir_out == NULL)
     {
         if (dup2(pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
-            return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
     }
     close(pipe_cmd->pipe[0]);
     close(pipe_cmd->pipe[1]);
@@ -47,13 +50,19 @@ int other_multiple(t_command *cmd, t_pipe *pipe_cmd)
     if (cmd->redir_in == NULL)
     {
         if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
-            return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
     }
     close(pipe_cmd->pipe[0]); 
     if (cmd->redir_out == NULL)
     {
         if (dup2(pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
-            return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+        {
+            perror("");
+            return (1);
+        }
     }
     close(pipe_cmd->next->pipe[0]);
     close(pipe_cmd->next->pipe[1]);
@@ -71,7 +80,10 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
     
     pid = fork();
     if (pid < -1)
-            return (ft_putstr_fd(ERR_FORK, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (1);
+    }
     else if (pid == 0)
     {
         if (cmd->redir_in != NULL || cmd->redir_out != NULL)
@@ -82,7 +94,10 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
         if (cmd->redir_in == NULL)
         {
             if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
-                return (ft_putstr_fd(ERR_DUP, STDERR_FILENO), 1);
+            {
+                perror("");
+                exit (1); //return prv
+            }
         }
         close(pipe_cmd->pipe[0]);
         if (is_builtint(cmd->command) == 0)

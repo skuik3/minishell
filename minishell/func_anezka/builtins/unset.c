@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/08/06 14:36:28 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/03 11:06:08 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ char *find_variable(char *arguments)
         len++;
     variable = malloc(sizeof(char) * (len + 1));
     if (variable == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     i = 0;
     while (arguments[i] != '\0' && arguments[i] != '=')
     {
@@ -62,7 +65,10 @@ char **put_unset(char **old_env, int unset)
     len = counting_envlen(old_env);
     new_envp = malloc(sizeof(char *) * (len + 1));
     if (new_envp == NULL)
-		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+    {
+        perror("");
+        return (NULL);
+    }
     while (i < unset)
     {
        new_envp[i] = old_env[i];
@@ -90,7 +96,10 @@ int *find_unset(int *unset, char **arguments, env_t *envp)
     {
         variable = find_variable(arguments[j]);
         if (ft_strcmp(variable, arguments[j]) != 0)
-            return (ft_putstr_fd(INVALID_PAR, STDERR_FILENO), NULL);
+        {
+            perror("");
+            return (NULL);
+        }
         i = 0;
         unset[j] = -1;
         while (envp->mod[i] != NULL)
@@ -124,7 +133,10 @@ int run_unset(env_t *envp, char **arguments)
     envplen = counting_envlen(envp->mod);
     unset = malloc(sizeof(int) * (arglen * envplen + 1));
     if (unset == NULL)
-        return(ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), 1);
+    {
+        perror("");
+        return (NULL);
+    }
     unset = find_unset(unset, arguments, envp);
     if (unset == NULL) //check, dont delete
         return (0);
