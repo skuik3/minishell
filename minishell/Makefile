@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
+#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/07/21 17:30:44 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/09/03 11:55:30 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,9 @@ SRC = tokenizer/sisis_main.c \
 	  tokenizer/process.c \
 	  tokenizer/special_cases.c \
 	  tokenizer/tokenizing.c \
-	  func_anezka/builtins/cd_pwd.c\
-	  func_anezka/builtins/echo.c\
-	  func_anezka/builtins/env.c\
-	  func_anezka/builtins/export.c\
-	  func_anezka/builtins/unset.c\
-	  func_anezka/main/command_find.c\
-	  func_anezka/main/libft_utils.c\
 	  main.c\
-
-
+	  
+OBJS = tokenizing.o main.o process.o parse_token.o
 OBJ = $(SRC:.c=.o)
 CC = cc
 #FLAGS = -Wall -Wextra -Werror

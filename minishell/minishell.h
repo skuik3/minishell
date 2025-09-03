@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/23 16:19:11 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/03 16:28:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <string.h>
 #include <ctype.h>
 
+
 #include "tokenizer/helper_funcs/libft.h"
 
 #define _GNU_SOURCE
@@ -42,48 +43,60 @@ typedef struct environment_variables
     char **mod;
 } env_t;
 
+
 typedef enum e_token_type {
     T_WORD,       //hello
     T_PIPE,       // |
-    T_REDIR_IN,   // <
-    T_REDIR_OUT,  // >
-    T_APPEND,     // >>
-    T_HEREDOC,    // <<
     T_END,         // end of str
     T_OR,        // ||
     T_AND,       // &&
     T_BG,        // &
-}   t_token_type;
+    T_REDIR_IN,
+    T_REDIR_OUT,
+    T_REDIR_APPEND,
+    T_REDIR_HEREDOC
+} t_token_type;
+
+typedef enum e_redir_type {
+    REDIR_IN,
+    REDIR_OUT,
+    R_APPEND,
+    R_HEREDOC
+} t_redir_type;
 
 typedef struct s_token {
-    char *value;
     t_token_type type;
+    char *value;
     struct s_token *next;
+    int index;
 } t_token;
 
+
+typedef struct s_redir {
+    char *filename;
+    t_redir_type type;
+} t_redir;
+
 typedef struct s_command {
-    char *command;
-    char **arguments;
-    char **redir_in;
-    char **redir_out;
-    char *heredoc;
-    char *append;
+    char *name;
+    char **args;
+    t_redir **redirs;
+    int arg_count;
+    int redir_count;
+    char *cmd_str;
     struct s_command *next;
-    env_t *envar;
 } t_command;
 
+/// new
 typedef struct s_cmd_builder {
     t_command   *cmd;
     t_list      *args;
-    t_list      *redir_in;
-    t_list      *redir_out;
+    t_list    *redirs;
 } t_cmd_builder;
 
-typedef struct s_node
-{
-    void *content;
-    struct s_list *next;
-} t_node;
+
+
+
 
 // ANEZKAS_PART
 
@@ -138,19 +151,19 @@ void handle_in_redir(t_token *tok, t_cmd_builder *b);
 void handle_out_redir(t_token *tok, t_cmd_builder *b);
 //free.c
 void free_tokens(t_token *head);
+void free_redir_array(t_redir **arr, int count);
 void free_cmd(t_command *cmd);
 void free_array(char **arr);
 void free_argv(char **argv);
 //parse_token.c
-t_token *new_token(const char *start, size_t len, t_token_type type);
 t_token_type get_token_type_len(const char *str, size_t len);
 size_t parse_quoted(const char *input, size_t i, t_token **tokens);
 size_t parse_operator(const char *input, size_t i, t_token **tokens);
 size_t parse_word(const char *input, size_t i, t_token **tokens);
+t_redir_type get_redir_type(const char *str, size_t len);
 //parse_tok_loop.c
 bool parse_tokens(t_token *tok, t_command **out);
-void parse_token_loop(t_token *tok, t_cmd_builder *b);
-char **list_to_array(t_list *list);
+t_redir **list_to_array(t_list *list, int *count);
 //parse_pipes.c
 void find_segment_end(t_token **end, t_token *tokens);
 bool init_commands(t_command **head, t_token *tokens);
@@ -159,9 +172,21 @@ const char *token_type_to_string(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
 
 void print_list(char **arr, const char *label);
+void print_args(t_command *cmd);
 void print_command(t_command *cmd, int index);
-void print_cmd(t_command *cmd);
+void print_redirs(t_redir **redirs, int redir_count);
 int is_exit_input(const char *line, ssize_t n);
 t_command *run_shell_line(char *line);
+
+bool is_redir_token(t_token *tok);
+
+t_token *new_token(const char *str, size_t len, t_token_type type, int pos);
+t_redir *new_redir(t_token *tok, t_redir_type type);
+void add_redir_token(t_token *tok, t_cmd_builder *b);
+void list_add_back(t_list **list, void *content);
+bool init_cmd_builder(t_cmd_builder *b, t_command **out);
+bool process_tokens(t_token *tok, t_cmd_builder *b);
+void finalize_cmd_builder(t_cmd_builder *b, t_command **out);
+bool parse_tokens(t_token *tok, t_command **out);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/23 19:00:39 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/01 23:49:31 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,9 @@ int main(int argc, char *argv[], char *envp[])
 
     if (!(cmd = malloc(sizeof(t_command))))
     {
-        ft_putstr_fd(ERR_MALLOC, 2);
+        // ft_putstr_fd(ERR_MALLOC, 2);
         return (1);
     }
-    if (!(cmd->envar = malloc(sizeof(env_t))))
-    {
-        free(cmd);
-        ft_putstr_fd(ERR_MALLOC, 2);
-        return (1);
-    }
-    saving_env(&cmd->envar->start, envp);
-    saving_env(&cmd->envar->mod, envp);
     while (1)
     {
         promt = readline("");
