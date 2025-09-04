@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 12:12:40 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 16:23:11 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ void handle_signal_main(int signal)
         rl_replace_line("", 0);
         rl_redisplay();
     }
-    // else if (signal == SIGQUIT) //ctrl+
-    // {
-    //     g_signal = SIGQUIT;
-    //     kill(0, SIGINT);
-    // }
-    else if (signal == EOF) //ctrl+d, now segfaults
+    else if (signal == EOF) //ctrl+d
         g_signal = EOF;
+    // else if (signal == SIGQUIT) //ctrl+\ 
+    // managed in main by ignoring
+
 }
 
 void handle_signal_child(int signal)
@@ -39,6 +37,8 @@ void handle_signal_child(int signal)
         g_signal = SIGINT;
         write(STDOUT_FILENO, "\n", 1);
     }
+    else if (signal == EOF) //ctrl+d
+        g_signal = EOF;
 }
 
 void handle_signal_heredoc(int signal)
