@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 11:50:52 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 15:31:35 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
     }
     if (status == SIGINT)
         return (2);
-    while (cmd->next != NULL)
+    while (cmd->next != NULL && g_signal != SIGINT)
     {
         pid = fork();
         if (pid < -1)
@@ -162,6 +162,7 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         }
         else if (pid == 0)
         {
+            signal(SIGINT, SIG_DFL);
             if (cmd->is_first == 1)
             {
                 status = first_multiple(cmd, pipe_cmd);
@@ -186,7 +187,8 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         // if (heredoc_present(cmd->redir_in) == 1) //uncomment here first
         
     }
-    status = last_multiple(cmd, pipe_cmd);
+    if (g_signal != SIGINT);
+        status = last_multiple(cmd, pipe_cmd);
     // while (wait(&status) > 1)
     //     ;
     return (status);

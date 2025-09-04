@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 12:21:29 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 13:16:32 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ int check_heredoc(t_command *cmd)
 
         if (heredoc_present(cmd->redir_in) == 1)
             returned = do_heredoc_multiple(cmd);
+        if (returned = SIGINT)
+            return(returned);
         cmd = cmd->next;
     }
     return (returned);

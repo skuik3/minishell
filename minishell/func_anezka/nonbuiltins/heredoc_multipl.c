@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:31:29 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 15:29:51 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int last_heredoc_multiple(t_redir *last)
         perror("");
         return (1);
     }
+    signal(SIGINT, handle_signal_child); //
     pid = fork();
     if (pid < -1)
     {
@@ -54,6 +55,7 @@ int last_heredoc_multiple(t_redir *last)
     }
     else if (pid == 0)
     {
+        signal(SIGINT, SIG_DFL);
         // dup2(last->pipe_forhdc[1], STDIN_FILENO);
         close(last->pipe_forhdc[0]);
         promt = get_line_heredoc(last);
@@ -66,6 +68,11 @@ int last_heredoc_multiple(t_redir *last)
     // if (dup2(last->pipe_forhdc[0], STDIN_FILENO) == -1)
     //     return (1);
     // close(last->pipe_forhdc[0]);
+    if (g_signal == SIGINT) //
+    {
+        close(last->pipe_forhdc[0]); //
+        return (SIGINT);
+    }
     return (0);
 }
 
@@ -82,6 +89,8 @@ int do_heredoc_multiple(t_command *cmd)
     {
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = redirecting_heredoc(cmd->redir_in[i]);
+        if (returned == SIGINT)
+            return(returned);
         i++;
     }
     // write(1, "C\n", 2);
