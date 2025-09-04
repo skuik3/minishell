@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 16:20:13 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 12:21:29 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int last_heredoc(t_redir *last)
         perror("");
         return (1);
     }
+    signal(SIGINT, handle_signal_child);
     pid = fork();
     if (pid < -1)
     {
@@ -32,6 +33,7 @@ int last_heredoc(t_redir *last)
     }
     else if (pid == 0)
     {
+        signal(SIGINT, SIG_DFL);
         close(pipe_hdc[0]);
         promt = get_line_heredoc(last);
         write(pipe_hdc[1], promt, ft_strlen(promt));
@@ -40,15 +42,18 @@ int last_heredoc(t_redir *last)
     }
     close(pipe_hdc[1]);
     waitpid(pid, &status, 0);
+    if (g_signal == SIGINT)
+    {
+        close(pipe_hdc[0]);
+        return (SIGINT);
+    }
     if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
     {
         perror("");
         return (1);
     }
     close(pipe_hdc[0]);
-    printf("statusheredoc>%d", status);
-    if (g_signal == SIGINT)
-        return (1);
+    // printf("statusheredoc>%d", status);
     return (0);
 }
 
@@ -75,7 +80,7 @@ int redirecting_heredoc(t_redir *heredoc)
     int pid;
     int status;
 
-    signal(SIGINT, handle_signal_heredoc);
+    signal(SIGINT, handle_signal_child);
     pid = fork();
     if (pid < -1)
     {
@@ -83,12 +88,14 @@ int redirecting_heredoc(t_redir *heredoc)
         return (1);
     }
     else if (pid == 0)
-    {
+    {        
+        signal(SIGINT, SIG_DFL);
         promt = get_line_heredoc(heredoc);
         exit(0);
     }
+    if (g_signal == SIGINT)
+        return (SIGINT);
     waitpid(pid, &status, 0);
-    printf("statusheredoclast>%d", status);
     return (status);
 }
 
@@ -106,6 +113,8 @@ int do_heredoc(t_command *cmd)
         // printf("\nBBBB\n");
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = redirecting_heredoc(cmd->redir_in[i]);
+        if (returned == SIGINT)
+            return(returned);
         i++;
     }
     while (cmd->redir_in[i] != NULL)
@@ -115,7 +124,7 @@ int do_heredoc(t_command *cmd)
             returned = last_heredoc(cmd->redir_in[i]);
         i++;
     }
-    // printf("\nDDDD>%d\n", returned);
+    // printf("\nDDDD>%d\n", returned); 
     return (returned);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 16:12:57 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 11:50:52 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,14 @@ int single_command(t_command *cmd)
         perror("");
         return (1);
     }
-    if (check_heredoc(cmd) == 1)
+    status = check_heredoc(cmd);
+    if (status == 1)
     {
         perror("");
-        return (1); 
+        return (1);
     }
+    if (status == SIGINT)
+        return (2);
     if (cmd->redir_in != NULL || cmd->redir_out != NULL)
     {
         if (check_redirect(cmd) == 1)
@@ -141,11 +144,14 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         perror("");
         return (1);
     }
-    if (check_heredoc(cmd) == 1)
+    status = check_heredoc(cmd);
+    if (status == 1)
     {
         perror("");
         return (1);
     }
+    if (status == SIGINT)
+        return (2);
     while (cmd->next != NULL)
     {
         pid = fork();

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 14:46:46 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/04 12:12:40 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,8 @@ void handle_signal_heredoc(int signal)
     if (signal == SIGINT)
     {
         g_signal = SIGINT;
-        write(STDOUT_FILENO, "\n", 1);
-        rl_redisplay();
         ioctl(0, TIOCSTI, "\n");
+        rl_redisplay();
     }
 }
 
