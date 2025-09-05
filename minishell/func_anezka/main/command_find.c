@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 15:31:35 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 09:23:33 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         // if (heredoc_present(cmd->redir_in) == 1) //uncomment here first
         
     }
-    if (g_signal != SIGINT);
+    if (g_signal != SIGINT)
         status = last_multiple(cmd, pipe_cmd);
     // while (wait(&status) > 1)
     //     ;

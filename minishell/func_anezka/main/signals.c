@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 16:23:11 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 11:00:20 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void handle_signal_main(int signal)
         rl_replace_line("", 0);
         rl_redisplay();
     }
-    else if (signal == EOF) //ctrl+d
+    else if (signal == EOF) //ctrl+d managed in main by checking promt
         g_signal = EOF;
-    // else if (signal == SIGQUIT) //ctrl+\ 
+    // else if (signal == SIGQUIT) //ctrl+
     // managed in main by ignoring
 
 }

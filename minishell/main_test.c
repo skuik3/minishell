@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 16:22:11 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 10:57:55 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,13 +355,13 @@ int main(int argc, char *argv[], char *envp[])
 
         //SIGNALS
         signal(SIGINT, handle_signal_main);
-        signal(EOF, SIG_IGN);  
+        // signal(EOF, SIG_IGN);
         signal(SIGQUIT, SIG_IGN);
         
         prompt = readline("minishell> ");
         
-        // if (!prompt) // EOF (Ctrl+D)
-        //     break;
+        if (!prompt) // EOF (Ctrl+D)
+            break;
             
         if (*prompt) // Only process non-empty input
         {
