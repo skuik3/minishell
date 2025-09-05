@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 09:23:33 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 15:18:28 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,27 +194,27 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
     return (status);
 }
 
-int command_execution(t_command *cmd)
+int command_execution(t_biggie *bigs)
 {
     t_pipe *pipe_cmd;
     t_command *head;
     int status;
 
     g_signal = 0;
-    pipe_cmd = prepare_pipes(cmd);
-    cmd->is_first = 1;
-    if (cmd->next == NULL)
+    bigs->cmd->pipe_cmd = prepare_pipes(bigs->cmd);
+    bigs->cmd->is_first = 1;
+    if (bigs->cmd->next == NULL)
     {
-        status = single_command(cmd);
+        bigs->exit_status = single_command(bigs->cmd);
         return (status);
     }
-    head = cmd;
-    while (cmd->next != NULL)
+    head = bigs->cmd;
+    while (bigs->cmd->next != NULL)
     {
-        cmd = cmd->next;
-        cmd->is_first = 0;
+        bigs->cmd = bigs->cmd->next;
+        bigs->cmd->is_first = 0;
     }
-    cmd = head;
-    status = multiple_commands(cmd, pipe_cmd);
+    bigs->cmd = head;
+    bigs->exit_status = multiple_commands(bigs->cmd, pipe_cmd);
     return(status);
 }

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 12:19:18 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 15:16:18 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,12 +344,13 @@ int main(int argc, char *argv[], char *envp[])
     t_command *cmd_head = NULL;
     t_command *cmd;
     t_command *cmd_temp;
+    t_biggie *bigs;
 
     (void)argc; // unused parameter
     (void)argv; // unused parameter
     printf("Simple Minishell Test (type 'exit' to quit)\n");
     env_t *env = adding_env(NULL, envp);
-
+    bigs = setting_big();
     while (1)
     {
 
@@ -428,7 +429,8 @@ int main(int argc, char *argv[], char *envp[])
             if (cmd_head)
             {
                 // g_signal = 0;
-                command_execution(cmd_head);
+                bigs->cmd = cmd_head;
+                command_execution(bigs);
             }
             
             // Free the entire command list

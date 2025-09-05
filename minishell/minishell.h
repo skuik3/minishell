@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 15:02:54 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 15:14:02 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_command {
     char *append;
     struct s_command *next;
     env_t *envar;  // add aneskas env
+    t_pipe  *pipe_cmd;
 } t_command;
 //END OF TEST VERSION   
 
@@ -146,6 +147,13 @@ typedef struct s_node
     void *content;
     struct s_list *next;
 } t_node;
+
+typedef struct s_biggiest_struct
+{
+    t_command *cmd;
+    env_t *env;
+    int *exit_status;
+}   t_biggie;
 
 // ANEZKAS_PART
 
