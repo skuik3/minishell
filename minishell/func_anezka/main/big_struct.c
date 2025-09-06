@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 11:44:46 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 15:14:40 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 15:23:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_biggie *setting_big(void)
     }
     new->cmd = NULL;
     new->env = NULL;
-    new->exit_status = NULL;
+    new->exit_status = 0;
     // new->pipes = NULL;
     // new->type = NULL;
     return(new);

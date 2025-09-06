@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 15:14:02 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 16:11:31 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,20 +152,21 @@ typedef struct s_biggiest_struct
 {
     t_command *cmd;
     env_t *env;
-    int *exit_status;
+    int exit_status;
 }   t_biggie;
 
 // ANEZKAS_PART
 
 //main_execution
-int what_builtin(t_command *cmd);
+int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);
-int command_execution(t_command *cmd);
-int single_command(t_command *cmd);
+int command_execution(t_biggie *bigs);
+int single_command(t_biggie *bigs);
 int multiple_commands(t_command *cmd, t_pipe *pipe_cmd);
 int last_multiple(t_command *cmd, t_pipe *pipe_cmd);
 int other_multiple(t_command *cmd, t_pipe *pipe_cmd);
 int first_multiple(t_command *cmd, t_pipe *pipe_cmd);
+t_biggie *setting_big(void);
 //utils for main_execution
 int saving_env(char ***env, char *envp[]);
 int is_builtint(char *command);
@@ -178,7 +179,7 @@ int run_pwd(void);
 int run_echo(char **string);
 int run_cd(char *path, env_t *env); //todo home
 int run_env(char **envp);
-int run_exit(void); //todo s ciselkami
+int run_exit(t_biggie *bigs); //todo s ciselkami
 int run_export(env_t *envp, char **arguments);
 int run_unset(env_t *envp, char **arguments);
 //utils for builtin fce
@@ -198,6 +199,7 @@ char **exchange_values(char **envp, char *exchange);
 char **prepare_unset(char *argument);
 int value_present(char *argument);
 char **adding_command(t_command *cmd);
+int just_nb(char *nb);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);

@@ -6,33 +6,33 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 15:18:28 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/05 15:35:52 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int what_builtin(t_command *cmd)
+int what_builtin(t_biggie *bigs)
 {
     int returned;
 
     returned = 0;
-    if (ft_strcmp(cmd->command, "echo") == 0)
-        returned = run_echo(cmd->arguments);
-    else if (ft_strcmp(cmd->command, "pwd") == 0)
+    if (ft_strcmp(bigs->cmd->command, "echo") == 0)
+        returned = run_echo(bigs->cmd->arguments);
+    else if (ft_strcmp(bigs->cmd->command, "pwd") == 0)
         returned = run_pwd();
-    else if (ft_strcmp(cmd->command, "cd") == 0)
-        returned = run_cd(cmd->arguments[0], cmd->envar);
-    else if (ft_strcmp(cmd->command, "env") == 0)
-        returned = run_env(cmd->envar->mod);
-    else if (ft_strcmp(cmd->command, "exit") == 0)
-        returned = run_exit();
-    else if (ft_strcmp(cmd->command, "export") == 0)
-        returned = run_export(cmd->envar, cmd->arguments);
-    else if (ft_strcmp(cmd->command, "unset") == 0)
-        returned = run_unset(cmd->envar, cmd->arguments);
-    else if (cmd->command != NULL)
-        returned = executing(cmd);
+    else if (ft_strcmp(bigs->cmd->command, "cd") == 0)
+        returned = run_cd(bigs->cmd->arguments[0], bigs->cmd->envar);
+    else if (ft_strcmp(bigs->cmd->command, "env") == 0)
+        returned = run_env(bigs->cmd->envar->mod);
+    else if (ft_strcmp(bigs->cmd->command, "exit") == 0)
+        returned = run_exit(bigs);
+    else if (ft_strcmp(bigs->cmd->command, "export") == 0)
+        returned = run_export(bigs->cmd->envar, bigs->cmd->arguments);
+    else if (ft_strcmp(bigs->cmd->command, "unset") == 0)
+        returned = run_unset(bigs->cmd->envar, bigs->cmd->arguments);
+    else if (bigs->cmd->command != NULL)
+        returned = executing(bigs->cmd);
     return (returned);
 }
 
@@ -69,10 +69,9 @@ int restore_fd(int stdout_orig, int stdin_orig)
     return (0);
 }
 
-int single_command(t_command *cmd)
+int single_command(t_biggie *bigs)
 {
     int pid;
-    int status;
     int stdout_orig;
     int stdin_orig;
 
@@ -83,24 +82,24 @@ int single_command(t_command *cmd)
         perror("");
         return (1);
     }
-    status = check_heredoc(cmd);
-    if (status == 1)
+    bigs->exit_status = check_heredoc(bigs->cmd);
+    if (bigs->exit_status == 1)
     {
         perror("");
         return (1);
     }
-    if (status == SIGINT)
+    if (bigs->exit_status == SIGINT)
         return (2);
-    if (cmd->redir_in != NULL || cmd->redir_out != NULL)
+    if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
     {
-        if (check_redirect(cmd) == 1)
+        if (check_redirect(bigs->cmd) == 1)
         {
             perror("");
             return (1); 
         }
     }
-    if (is_builtint(cmd->command) == 0)
-        status = what_builtin(cmd);
+    if (is_builtint(bigs->cmd->command) == 0)
+        bigs->exit_status = what_builtin(bigs);
     else
     {
         signal(SIGINT, handle_signal_child);
@@ -112,13 +111,13 @@ int single_command(t_command *cmd)
         }
         else if (pid == 0)
         {
-            status = executing(cmd);
-            exit(status);
+            bigs->exit_status = executing(bigs->cmd);
+            exit(bigs->exit_status);
         }
-        waitpid(pid, &status, 0);
+        waitpid(pid, &bigs->exit_status, 0);
     }
     restore_fd(stdout_orig, stdin_orig);
-    return (status);
+    return (bigs->exit_status);
 }
 
 void close_herepipe(t_command *cmd) {
@@ -205,7 +204,7 @@ int command_execution(t_biggie *bigs)
     bigs->cmd->is_first = 1;
     if (bigs->cmd->next == NULL)
     {
-        bigs->exit_status = single_command(bigs->cmd);
+        bigs->exit_status = single_command(bigs);
         return (status);
     }
     head = bigs->cmd;

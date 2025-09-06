@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 10:54:50 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/06 14:44:58 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,32 @@ int run_pwd(void)
     return (0);
 }
 
-int run_exit(void)
+int just_nb(char *nb)
 {
-    exit(0);
+    int i;
+
+    i = 0;
+    while (nb[i] != '\0')
+    {
+        if (nb[i] > '9' || nb[i] < '0')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+int run_exit(t_biggie *bigs)
+{
+    if (bigs->cmd->arguments[0] == NULL)
+        exit(bigs->exit_status);
+    else
+    {
+        if (bigs->cmd->arguments[1] != NULL)
+            exit (1);
+        else if (just_nb(bigs->cmd->arguments[0]) != 0)
+            bigs->exit_status = 255;
+        else
+            bigs->exit_status = atoi((const char*)(bigs->cmd->arguments));
+    }
+    exit (bigs->exit_status);
 }
