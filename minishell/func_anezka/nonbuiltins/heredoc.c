@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/04 16:15:06 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 18:09:09 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 int last_heredoc(t_redir *last)
 {
     int pid;
-    int pipe_hdc[2];
+
     char *promt;
     int status;
 
-    if (pipe(pipe_hdc) == -1)
+    last->pipe_forhdc = malloc(sizeof(int) * 2);
+    if (last->pipe_forhdc == NULL)
+    {
+        perror("");
+        return (1);
+    }   
+    if (pipe(last->pipe_forhdc) == -1)
     {
         perror("");
         return (1);
@@ -34,25 +40,25 @@ int last_heredoc(t_redir *last)
     else if (pid == 0)
     {
         signal(SIGINT, SIG_DFL);
-        close(pipe_hdc[0]);
+        close(last->pipe_forhdc[0]);
         promt = get_line_heredoc(last);
-        write(pipe_hdc[1], promt, ft_strlen(promt));
-        close(pipe_hdc[1]);
+        write(last->pipe_forhdc[1], promt, ft_strlen(promt));
+        close(last->pipe_forhdc[1]);
         exit(0);
     }
-    close(pipe_hdc[1]);
+    close(last->pipe_forhdc[1]);
     waitpid(pid, &status, 0);
     if (g_signal == SIGINT)
     {
-        close(pipe_hdc[0]);
+        close(last->pipe_forhdc[0]);
         return (SIGINT);
     }
-    if (dup2(pipe_hdc[0], STDIN_FILENO) == -1)
-    {
-        perror("");
-        return (1);
-    }
-    close(pipe_hdc[0]);
+    // if (dup2(last->pipe_forhdc[0], STDIN_FILENO) == -1)
+    // {
+    //     perror("");
+    //     return (1);
+    // }
+    close(last->pipe_forhdc[0]);
     // printf("statusheredoc>%d", status);
     return (0);
 }

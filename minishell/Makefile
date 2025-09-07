@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/05 15:23:31 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/09/07 17:29:00 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRC = tokenizer/sisis_main.c \
 OBJ = $(SRC:.c=.o)
 CC = cc
 #FLAGS = -Wall -Wextra -Werror
-FLAGS = -I/usr/local/opt/readline/include
+FLAGS = -I/usr/local/opt/readline/include -g
 LIBS = -pthread -lreadline -L/usr/local/opt/readline/lib
 
 all: $(NAME)
