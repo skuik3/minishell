@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 16:23:25 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 18:20:59 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int last_multiple(t_biggie *bigs);
 int other_multiple(t_biggie *bigs);
 int first_multiple(t_biggie *bigs);
 t_biggie *setting_big(void);
+void close_herepipe(t_command *cmd);
 //utils for main_execution
 int saving_env(char ***env, char *envp[]);
 int is_builtint(char *command);
