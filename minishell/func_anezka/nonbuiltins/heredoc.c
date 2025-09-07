@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:09:09 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 18:15:29 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int last_heredoc(t_redir *last)
     //     perror("");
     //     return (1);
     // }
-    close(last->pipe_forhdc[0]);
+    // close(last->pipe_forhdc[0]);
     // printf("statusheredoc>%d", status);
     return (0);
 }
