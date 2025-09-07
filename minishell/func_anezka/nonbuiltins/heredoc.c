@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:15:29 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 18:27:00 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,13 @@ int last_heredoc(t_redir *last)
 
     last->pipe_forhdc = malloc(sizeof(int) * 2);
     if (last->pipe_forhdc == NULL)
-    {
-        perror("");
         return (1);
-    }   
     if (pipe(last->pipe_forhdc) == -1)
-    {
-        perror("");
         return (1);
-    }
     signal(SIGINT, handle_signal_child);
     pid = fork();
     if (pid < -1)
-    {
-        perror("");
         return (1);
-    }
     else if (pid == 0)
     {
         signal(SIGINT, SIG_DFL);
@@ -53,13 +44,6 @@ int last_heredoc(t_redir *last)
         close(last->pipe_forhdc[0]);
         return (SIGINT);
     }
-    // if (dup2(last->pipe_forhdc[0], STDIN_FILENO) == -1)
-    // {
-    //     perror("");
-    //     return (1);
-    // }
-    // close(last->pipe_forhdc[0]);
-    // printf("statusheredoc>%d", status);
     return (0);
 }
 
@@ -89,10 +73,7 @@ int redirecting_heredoc(t_redir *heredoc)
     signal(SIGINT, handle_signal_child);
     pid = fork();
     if (pid < -1)
-    {
-        perror("");
         return (1);
-    }
     else if (pid == 0)
     {        
         signal(SIGINT, SIG_DFL);

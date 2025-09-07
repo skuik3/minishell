@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:47:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 18:25:32 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,11 @@ int redirecting_out(t_redir *redirout)
     if (access(redirout->filename, F_OK) == 0)
     {
         if (unlink(redirout->filename) == -1)
-        {
-            perror("");
             return (1);
-        }
     }
     fd = open(redirout->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (fd == -1)
-    {
-        perror("");
         return (1);
-    }
     close(fd);
     return (0);
 }
@@ -64,10 +58,7 @@ int appending(t_redir *append)
     if (access(append->filename, F_OK) != 0)
         fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (fd == -1)
-    {
-        perror("");
         return (1);
-    }
     close (fd);
     return (0);
 }
@@ -81,23 +72,14 @@ int last_redirect_out(t_redir *last)
         if (access(last->filename, F_OK) == 0)
         {
             if (unlink(last->filename) == -1)
-            {
-                perror("");
                 return (1);
-            }
         }
     }
     fd = open(last->filename, O_RDWR | O_CREAT | O_APPEND, SHELL_DEFAULT);
     if (fd == -1)
-    {
-        perror("");
         return (1);
-    }
     if (dup2(fd, STDOUT_FILENO) == -1)
-    {
-        perror("");
         return (1);
-    }
     close(fd);
     return (0);
 }
