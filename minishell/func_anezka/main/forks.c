@@ -6,77 +6,74 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 14:36:14 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 16:26:55 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int first_multiple(t_command *cmd, t_pipe *pipe_cmd) //in child process
+int first_multiple(t_biggie *bigs) //in child process
+{
+    if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
+    {
+        if (check_redirect(bigs->cmd) == 1)
+            return (1);
+    }
+    if (bigs->cmd->redir_out == NULL)
+    {
+        if (dup2(bigs->cmd->pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
+        {
+            perror("");
+            return (1);
+        }
+    }
+    close(bigs->cmd->pipe_cmd->pipe[0]);
+    close(bigs->cmd->pipe_cmd->pipe[1]);
+    if (is_builtint(bigs->cmd->command) == 0)
+        bigs->exit_status = what_builtin(bigs);
+    else if (is_builtint(bigs->cmd->command) == 1)
+        bigs->exit_status = executing(bigs->cmd);
+    return (bigs->exit_status);
+}
+
+int other_multiple(t_biggie *bigs)
 {
     int status;
 
-    if (cmd->redir_in != NULL || cmd->redir_out != NULL)
+    if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
     {
-        if (check_redirect(cmd) == 1)
+        if (check_redirect(bigs->cmd) == 1)
             return (1);
     }
-    if (cmd->redir_out == NULL)
+    if (bigs->cmd->redir_in == NULL)
     {
-        if (dup2(pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
+        if (dup2(bigs->cmd->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
         {
             perror("");
             return (1);
         }
     }
-    close(pipe_cmd->pipe[0]);
-    close(pipe_cmd->pipe[1]);
-    if (is_builtint(cmd->command) == 0)
-        status = what_builtin(cmd);
-    else if (is_builtint(cmd->command) == 1)
-        status = executing(cmd);
-    return (status);
+    close(bigs->cmd->pipe_cmd->pipe[0]); 
+    if (bigs->cmd->redir_out == NULL)
+    {
+        if (dup2(bigs->cmd->pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
+        {
+            perror("");
+            return (1);
+        }
+    }
+    close(bigs->cmd->pipe_cmd->next->pipe[0]);
+    close(bigs->cmd->pipe_cmd->next->pipe[1]);
+    if (is_builtint(bigs->cmd->command) == 0)
+        bigs->exit_status = what_builtin(bigs);
+    else if (is_builtint(bigs->cmd->command) == 1)
+        bigs->exit_status = executing(bigs->cmd);
+    return (bigs->exit_status);  
 }
 
-int other_multiple(t_command *cmd, t_pipe *pipe_cmd)
-{
-    int status;
-
-    if (cmd->redir_in != NULL || cmd->redir_out != NULL)
-    {
-        if (check_redirect(cmd) == 1)
-            return (1);
-    }
-    if (cmd->redir_in == NULL)
-    {
-        if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
-        {
-            perror("");
-            return (1);
-        }
-    }
-    close(pipe_cmd->pipe[0]); 
-    if (cmd->redir_out == NULL)
-    {
-        if (dup2(pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
-        {
-            perror("");
-            return (1);
-        }
-    }
-    close(pipe_cmd->next->pipe[0]);
-    close(pipe_cmd->next->pipe[1]);
-    if (is_builtint(cmd->command) == 0)
-        status = what_builtin(cmd);
-    else if (is_builtint(cmd->command) == 1)
-        status = executing(cmd);
-    return (status);  
-}
-
-int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
+int last_multiple(t_biggie *bigs)
 {
     int pid;
-    int status;
     
     pid = fork();
     if (pid < -1)
@@ -86,28 +83,28 @@ int last_multiple(t_command *cmd, t_pipe *pipe_cmd)
     }
     else if (pid == 0)
     {
-        if (cmd->redir_in != NULL || cmd->redir_out != NULL)
+        if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
         {
-            if (check_redirect(cmd) == 1) //check previous commit
+            if (check_redirect(bigs->cmd) == 1) //check previous commit
                 return (1);
         }
-        if (cmd->redir_in == NULL)
+        if (bigs->cmd->redir_in == NULL)
         {
-            if (dup2(pipe_cmd->pipe[0], STDIN_FILENO) == -1)
+            if (dup2(bigs->cmd->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
             {
                 perror("");
                 exit (1); //return prv
             }
         }
-        close(pipe_cmd->pipe[0]);
-        if (is_builtint(cmd->command) == 0)
-            status = what_builtin(cmd);
-        else if (is_builtint(cmd->command) == 1)
-            status = executing(cmd);
+        close(bigs->cmd->pipe_cmd->pipe[0]);
+        if (is_builtint(bigs->cmd->command) == 0)
+            bigs->exit_status = what_builtin(bigs);
+        else if (is_builtint(bigs->cmd->command) == 1)
+            bigs->exit_status = executing(bigs->cmd);
         exit(0);
     }
-    close(pipe_cmd->pipe[0]);
-    while (wait(&status) != -1)
+    close(bigs->cmd->pipe_cmd->pipe[0]);
+    while (wait(&bigs->exit_status) != -1)
         ;
-    return (status);
+    return (bigs->exit_status);
 }

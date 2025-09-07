@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/06 14:44:58 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 17:09:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int run_exit(t_biggie *bigs)
     else
     {
         if (bigs->cmd->arguments[1] != NULL)
-            exit (1);
+            bigs->exit_status = 1;
         else if (just_nb(bigs->cmd->arguments[0]) != 0)
             bigs->exit_status = 255;
         else

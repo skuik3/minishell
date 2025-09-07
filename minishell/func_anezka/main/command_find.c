@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 15:35:52 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 16:23:47 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int single_command(t_biggie *bigs)
     restore_fd(stdout_orig, stdin_orig);
     return (bigs->exit_status);
 }
-
+//maybe check after changing bigs
 void close_herepipe(t_command *cmd) {
     int i = 0;
     while (cmd->redir_in[i + 1] != NULL)
@@ -129,12 +129,11 @@ void close_herepipe(t_command *cmd) {
 }
 
 //check the exiting and statuses if not weird
-int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
+int multiple_commands(t_biggie *bigs)
 {
     int pid;
     int orig_stdout;
     int orig_stdin;
-    int status;
 
     orig_stdout = dup(STDOUT_FILENO);
     orig_stdin = dup(STDIN_FILENO);
@@ -143,15 +142,15 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         perror("");
         return (1);
     }
-    status = check_heredoc(cmd);
-    if (status == 1)
+    bigs->exit_status = check_heredoc(bigs->cmd);
+    if (bigs->exit_status == 1)
     {
         perror("");
         return (1);
     }
-    if (status == SIGINT)
+    if (bigs->exit_status == SIGINT)
         return (2);
-    while (cmd->next != NULL && g_signal != SIGINT)
+    while (bigs->cmd->next != NULL && g_signal != SIGINT)
     {
         pid = fork();
         if (pid < -1)
@@ -162,35 +161,35 @@ int multiple_commands(t_command *cmd, t_pipe *pipe_cmd)
         else if (pid == 0)
         {
             signal(SIGINT, SIG_DFL);
-            if (cmd->is_first == 1)
+            if (bigs->cmd->is_first == 1)
             {
-                status = first_multiple(cmd, pipe_cmd);
-                if (status == 1)
+                bigs->exit_status = first_multiple(bigs);
+                if (bigs->exit_status == 1)
                     exit (1);
             }
             else
-                status = other_multiple(cmd, pipe_cmd);
-            exit(status);
+                bigs->exit_status = other_multiple(bigs);
+            exit(bigs->exit_status);
         }
-        if (cmd->is_first == 1)
-            close(pipe_cmd->pipe[1]);
+        if (bigs->cmd->is_first == 1)
+            close(bigs->cmd->pipe_cmd->pipe[1]);
         else
         {
-            close(pipe_cmd->pipe[0]);
-            close(pipe_cmd->next->pipe[1]);
-            pipe_cmd = pipe_cmd->next;
+            close(bigs->cmd->pipe_cmd->pipe[0]);
+            close(bigs->cmd->pipe_cmd->next->pipe[1]);
+            bigs->cmd->pipe_cmd = bigs->cmd->pipe_cmd->next;
         }
-        if (cmd->redir_in != NULL)
-            close_herepipe(cmd);
-        cmd = cmd->next;
+        if (bigs->cmd->redir_in != NULL)
+            close_herepipe(bigs->cmd);
+        bigs->cmd = bigs->cmd->next;
         // if (heredoc_present(cmd->redir_in) == 1) //uncomment here first
         
     }
     if (g_signal != SIGINT)
-        status = last_multiple(cmd, pipe_cmd);
+        bigs->exit_status = last_multiple(bigs);
     // while (wait(&status) > 1)
     //     ;
-    return (status);
+    return (bigs->exit_status);
 }
 
 int command_execution(t_biggie *bigs)
@@ -214,6 +213,6 @@ int command_execution(t_biggie *bigs)
         bigs->cmd->is_first = 0;
     }
     bigs->cmd = head;
-    bigs->exit_status = multiple_commands(bigs->cmd, pipe_cmd);
+    bigs->exit_status = multiple_commands(bigs);
     return(status);
 }

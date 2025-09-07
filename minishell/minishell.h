@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 16:11:31 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 16:23:25 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,10 +162,10 @@ int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);
 int command_execution(t_biggie *bigs);
 int single_command(t_biggie *bigs);
-int multiple_commands(t_command *cmd, t_pipe *pipe_cmd);
-int last_multiple(t_command *cmd, t_pipe *pipe_cmd);
-int other_multiple(t_command *cmd, t_pipe *pipe_cmd);
-int first_multiple(t_command *cmd, t_pipe *pipe_cmd);
+int multiple_commands(t_biggie *bigs);
+int last_multiple(t_biggie *bigs);
+int other_multiple(t_biggie *bigs);
+int first_multiple(t_biggie *bigs);
 t_biggie *setting_big(void);
 //utils for main_execution
 int saving_env(char ***env, char *envp[]);
