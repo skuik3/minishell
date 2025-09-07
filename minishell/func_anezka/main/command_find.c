@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:19:33 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 18:44:06 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int single_command(t_biggie *bigs)
     return (bigs->exit_status);
 }
 //maybe check after changing bigs
-void close_herepipe(t_command *cmd) {
+void close_herepipe(t_command *cmd) 
+{
     int i = 0;
     while (cmd->redir_in[i + 1] != NULL)
         i++;
@@ -174,12 +175,12 @@ int multiple_commands(t_biggie *bigs)
             exit(bigs->exit_status);
         }
         if (bigs->cmd->is_first == 1)
-            close(bigs->cmd->pipe_cmd->pipe[1]);
+            close(bigs->pipe_cmd->pipe[1]);
         else
         {
-            close(bigs->cmd->pipe_cmd->pipe[0]);
-            close(bigs->cmd->pipe_cmd->next->pipe[1]);
-            bigs->cmd->pipe_cmd = bigs->cmd->pipe_cmd->next;
+            close(bigs->pipe_cmd->pipe[0]);
+            close(bigs->pipe_cmd->next->pipe[1]);
+            bigs->pipe_cmd = bigs->pipe_cmd->next;
         }
         if (bigs->cmd->redir_in != NULL)
             close_herepipe(bigs->cmd);
@@ -203,7 +204,7 @@ int command_execution(t_biggie *bigs)
     int status;
 
     g_signal = 0;
-    bigs->cmd->pipe_cmd = prepare_pipes(bigs->cmd);
+    bigs->pipe_cmd = prepare_pipes(bigs->cmd);
     bigs->cmd->is_first = 1;
     if (bigs->cmd->next == NULL)
     {
