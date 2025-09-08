@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 20:34:51 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/08 16:37:39 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,13 @@ int single_command(t_biggie *bigs)
             bigs->exit_status = executing(bigs->cmd);
             exit(bigs->exit_status);
         }
+        printf("BBBBB>%d", bigs->exit_status);
         waitpid(pid, &bigs->exit_status, 0);
     }
     if (bigs->cmd->redir_in != NULL)
         close_herepipe(bigs->cmd);
     restore_fd(stdout_orig, stdin_orig);
+    printf("AAAA>%d", bigs->exit_status);
     return (bigs->exit_status);
 }
 //maybe check after changing bigs
@@ -203,7 +205,6 @@ int command_execution(t_biggie *bigs)
 {
     t_pipe *pipe_cmd;
     t_command *head;
-    int status;
 
     g_signal = 0;
     bigs->pipe_cmd = prepare_pipes(bigs->cmd);
@@ -211,7 +212,7 @@ int command_execution(t_biggie *bigs)
     if (bigs->cmd->next == NULL)
     {
         bigs->exit_status = single_command(bigs);
-        return (status);
+        return (bigs->exit_status);
     }
     head = bigs->cmd;
     while (bigs->cmd->next != NULL)
@@ -221,5 +222,5 @@ int command_execution(t_biggie *bigs)
     }
     bigs->cmd = head;
     bigs->exit_status = multiple_commands(bigs);
-    return(status);
+    return(bigs->exit_status);
 }

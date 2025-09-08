@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 15:16:18 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/08 16:36:33 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,9 +428,9 @@ int main(int argc, char *argv[], char *envp[])
             
             if (cmd_head)
             {
-                // g_signal = 0;
+                g_signal = 0;
                 bigs->cmd = cmd_head;
-                command_execution(bigs);
+                bigs->exit_bef = command_execution(bigs);
             }
             
             // Free the entire command list

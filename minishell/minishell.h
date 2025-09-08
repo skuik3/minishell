@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:43:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/08 12:19:28 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct s_biggiest_struct
     env_t *env;
     t_pipe  *pipe_cmd;
     int exit_status;
+    int exit_bef;
 }   t_biggie;
 
 // ANEZKAS_PART
