@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:44:06 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/07 20:34:51 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int single_command(t_biggie *bigs)
         }
         else if (pid == 0)
         {
+            signal(SIGINT, SIG_DFL);
             bigs->exit_status = executing(bigs->cmd);
             exit(bigs->exit_status);
         }
@@ -155,6 +156,7 @@ int multiple_commands(t_biggie *bigs)
         return (2);
     while (bigs->cmd->next != NULL && g_signal != SIGINT)
     {
+        signal(SIGINT, handle_signal_child);
         pid = fork();
         if (pid < -1)
         {
