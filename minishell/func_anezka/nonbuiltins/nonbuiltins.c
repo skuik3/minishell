@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/08 16:09:33 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 12:04:27 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int executing(t_command *cmd)
         if (path == NULL)
         {
             write(1, "Command not found\n", 19);
+                printf("BBBB>");
             return (127);
         }
         if (execve(path, cmdw_args, cmd->envar->mod) == -1)

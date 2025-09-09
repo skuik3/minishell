@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 10:22:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 12:20:37 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,19 @@ int just_nb(char *nb)
     }
     return (0);
 }
-// command not found >>127 not working
+
+int number_exit(char *args)
+{
+    int nb;
+
+    nb = atoi((const char*)(args));
+    if (nb > 255)
+        nb = nb % 256;
+    return (nb);
+}
+
 // ctrl+c >> 130 working in heredoc, not in child
-// cislo >> cislo working
-// cokoliv jineho >> 255
+// ISSUES WITH MULTIPLE COMMANDS
 int run_exit(t_biggie *bigs)
 {
     if (bigs->cmd->arguments[0] == NULL){
@@ -100,7 +109,7 @@ int run_exit(t_biggie *bigs)
         else if (just_nb(bigs->cmd->arguments[0]) != 0)
             bigs->exit_status = 255;
         else
-            bigs->exit_status = atoi((const char*)(bigs->cmd->arguments[0]));
+            bigs->exit_status = number_exit(bigs->cmd->arguments[0]);
     }
     printf("EXIT>%d", bigs->exit_status);
     exit (bigs->exit_status);

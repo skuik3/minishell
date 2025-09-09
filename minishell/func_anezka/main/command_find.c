@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 11:00:47 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 12:18:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int single_command(t_biggie *bigs)
             exit(bigs->exit_status);
         }
         waitpid(pid, &bigs->exit_status, 0);
+        bigs->exit_status = WEXITSTATUS(bigs->exit_status);
+        printf("BBBB>%d", bigs->exit_status);
         if (bigs->exit_status == 2)
             bigs->exit_status = 130;
     }
@@ -134,7 +136,12 @@ void close_herepipe(t_command *cmd)
         close(cmd->redir_in[i]->pipe_forhdc[0]);    
 }
 
-//check the exiting and statuses if not weird
+//check the exiting and statuses
+//if exit status != 0, should maybe not continue and update exit status
+//find pattern
+//kcnkscs | cat >> return 0 ..works
+// cat | kjcnkdc >> return 127 (after ctrl+c, because cat working normally)
+//          ..this does not work in minishell
 int multiple_commands(t_biggie *bigs)
 {
     int pid;

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/08 12:19:28 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 12:15:35 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ char **prepare_unset(char *argument);
 int value_present(char *argument);
 char **adding_command(t_command *cmd);
 int just_nb(char *nb);
+int number_exit(char *args);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);

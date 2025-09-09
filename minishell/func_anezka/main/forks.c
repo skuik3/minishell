@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 11:02:19 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 12:04:28 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,12 @@ int last_multiple(t_biggie *bigs)
             bigs->exit_status = what_builtin(bigs);
         else if (is_builtint(bigs->cmd->command) == 1)
             bigs->exit_status = executing(bigs->cmd);
-        exit(0);
+        exit(bigs->exit_status);
     }
     close(bigs->pipe_cmd->pipe[0]);
     while (wait(&bigs->exit_status) != -1)
         ;
+    printf("AAAA>%d", bigs->exit_status);
     if (bigs->exit_status == 2)
         bigs->exit_status = 130;
     return (bigs->exit_status);
