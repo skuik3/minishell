@@ -1,0 +1,2 @@
+// cat | not existing command
+// exit status with multiple commands

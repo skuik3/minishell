@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 12:18:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 14:30:21 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int single_command(t_biggie *bigs)
         waitpid(pid, &bigs->exit_status, 0);
         bigs->exit_status = WEXITSTATUS(bigs->exit_status);
         printf("BBBB>%d", bigs->exit_status);
-        if (bigs->exit_status == 2)
+        if (bigs->exit_status == 2 || g_signal == SIGINT)
             bigs->exit_status = 130;
     }
     if (bigs->cmd->redir_in != NULL)
