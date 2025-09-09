@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/08 16:37:39 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 11:00:47 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int single_command(t_biggie *bigs)
         return (1);
     }
     if (bigs->exit_status == SIGINT)
-        return (2);
+        return (130);
     if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
     {
         if (check_redirect(bigs->cmd) == 1)
@@ -115,13 +115,13 @@ int single_command(t_biggie *bigs)
             bigs->exit_status = executing(bigs->cmd);
             exit(bigs->exit_status);
         }
-        printf("BBBBB>%d", bigs->exit_status);
         waitpid(pid, &bigs->exit_status, 0);
+        if (bigs->exit_status == 2)
+            bigs->exit_status = 130;
     }
     if (bigs->cmd->redir_in != NULL)
         close_herepipe(bigs->cmd);
     restore_fd(stdout_orig, stdin_orig);
-    printf("AAAA>%d", bigs->exit_status);
     return (bigs->exit_status);
 }
 //maybe check after changing bigs
@@ -155,7 +155,7 @@ int multiple_commands(t_biggie *bigs)
         return (1);
     }
     if (bigs->exit_status == SIGINT)
-        return (2);
+        return (130);
     while (bigs->cmd->next != NULL && g_signal != SIGINT)
     {
         signal(SIGINT, handle_signal_child);
@@ -171,8 +171,8 @@ int multiple_commands(t_biggie *bigs)
             if (bigs->cmd->is_first == 1)
             {
                 bigs->exit_status = first_multiple(bigs);
-                if (bigs->exit_status == 1)
-                    exit (1);
+                if (bigs->exit_status != 0) // should i just return exit status wihtout check, would make more sense
+                    exit (bigs->exit_status);
             }
             else
                 bigs->exit_status = other_multiple(bigs);

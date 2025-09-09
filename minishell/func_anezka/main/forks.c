@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:44:57 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 11:02:19 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,7 @@ int last_multiple(t_biggie *bigs)
     close(bigs->pipe_cmd->pipe[0]);
     while (wait(&bigs->exit_status) != -1)
         ;
+    if (bigs->exit_status == 2)
+        bigs->exit_status = 130;
     return (bigs->exit_status);
 }
