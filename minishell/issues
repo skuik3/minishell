@@ -1,2 +1,12 @@
-// cat | not existing command
+// cat | not existing command 
+//          >> puts > and after writing something goes back to minishell
+
 // exit status with multiple commands
+// exit negative nmb
+// sleep 5 | exit
+// unse LOL ROR 
+//           >> unsets just the first one
+// cat <
+// exit 0 | exit 1
+//          >> $? the last exit, doesnt actually exits
+

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 14:30:21 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 14:38:04 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int single_command(t_biggie *bigs)
         }
         waitpid(pid, &bigs->exit_status, 0);
         bigs->exit_status = WEXITSTATUS(bigs->exit_status);
-        printf("BBBB>%d", bigs->exit_status);
         if (bigs->exit_status == 2 || g_signal == SIGINT)
             bigs->exit_status = 130;
     }
@@ -178,6 +177,7 @@ int multiple_commands(t_biggie *bigs)
             if (bigs->cmd->is_first == 1)
             {
                 bigs->exit_status = first_multiple(bigs);
+                printf("BBBB>%d", bigs->exit_status);
                 if (bigs->exit_status != 0) // should i just return exit status wihtout check, would make more sense
                     exit (bigs->exit_status);
             }

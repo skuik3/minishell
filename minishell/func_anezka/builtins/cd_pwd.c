@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 12:20:37 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 16:40:35 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,23 @@ int run_pwd(void)
 int just_nb(char *nb)
 {
     int i;
+    int count;
 
     i = 0;
+    count = 0;
     while (nb[i] != '\0')
     {
-        if (nb[i] > '9' || nb[i] < '0')
+        if ((nb[i] > '9' || nb[i] < '0') && (nb[i] != '+' && nb[i] != '-'))
             return (1);
+        else if (nb[i] == '+' || nb[i] == '-')
+            count++;
         i++;
     }
+    if (count > 1)
+        return (1);
     return (0);
 }
-
+//CHANGE TO FT_ATOI
 int number_exit(char *args)
 {
     int nb;
@@ -91,11 +97,11 @@ int number_exit(char *args)
     nb = atoi((const char*)(args));
     if (nb > 255)
         nb = nb % 256;
+    else if (nb < 0)
+        nb = 256 + nb;
     return (nb);
 }
 
-// ctrl+c >> 130 working in heredoc, not in child
-// ISSUES WITH MULTIPLE COMMANDS
 int run_exit(t_biggie *bigs)
 {
     if (bigs->cmd->arguments[0] == NULL){
