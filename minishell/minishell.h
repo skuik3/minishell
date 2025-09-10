@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 12:15:35 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/10 14:45:18 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ int value_present(char *argument);
 char **adding_command(t_command *cmd);
 int just_nb(char *nb);
 int number_exit(char *args);
+int check_variable(char *variable);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);
@@ -239,6 +240,8 @@ unsigned int	findend(const char *s, int c, int i);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 void	ft_putstr_fd(char *s, int fd);
+int	ft_isalnum(int c);
+int	ft_isalpha(int c);
 
 // SISIS_PART
 

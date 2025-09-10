@@ -10,3 +10,4 @@
 // exit 0 | exit 1
 //          >> $? the last exit, doesnt actually exits
 
+// export pred rovna se .. musi byt jenom pismenka nebo cisla pokud nejsou prvni
