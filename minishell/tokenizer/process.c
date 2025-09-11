@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:28:08 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 09:04:30 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 21:55:13 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ const char *redir_type_to_string(t_redir_type type)
 {
 	if (type == REDIR_IN) return "<";
 	if (type == REDIR_OUT) return ">";
-	if (type == R_APPEND) return ">>";
-	if (type == R_HEREDOC) return "<<";
+	if (type == REDIR_APPEND) return ">>";
+	if (type == REDIR_HEREDOC) return "<<";
 	return (0);
 }
 

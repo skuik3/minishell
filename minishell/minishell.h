@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 08:31:14 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 21:57:47 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef enum e_token_type {
 typedef enum e_redir_type {
     REDIR_IN,
     REDIR_OUT,
-    R_APPEND,
-    R_HEREDOC
+    REDIR_APPEND,
+    REDIR_HEREDOC
 } t_redir_type;
 
 typedef struct s_token {
@@ -79,7 +79,7 @@ typedef struct s_redir {
 
 typedef struct s_command {
     char    *name;
-    char    **args;
+    char    **arguments;
     t_redir **redir_in;
     t_redir **redir_out;
     int     redir_in_count;

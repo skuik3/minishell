@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 09:02:11 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 21:58:06 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	free_cmd(t_command *cmd)
 	while (cmd)
 	{
 		next = cmd->next;
-		free_array(cmd->args);
+		free_array(cmd->arguments);
 
 		free_redir_array(cmd->redir_in, cmd->redir_in_count);
 		free_redir_array(cmd->redir_out, cmd->redir_out_count);

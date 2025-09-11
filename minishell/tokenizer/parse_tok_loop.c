@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 09:03:30 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 21:58:50 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	add_redir_token(t_token *tok, t_cmd_builder *b)
 
 	if (tok->type == T_REDIR_IN || tok->type == T_REDIR_HEREDOC)
 		r = new_redir(tok->next, 
-			tok->type == T_REDIR_IN ? REDIR_IN : R_HEREDOC);
+			tok->type == T_REDIR_IN ? REDIR_IN : REDIR_HEREDOC);
 	else if (tok->type == T_REDIR_OUT || tok->type == T_REDIR_APPEND)
 		r = new_redir(tok->next,
-			tok->type == T_REDIR_OUT ? REDIR_OUT : R_APPEND);
+			tok->type == T_REDIR_OUT ? REDIR_OUT : REDIR_APPEND);
 	else
 		return;
 
@@ -204,7 +204,7 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b)
 
 void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 {
-	b->cmd->args = list_to_str_array(b->args);
+	b->cmd->arguments = list_to_str_array(b->args);
 	b->cmd->arg_count = list_size(b->args);
 
 	b->cmd->redir_in = list_to_redir_array(b->redir_in);

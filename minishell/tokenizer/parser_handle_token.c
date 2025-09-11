@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 09:04:18 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 21:55:00 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static t_redir *make_redir(t_token *tok)
 	else if (tok->type == T_REDIR_OUT)
 		r->type = REDIR_OUT;
 	else if (tok->type == T_REDIR_APPEND)
-		r->type = R_APPEND;
+		r->type = REDIR_APPEND;
 	else if (tok->type == T_REDIR_HEREDOC)
-		r->type = R_HEREDOC;
+		r->type = REDIR_HEREDOC;
 	return (r);
 }
 
@@ -83,9 +83,9 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 		else if (tok->type == T_REDIR_OUT)
 			redir->type = REDIR_OUT;
 		else if (tok->type == T_REDIR_APPEND)
-			redir->type = R_APPEND;
+			redir->type = REDIR_APPEND;
 		else if (tok->type == T_REDIR_HEREDOC)
-			redir->type = R_HEREDOC;
+			redir->type = REDIR_HEREDOC;
 
 		if (tok->type == T_REDIR_IN || tok->type == T_REDIR_HEREDOC)
 			ft_lstadd_back(&b->redir_in, ft_lstnew(redir));

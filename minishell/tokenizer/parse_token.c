@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:59:57 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 09:03:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 21:54:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ t_redir_type get_redir_type(const char *str, size_t len)
 	if (strncmp(str, ">", len) == 0)
 		return REDIR_OUT;
 	if (strncmp(str, ">>", len) == 0)
-		return R_APPEND;
+		return REDIR_APPEND;
 	if (strncmp(str, "<", len) == 0)
 		return REDIR_IN;
 	if (strncmp(str, "<<", len) == 0)
-		return R_HEREDOC;
+		return REDIR_HEREDOC;
 	return (0);
 }
 
