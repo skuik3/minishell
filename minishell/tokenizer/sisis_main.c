@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 21:59:08 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void print_redirs(t_redir **redirs, int count, const char *label)
 
 void print_command(t_command *cmd, int index)
 {
-	printf("Command %d: %s\n", index, cmd->cmd_str ? cmd->cmd_str : "(null)");
+	printf("Command %d: %s\n", index, cmd->command ? cmd->command : "(null)");
 	print_list(cmd->arguments, "Args");
 	print_redirs(cmd->redir_in, cmd->redir_in_count, "Input Redirections");
 	print_redirs(cmd->redir_out, cmd->redir_out_count, "Output Redirections");

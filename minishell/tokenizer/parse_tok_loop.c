@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 21:58:50 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b)
 		{
 			if (is_first_token)
 			{
-				b->cmd->cmd_str = strdup(tok->value);
+				b->cmd->command = strdup(tok->value);
 				is_first_token = false;
 			}
 			else

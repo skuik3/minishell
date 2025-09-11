@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 21:55:00 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 
 	if (tok->type == T_WORD)
 	{
-		if (!b->cmd->cmd_str)
-			b->cmd->cmd_str = strdup(tok->value);
+		if (!b->cmd->command)
+			b->cmd->command = strdup(tok->value);
 		ft_lstadd_back(&b->args, ft_lstnew(strdup(tok->value)));
 	}
 	else if (tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
@@ -93,7 +93,7 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 			ft_lstadd_back(&b->redir_out, ft_lstnew(redir));
 
 		if (tok->type == T_REDIR_HEREDOC && tok->next)
-			b->cmd->cmd_str = strdup(tok->next->value);
+			b->cmd->command = strdup(tok->next->value);
 	}
 }
 
