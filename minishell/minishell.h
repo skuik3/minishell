@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 16:28:43 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 08:31:14 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,22 @@ typedef struct s_redir {
 } t_redir;
 
 typedef struct s_command {
-    char *name;
-    char **args;
-    t_redir **redirs;
-    int arg_count;
-    int redir_count;
-    char *cmd_str;
+    char    *name;
+    char    **args;
+    t_redir **redir_in;
+    t_redir **redir_out;
+    int     redir_in_count;
+    int     redir_out_count;
+    int     arg_count;
+    char    *cmd_str;
     struct s_command *next;
 } t_command;
 
-/// new
 typedef struct s_cmd_builder {
     t_command   *cmd;
     t_list      *args;
-    t_list    *redirs;
+    t_list      *redir_in;
+    t_list      *redir_out;
 } t_cmd_builder;
 
 
@@ -174,7 +176,8 @@ t_token *argv_to_token_list(int argc, char **argv);
 void print_list(char **arr, const char *label);
 void print_args(t_command *cmd);
 void print_command(t_command *cmd, int index);
-void print_redirs(t_redir **redirs, int redir_count);
+
+void print_redirs(t_redir **redirs, int count, const char *label);
 int is_exit_input(const char *line, ssize_t n);
 t_command *run_shell_line(char *line);
 

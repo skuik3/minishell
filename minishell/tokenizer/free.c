@@ -6,80 +6,83 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/03 15:59:32 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 09:02:11 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void free_tokens(t_token *head)
+void	free_tokens(t_token *head)
 {
-    t_token *tmp;
+	t_token *tmp;
 
-    while (head)
-    {
-        tmp = head;
-        head = head->next;
-        free(tmp->value);
-        free(tmp);
-    }
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->value);
+		free(tmp);
+	}
 }
 
-void free_redir_array(t_redir **arr, int count)
+void	free_redir_array(t_redir **arr, int count)
 {
-    if (count <= 0 || !arr)
-        return;
+	if (count <= 0 || !arr)
+		return;
 
-    t_redir **current = arr;
-    while (count--)
-    {
-        if (*current)
-        {
-            free((*current)->filename);
-            free(*current);
-        }
-        current++;
-    }
-    free(arr);
+	t_redir **current = arr;
+	while (count--)
+	{
+		if (*current)
+		{
+			free((*current)->filename);
+			free(*current);
+		}
+		current++;
+	}
+	free(arr);
 }
 
-void free_array(char **arr)
+void	free_array(char **arr)
 {
-    if (!arr)
-        return;
+	if (!arr)
+		return;
 
-    char **current = arr;
-    while (*current)
-    {
-        free(*current);
-        current++;
-    }
-    free(arr);
+	char **current = arr;
+	while (*current)
+	{
+		free(*current);
+		current++;
+	}
+	free(arr);
 }
 
-void free_cmd(t_command *cmd)
+void	free_cmd(t_command *cmd)
 {
-    t_command *next;
+	t_command *next;
 
-    while (cmd)
-    {
-        next = cmd->next;
-        free_array(cmd->args);
-        free_redir_array(cmd->redirs, cmd->redir_count);
-        free(cmd);
-        cmd = next;
-    }
+	while (cmd)
+	{
+		next = cmd->next;
+		free_array(cmd->args);
+
+		free_redir_array(cmd->redir_in, cmd->redir_in_count);
+		free_redir_array(cmd->redir_out, cmd->redir_out_count);
+
+		free(cmd);
+		cmd = next;
+	}
 }
 
-void free_cmd_builder(t_cmd_builder *builder)
+void	free_cmd_builder(t_cmd_builder *builder)
 {
-    if (!builder)
-        return;
+	if (!builder)
+		return ;
 
-    free_cmd(builder->cmd);
-    // free_list(builder->args);
-    // free_list(builder->redir_in);
-    // free_list(builder->redir_out);
-    free(builder);
+	free_cmd(builder->cmd);
+	// free_list(builder->args);
+	// free_list(builder->redir_in);
+	// free_list(builder->redir_out);
+	free(builder);
 }
 

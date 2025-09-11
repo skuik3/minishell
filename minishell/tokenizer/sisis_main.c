@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/03 16:02:45 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/11 09:04:42 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,61 @@
 
 void print_list(char **arr, const char *label)
 {
-    int i;
+	int i;
 
-    i = 0;
-    if (!arr)
-        return;
-    printf("  %s: ", label);
-    while (arr[i])
-    {
-        printf("[%s] ", arr[i]);
-        i++;
-    }
-    printf("\n");
+	i = 0;
+	if (!arr)
+		return;
+	printf("  %s: ", label);
+	while (arr[i])
+	{
+		printf("[%s] ", arr[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 //only for seeing it now
-void print_redirs(t_redir **redirs, int redir_count)
+void print_redirs(t_redir **redirs, int count, const char *label)
 {
-    int i;
+	int i;
 
-    if (!redirs || redir_count == 0)
-        return;
-    printf("  Redirections:\n");
-    for (i = 0; i < redir_count; i++)
-    {
-        if (redirs[i]->type == REDIR_IN)
-            printf("    Input: [%s]\n", redirs[i]->filename);
-        else if (redirs[i]->type == REDIR_OUT)
-            printf("    Output: [%s]\n", redirs[i]->filename);
-        else if (redirs[i]->type == R_APPEND)
-            printf("    Append: [%s]\n", redirs[i]->filename);
-        else if (redirs[i]->type == R_HEREDOC)
-            printf("    Heredoc: [%s]\n", redirs[i]->filename);
-    }
+	if (!redirs || count == 0)
+		return;
+	printf("  %s:\n", label);
+	for (i = 0; i < count; i++)
+	{
+		if (redirs[i]->type == REDIR_IN)
+			printf("    Input: [%s]\n", redirs[i]->filename);
+		else if (redirs[i]->type == REDIR_OUT)
+			printf("    Output: [%s]\n", redirs[i]->filename);
+		else if (redirs[i]->type == R_APPEND)
+			printf("    Append: [%s]\n", redirs[i]->filename);
+		else if (redirs[i]->type == R_HEREDOC)
+			printf("    Heredoc: [%s]\n", redirs[i]->filename);
+	}
 }
 
 void print_command(t_command *cmd, int index)
 {
-    printf("Command %d: %s\n", index, cmd->cmd_str ? cmd->cmd_str : "(null)");
-    print_list(cmd->args, "Args");
-    print_redirs(cmd->redirs, cmd->redir_count);
+	printf("Command %d: %s\n", index, cmd->cmd_str ? cmd->cmd_str : "(null)");
+	print_list(cmd->args, "Args");
+	print_redirs(cmd->redir_in, cmd->redir_in_count, "Input Redirections");
+	print_redirs(cmd->redir_out, cmd->redir_out_count, "Output Redirections");
 }
 
 void print_cmd(t_command *cmd)
 {
-    int i;
+	int i;
 
-    i = 1;
-    while (cmd)
-    {
-        print_command(cmd, i);
-        i++;
-        cmd = cmd->next;
-    }
-    printf("%d commands in pipeline.\n", i - 1);
+	i = 1;
+	while (cmd)
+	{
+		print_command(cmd, i);
+		i++;
+		cmd = cmd->next;
+	}
+	printf("%d commands in pipeline.\n", i - 1);
 }
 
 int is_exit_input(const char *line, ssize_t n)
