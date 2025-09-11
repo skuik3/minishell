@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:05:49 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/11 10:26:11 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int *find_unset(int *unset, char **arguments, env_t *envp)
     return (unset);
 }
 
-int run_unset(env_t *envp, char **arguments)
+int run_unset_cont(env_t *envp, char **arguments)
 {
     int i;
     int j;
@@ -148,4 +148,19 @@ int run_unset(env_t *envp, char **arguments)
     get_order(envp->mod);
     run_env(envp->mod);
     return (0);
+}
+
+int run_unset(env_t *envp, char **arguments)
+{
+    int i;
+    int returned;
+
+    i = 0;
+    returned = 0;
+    while (arguments[i] != NULL)
+    {
+        returned = run_unset_cont(envp, arguments[i]);
+        i++;
+    }
+    return (returned);
 }

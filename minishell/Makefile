@@ -6,7 +6,7 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/11 10:12:22 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/09/11 11:44:39 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
