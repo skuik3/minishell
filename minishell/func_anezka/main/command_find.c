@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 14:38:04 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/11 10:02:16 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,13 +214,13 @@ int command_execution(t_biggie *bigs)
     t_command *head;
 
     g_signal = 0;
-    bigs->pipe_cmd = prepare_pipes(bigs->cmd);
     bigs->cmd->is_first = 1;
     if (bigs->cmd->next == NULL)
     {
         bigs->exit_status = single_command(bigs);
         return (bigs->exit_status);
     }
+    bigs->pipe_cmd = prepare_pipes(bigs->cmd);
     head = bigs->cmd;
     while (bigs->cmd->next != NULL)
     {

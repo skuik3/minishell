@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 10:21:59 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/11 10:05:21 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ t_command *parse_simple_command(char *input)
     cmd->redir_out = NULL;
     cmd->redir_in_count = 0;
     cmd->redir_out_count = 0;
-    cmd->heredoc = NULL;
-    cmd->append = NULL;
     cmd->next = NULL;
     cmd->envar = NULL;
     
@@ -351,10 +349,12 @@ int main(int argc, char *argv[], char *envp[])
     printf("Simple Minishell Test (type 'exit' to quit)\n");
     env_t *env = adding_env(NULL, envp);
     bigs = setting_big();
+    bigs->env = env;
     while (1)
     {
 
         //SIGNALS
+        clean_big(bigs);
         signal(SIGINT, handle_signal_main);
         signal(EOF, SIG_IGN);
         signal(SIGQUIT, SIG_IGN);
@@ -434,25 +434,15 @@ int main(int argc, char *argv[], char *envp[])
             }
             
             // Free the entire command list
-            cmd = cmd_head;
-            while (cmd)
-            {
-                t_command *next = cmd->next;
-                free_command(cmd);
-                cmd = next;
-            }
+
             
             // Free prompt_split array
-            for (int i = 0; prompt_split[i]; i++)
-                free(prompt_split[i]);
-            free(prompt_split);
             add_history(prompt);
         }
         
-        free(prompt);
+
     }
-    
+    free_big(bigs);
     printf("\nExiting minishell...\n");
     return (0);
 }
-

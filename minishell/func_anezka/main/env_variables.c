@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:29:02 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 14:36:36 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/11 10:04:40 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int saving_env(char ***env, char *envp[])
         copy_string(&(*env)[i], envp[i]);
         i++;
     }
-    env[i] = NULL;
+    (*env)[i] = NULL;
     return (0);
 }

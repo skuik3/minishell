@@ -6,22 +6,13 @@
 #    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/08 10:15:49 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/09/11 10:12:22 by anezkahavra      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = tokenizer/sisis_main.c \
-      tokenizer/free.c \
-	  tokenizer/parse_pipes.c \
-	  tokenizer/parse_tok_loop.c \
-	  tokenizer/parse_token.c \
-	  tokenizer/parser_handle_token.c \
-	  tokenizer/process.c \
-	  tokenizer/special_cases.c \
-	  tokenizer/tokenizing.c \
-	  tokenizer/helper_funcs/ft_strjoin.c\
+SRC = tokenizer/helper_funcs/ft_strjoin.c\
 	  tokenizer/helper_funcs/ft_strdup.c\
 	  func_anezka/builtins/cd_pwd.c\
 	  func_anezka/builtins/echo.c\
@@ -44,6 +35,7 @@ SRC = tokenizer/sisis_main.c \
 	  get_next_line/get_next_line.c\
 	  get_next_line/get_next_line_utils.c\
 	  func_anezka/main/big_struct.c\
+	  func_anezka/main/free.c\
 
 
 

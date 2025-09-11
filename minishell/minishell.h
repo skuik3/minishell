@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/10 14:45:18 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/11 10:06:17 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ typedef struct s_command {
     int redir_in_count;
     t_redir **redir_out;     // array of pointers to output redirections (> and >>)
     int redir_out_count;
-    char *heredoc;
-    char *append;
+    // char *heredoc;
+    // char *append;
     struct s_command *next;
     env_t *envar;  // add aneskas env
 } t_command;
@@ -157,7 +157,8 @@ typedef struct s_biggiest_struct
 }   t_biggie;
 
 // ANEZKAS_PART
-
+void free_big(t_biggie *bigs);
+void clean_big(t_biggie *bigs);
 //main_execution
 int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);
