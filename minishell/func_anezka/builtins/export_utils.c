@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/10 15:06:34 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/12 10:13:31 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,15 @@ int value_present(char *argument)
 int check_variable(char *variable)
 {
     int i;
+    char *just_variable;
 
     i = 1;
-    if (ft_isalpha(variable[0]) != 1)
+    just_variable = find_variable(variable);
+    if (ft_isalpha(just_variable[0]) != 1)
         return (1);
-    while (variable[i + 3] != '\0')
+    while (just_variable[i] != '\0')
     {
-        if (ft_isalnum(variable[i]) != 1)
+        if (ft_isalnum(just_variable[i]) != 1)
             return (1);
         i++;
     }
