@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 20:06:18 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/15 10:25:00 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *adding_variable(char *argument)
 		return (argument);
 	if (argument[i] != '\0')
 		new_arg = ft_strjoin(argument, "''");
-	else if (argument[i] == '\0')
+	else //if (argument[i] == '\0')
 		new_arg = ft_strjoin(argument, "=''");
 	return (new_arg);
 }

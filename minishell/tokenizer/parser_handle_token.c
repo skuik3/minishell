@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/15 11:24:25 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new_node)
 	while (current->next)
 		current = current->next;
 	current->next = new_node;
-}
-
-static t_redir *make_redir(t_token *tok)
-{
-	t_redir *r;
-
-	if (!tok || !tok->next)
-		return (NULL);
-	r = malloc(sizeof(t_redir));
-	if (!r)
-		return (NULL);
-	r->filename = strdup(tok->next->value);
-	if (tok->type == T_REDIR_IN)
-		r->type = REDIR_IN;
-	else if (tok->type == T_REDIR_OUT)
-		r->type = REDIR_OUT;
-	else if (tok->type == T_REDIR_APPEND)
-		r->type = REDIR_APPEND;
-	else if (tok->type == T_REDIR_HEREDOC)
-		r->type = REDIR_HEREDOC;
-	return (r);
 }
 
 void	handle_token(t_token *tok, t_cmd_builder *b)

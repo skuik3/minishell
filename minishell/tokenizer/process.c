@@ -41,8 +41,8 @@ t_token *argv_to_token_list(int argc, char **argv)
 	{
 		size_t len = strlen(argv[i]);
 		t_redir_type rtype = get_redir_type(argv[i], len);
-		t_token_type tp = (rtype != -1) ? T_WORD : get_token_type_len(argv[i], len);
-		append_token(&head, new_token(argv[i], len, tp, i));
+		t_token_type tp = (rtype != 0) ? T_WORD : get_token_type_len(argv[i], len);
+		append_token(&head, new_token(argv[i], len, tp));
 		i++;
 	}
 	return(head);

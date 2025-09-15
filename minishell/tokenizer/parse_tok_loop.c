@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/15 10:44:28 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ static bool is_invalid_token(t_token *tok)
 	return (false);
 }
 
-static void parse_token_loop(t_token *tok, t_cmd_builder *b)
+void parse_token_loop(t_token *tok, t_cmd_builder *b)
 {
 	while (tok && tok->type != T_PIPE)
 	{
@@ -205,14 +205,11 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b)
 void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 {
 	b->cmd->arguments = list_to_str_array(b->args);
-	b->cmd->arg_count = list_size(b->args);
-
+	//b->cmd->arg_count = list_size(b->args);
 	b->cmd->redir_in = list_to_redir_array(b->redir_in);
 	b->cmd->redir_in_count = list_size(b->redir_in);
-
 	b->cmd->redir_out = list_to_redir_array(b->redir_out);
 	b->cmd->redir_out_count = list_size(b->redir_out);
-
 	*out = b->cmd;
 }
 

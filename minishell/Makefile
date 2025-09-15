@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
+#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/15 09:52:32 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/15 11:29:22 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,50 +37,41 @@ SRC = main.c\
 	tokenizer/parse_pipes.c\
 	tokenizer/parse_tok_loop.c\
 	tokenizer/parse_token.c\
-	tokenizer/parse_handle_token.c\
+	tokenizer/parser_handle_token.c\
 	tokenizer/process.c\
 	tokenizer/special_cases.c\
 	tokenizer/tokenizing.c\
-	tokenizer/helper_funcs/ft_atoi.c\
-	tokenizer/helper_funcs/ft_bzero.c\
-	tokenizer/helper_funcs/ft_calloc.c\
-	tokenizer/helper_funcs/ft_isalnum.c\
-	tokenizer/helper_funcs/ft_isalpha.c\
-	tokenizer/helper_funcs/ft_isascii.c\
-	tokenizer/helper_funcs/ft_isdigit.c\
-	tokenizer/helper_funcs/ft_isprint.c\
-	tokenizer/helper_funcs/ft_itoa.c\
-	tokenizer/helper_funcs/ft_memchr.c\
-	tokenizer/helper_funcs/ft_memcmp.c\
-	tokenizer/helper_funcs/ft_memcpy.c\
-	tokenizer/helper_funcs/ft_memmove.c\
-	tokenizer/helper_funcs/ft_memset.c\
-	tokenizer/helper_funcs/ft_putchar_fd.c\
-	tokenizer/helper_funcs/ft_putendl_fd.c\
-	tokenizer/helper_funcs/ft_putnbr_fd.c\
-	tokenizer/helper_funcs/ft_putstr_fd.c\
-	tokenizer/helper_funcs/ft_split.c\
-	tokenizer/helper_funcs/ft_str_is_lowercase.c\
-	tokenizer/helper_funcs/ft_str_is_numeric.c\
-	tokenizer/helper_funcs/ft_str_is_printable.c\
-	tokenizer/helper_funcs/ft_str_is_uppercase.c\
-	tokenizer/helper_funcs/ft_strchr.c\
-	tokenizer/helper_funcs/ft_strdup.c\
-	tokenizer/helper_funcs/ft_striteri.c\
-	tokenizer/helper_funcs/ft_strjoin.c\
-	tokenizer/helper_funcs/ft_strlcat.c\
-	tokenizer/helper_funcs/ft_strlcpy.c\
-	tokenizer/helper_funcs/ft_strlen.c\
-	tokenizer/helper_funcs/ft_strmapi.c\
-	tokenizer/helper_funcs/ft_strncmp.c\
-	tokenizer/helper_funcs/ft_strnstr.c\
-	tokenizer/helper_funcs/ft_strrchr.c\
-	tokenizer/helper_funcs/ft_strtrim.c\
-	tokenizer/helper_funcs/ft_substr.c\
-	tokenizer/helper_funcs/ft_tolower.c\
-	tokenizer/helper_funcs/ft_toupper.c\
-	tokenizer/helper_funcs/get_next_line_utils.c\
-	tokenizer/helper_funcs/get_next_line.c\
+	tokenizer/sisis_main.c\
+	helper_funcs/ft_atoi.c\
+	helper_funcs/ft_bzero.c\
+	helper_funcs/ft_calloc.c\
+	helper_funcs/ft_isascii.c\
+	helper_funcs/ft_isdigit.c\
+	helper_funcs/ft_isprint.c\
+	helper_funcs/ft_itoa.c\
+	helper_funcs/ft_memchr.c\
+	helper_funcs/ft_memcmp.c\
+	helper_funcs/ft_memcpy.c\
+	helper_funcs/ft_memmove.c\
+	helper_funcs/ft_memset.c\
+	helper_funcs/ft_putchar_fd.c\
+	helper_funcs/ft_putendl_fd.c\
+	helper_funcs/ft_putnbr_fd.c\
+	helper_funcs/ft_str_is_alpha.c\
+	helper_funcs/ft_str_is_lowercase.c\
+	helper_funcs/ft_str_is_numeric.c\
+	helper_funcs/ft_str_is_printable.c\
+	helper_funcs/ft_str_is_uppercase.c\
+	helper_funcs/ft_strchr.c\
+	helper_funcs/ft_strjoin.c\
+	helper_funcs/ft_striteri.c\
+	helper_funcs/ft_strmapi.c\
+	helper_funcs/ft_strnstr.c\
+	helper_funcs/ft_strrchr.c\
+	helper_funcs/ft_strtrim.c\
+	helper_funcs/ft_substr.c\
+	helper_funcs/get_next_line_utils.c\
+	helper_funcs/get_next_line.c\
 	
 
 OBJ = $(SRC:.c=.o)

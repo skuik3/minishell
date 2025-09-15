@@ -6,15 +6,15 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:59:57 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 21:54:43 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/15 10:48:37 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token *new_token(const char *str, size_t len, t_token_type type, int pos)
+t_token	*new_token(const char *str, size_t len, t_token_type type)
 {
-	t_token *tok;
+	t_token	*tok;
 
 	tok = malloc(sizeof(t_token));
 	if (!tok)
@@ -77,7 +77,7 @@ static size_t handle_double_op(const char *input, size_t i, t_token **tokens)
 	t_token_type type;
 
 	type = get_token_type_len(&input[i], 2);
-	append_token(tokens, new_token(&input[i], 2, type, i));
+	append_token(tokens, new_token(&input[i], 2, type));
 	return (i + 2);
 }
 
@@ -86,7 +86,7 @@ static	size_t handle_single_op(const char *input, size_t i, t_token **tokens)
 	t_token_type type;
 
 	type = get_token_type_len(&input[i], 1);
-	append_token(tokens, new_token(&input[i], 1, type, i));
+	append_token(tokens, new_token(&input[i], 1, type));
 	return (i + 1);
 }
 
@@ -107,7 +107,7 @@ size_t	parse_quoted(const char *input, size_t i, t_token **tokens)
 	start = i;
 	while (input[i] && input[i] != quote)
 		i++;
-	append_token(tokens, new_token(&input[start], i - start, T_WORD, start));
+	append_token(tokens, new_token(&input[start], i - start, T_WORD));
 	if (input[i] == quote)
 		return (i + 1);
 	return (i);
@@ -120,6 +120,6 @@ size_t	parse_word(const char *input, size_t i, t_token **tokens)
 	start = i;
 	while (input[i] && !isspace((unsigned char)input[i]) && !is_operator_start(input[i]))
 		i++;
-	append_token(tokens, new_token(&input[start], i - start, T_WORD, start));
+	append_token(tokens, new_token(&input[start], i - start, T_WORD));
 	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:25:32 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/15 10:59:04 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ int redirecting_out(t_redir *redirout)
     close(fd);
     return (0);
 }
-// should also change to R_OK?, same case later
+//should also change to R_OK?, same case later
 int appending(t_redir *append)
 {
     int fd;
 
     if (access(append->filename, F_OK) != 0)
-        fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
+        return(0);
+    fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (fd == -1)
         return (1);
     close (fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 09:57:38 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/15 10:41:25 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef enum e_token_type {
     T_PIPE,       // |
     T_REDIR_IN,   // <
     T_REDIR_OUT,  // >
-    T_APPEND,     // >>
-    T_HEREDOC,    // <<
+    T_REDIR_APPEND,     // >>
+    T_REDIR_HEREDOC,    // <<
     T_END,         // end of str
     T_OR,        // ||
     T_AND,       // &&
@@ -266,17 +266,18 @@ void free_array(char **arr);
 void free_argv(char **argv);
 //parse_token.c
 t_token *new_token(const char *start, size_t len, t_token_type type);
+t_redir_type get_redir_type(const char *str, size_t len);
 t_token_type get_token_type_len(const char *str, size_t len);
 size_t parse_quoted(const char *input, size_t i, t_token **tokens);
 size_t parse_operator(const char *input, size_t i, t_token **tokens);
 size_t parse_word(const char *input, size_t i, t_token **tokens);
 //parse_tok_loop.c
-void parse_tokens(t_token *tok, t_command **out);
-void parse_token_loop(t_token *tok, t_cmd_builder *b);
+bool parse_tokens(t_token *tok, t_command **out);
+void list_add_back(t_list **list, void *content);
 char **list_to_array(t_list *list);
 //parse_pipes.c
 void find_segment_end(t_token **end, t_token *tokens);
-void init_commands(t_command **head, t_token *tokens);
+bool init_commands(t_command **head, t_token *tokens);
 //process.c
 const char *token_type_to_string(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
