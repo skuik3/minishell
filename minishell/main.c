@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 11:43:29 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/15 09:21:39 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int main(int argc, char *argv[], char *envp[])
     char *promt;
     t_command *cmd;
     t_biggie *bigs;
-    
+
+    (void)argc;
+    (void)argv;    
     bigs = setting_big();
     bigs->env = adding_env(NULL, envp);
     while (1)

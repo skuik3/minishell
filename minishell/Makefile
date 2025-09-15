@@ -6,7 +6,7 @@
 #    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/14 20:04:01 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/15 09:12:52 by anezka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC = tokenizer/helper_funcs/ft_strjoin.c\
 	  func_anezka/main/command_find.c\
 	  func_anezka/main/libft_utils.c\
 	  func_anezka/nonbuiltins/nonbuiltins.c\
-	  main_test.c\
+	  main.c\
 	  func_anezka/builtins/export_utils.c\
 	  func_anezka/main/env_variables.c\
 	  func_anezka/nonbuiltins/pipes.c\
