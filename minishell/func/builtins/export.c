@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 14:12:22 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:06:18 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ char *adding_variable(char *argument)
 			break;
 		i++;
 	}
-	if (i != len)
+	if (i != len && argument[i + 1] != '\0')
 		return (argument);
-	new_arg = ft_strjoin(argument, "=''");
+	if (argument[i] != '\0')
+		new_arg = ft_strjoin(argument, "''");
+	else if (argument[i] == '\0')
+		new_arg = ft_strjoin(argument, "=''");
 	return (new_arg);
 }
 
@@ -42,7 +45,10 @@ char  **put_envp(char **old_envp, char *new_arg)
 	len = counting_envlen(old_envp);
 	new_envp = malloc(sizeof(char *) * (len + 2));
 	if (new_envp == NULL)
-		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+	{
+		perror("");
+		return (NULL);
+	}
 	while (old_envp[i] != NULL)
 	{
 		new_envp[i] = old_envp[i];
@@ -51,7 +57,10 @@ char  **put_envp(char **old_envp, char *new_arg)
 	len = 0;
 	new_envp[i] = malloc(sizeof(char) * (ft_strlen(new_arg) + 1));
 	if (new_envp == NULL)
-		return (ft_putstr_fd(ERR_MALLOC, 2), NULL);
+	{
+		perror("");
+		return (NULL);
+	}
 	while (new_arg[len] != '\0')
 	{
 		new_envp[i][len] = new_arg[len];
@@ -66,7 +75,6 @@ char  **put_envp(char **old_envp, char *new_arg)
 int inner_check(char *envp[], int i)
 {
 	int j;
-	char *temp;
 
 	j = 0;
 	while (envp[i][j] != '\0' && envp[i + 1][j] != '\0')
@@ -85,7 +93,6 @@ int inner_check(char *envp[], int i)
 int get_order(char **envp)
 {
 	int i;
-	int k;
 	char *temp;
 	int swapped;
 
@@ -108,11 +115,11 @@ int get_order(char **envp)
 	return (0);
 }
 
-//now added as a string, without recognizing variable and value, pr. JANA / should be JANA=''
 int run_export(env_t *envp, char **arguments)
 {
     int   i;
 	char *add_variable;
+	char **unset;
 
     i = 0;
     if (arguments == NULL)
@@ -124,12 +131,25 @@ int run_export(env_t *envp, char **arguments)
 	while (arguments[i] != NULL)
 	{
 		add_variable = adding_variable(arguments[i]);
-		if (find_variable() == 0)
-			//run this and return if variable already present
-    	envp->mod = put_envp(envp->mod, add_variable);
+		if (check_variable(add_variable) == 1)
+		{
+			write(1, "not a valid identifier\n", 24);
+			return (1);
+		}
+		if (variable_present(find_variable(add_variable), envp) == 0)
+		{
+			if (value_present(arguments[i]) == 0)
+			{
+				unset = prepare_unset(arguments[i]);
+				run_unset(envp, unset);
+			}
+			else
+				return (0);
+		}
+		envp->mod = put_envp(envp->mod, add_variable);
 		i++;
 	}
- // just fo easy check, delete later >> export with args is not printed
+ // just fo easy check, delete later
     get_order(envp->mod);
     run_env(envp->mod);
     return (0);

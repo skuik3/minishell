@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 13:49:06 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/09 12:04:27 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int is_path(char *command)
             break ;
         i++;
     }
-    if (i == (len + 1))
+    if (i == len)
         return (1);
     return (0);
 }
@@ -42,7 +42,8 @@ char *command_path(t_command *cmd)
     arr_path = ft_split(env_path, ':');
     while (arr_path[i] != NULL)
     {
-        path = ft_strjoin(arr_path[i], cmd->command);
+        path = ft_strjoin(arr_path[i], "/");
+        path = ft_strjoin(path, cmd->command);
         if (access(path, F_OK) == 0)
             return (path);
         i++;
@@ -50,32 +51,64 @@ char *command_path(t_command *cmd)
     return (NULL);
 }
 
+char **adding_command(t_command *cmd)
+{
+    char **cmdw_args;
+    int arr_len;
+    int i;
 
-// maybe check with acces if file exist >> possible error
-// maybe check status if child process works correctly
-int executing(t_command *cmd)
-{       
-    //now defined, later when tokenization works, should be generally usable
-    // char *const argv[] = {"ls", "-l", NULL}; depends on tokenization from readline, do later
-    int pid;
-    int status;
-    char *path;
-
-    pid = fork();
-    if (pid < -1)
+    arr_len = counting_envlen(cmd->arguments);
+    cmdw_args = malloc(sizeof(char *) * (arr_len + 2));
+    if (cmdw_args == NULL)
     {
-        ft_putstr_fd(ERR_FORK, STDERR_FILENO);
+        perror("");
+        return (NULL);
+    }
+    cmdw_args[0] = ft_strdup(cmd->command);
+    i = 1;
+    while (cmd->arguments[i - 1] != NULL)
+    {
+        cmdw_args[i] = ft_strdup(cmd->arguments[i - 1]);
+        i++;
+    }
+    cmdw_args[i] = NULL;
+    return(cmdw_args);
+}
+
+int executing(t_command *cmd)
+{
+    char *path;
+    char **cmdw_args;
+
+    cmdw_args = adding_command(cmd);
+    if (cmdw_args == NULL)
+    {
+        perror("");
         return (1);
     }
-    if (is_path(cmd->command) == 0 && pid == 0)
-        execve(cmd->command, cmd->arguments, cmd->envar);
-    else if (is_path(cmd->command) != 0 && pid == 0)
+    if (is_path(cmd->command) == 0)
+    {
+        if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
+        {
+            perror("");
+            return (1);
+        }
+    }
+    else if (is_path(cmd->command) != 0)
     {
         path = command_path(cmd);
-        execve(path, cmd->arguments, cmd->envar);
+        if (path == NULL)
+        {
+            write(1, "Command not found\n", 19);
+                printf("BBBB>");
+            return (127);
+        }
+        if (execve(path, cmdw_args, cmd->envar->mod) == -1)
+        {
+            perror("");
+            return (1);
+        }
     }
-    else if (pid > 0)
-        waitpid(pid, &status, 0); // if not use for check, status not needed >> NULL
     return (0);
 }
 

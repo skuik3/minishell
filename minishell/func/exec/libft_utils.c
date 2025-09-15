@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:20 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/16 21:49:48 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/10 14:45:09 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,3 +127,26 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
+
+int	ft_isalnum(int c)
+{
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	{
+		return (1);
+	}
+	return (0);
+}
+

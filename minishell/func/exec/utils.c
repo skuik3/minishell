@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 14:18:14 by anezkahavra      ###   ########.fr       */
+/*   Created: 2025/08/11 09:47:51 by anezkahavra       #+#    #+#             */
+/*   Updated: 2025/09/03 11:30:12 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int counting_envlen(char **envp)
+char	*ft_strdup(const char *s1)
 {
-	int i;
+	char				*temp;
+	unsigned int		i;
 
+	temp = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (temp == NULL)
+	{
+		perror("");
+        return (NULL);
+	}
 	i = 0;
-	while (envp[i] != NULL)
+	while (i < ft_strlen(s1))
+	{
+		temp[i] = s1[i];
 		i++;
-	return (i);
-}
-
-int run_env(char **envp)
-{
-    int i;
-
-    i = 0;
-    if (envp == NULL)
-    {
-        ft_putstr_fd(ERR_BC, STDERR_FILENO);
-        return (1);
-    }
-    while (envp[i] != NULL)
-    {
-        printf("%s\n", envp[i]);
-        i++;
-    }
-    return (0);
+	}
+	temp[i] = '\0';
+	return (temp);
 }

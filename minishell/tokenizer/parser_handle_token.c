@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_handle_token.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/07/21 17:02:52 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,86 @@
 
 t_list *ft_lstnew(void *content)
 {
-    t_list *node = malloc(sizeof(t_list));
-    if (!node)
-        return (NULL);
-    node->content = content;
-    node->next = NULL;
-    return (node);
+	t_list *node;
+
+	node = malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
+	node->content = content;
+	node->next = NULL;
+	return (node);
 }
 
-void ft_lstadd_back(t_list **lst, t_list *new_node)
+void	ft_lstadd_back(t_list **lst, t_list *new_node)
 {
-    t_list *current = *lst;
+	t_list *current;
 
-    if (!lst || !new_node)
-        return;
-    if (!*lst)
-    {
-        *lst = new_node;
-        return;
-    }
-    while (current->next)
-        current = current->next;
-    current->next = new_node;
+	if (!lst || !new_node)
+		return;
+	if (!*lst)
+	{
+		*lst = new_node;
+		return;
+	}
+	current = *lst;
+	while (current->next)
+		current = current->next;
+	current->next = new_node;
 }
 
-void handle_token(t_token *tok, t_cmd_builder *b)
+static t_redir *make_redir(t_token *tok)
 {
-    if (tok->type == T_WORD)
-    {
-        if (!b->cmd->command)
-            b->cmd->command = strdup(tok->value);
-        ft_lstadd_back(&b->args, ft_lstnew(strdup(tok->value)));
-    }
-    handle_in_redir(tok, b);
-    handle_out_redir(tok, b);
+	t_redir *r;
+
+	if (!tok || !tok->next)
+		return (NULL);
+	r = malloc(sizeof(t_redir));
+	if (!r)
+		return (NULL);
+	r->filename = strdup(tok->next->value);
+	if (tok->type == T_REDIR_IN)
+		r->type = REDIR_IN;
+	else if (tok->type == T_REDIR_OUT)
+		r->type = REDIR_OUT;
+	else if (tok->type == T_REDIR_APPEND)
+		r->type = REDIR_APPEND;
+	else if (tok->type == T_REDIR_HEREDOC)
+		r->type = REDIR_HEREDOC;
+	return (r);
 }
 
-void handle_in_redir(t_token *tok, t_cmd_builder *b)
+void	handle_token(t_token *tok, t_cmd_builder *b)
 {
-    if (tok->type == T_REDIR_IN && tok->next)
-        ft_lstadd_back(&b->redir_in, ft_lstnew(strdup(tok->next->value)));
-    if (tok->type == T_HEREDOC && tok->next)
-        b->cmd->heredoc = strdup(tok->next->value);
+	t_redir *redir;
+
+	if (tok->type == T_WORD)
+	{
+		if (!b->cmd->command)
+			b->cmd->command = strdup(tok->value);
+		ft_lstadd_back(&b->args, ft_lstnew(strdup(tok->value)));
+	}
+	else if (tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
+	{
+		redir = malloc(sizeof(t_redir));
+		if (!redir)
+			return;
+		redir->filename = strdup(tok->next ? tok->next->value : "");
+		if (tok->type == T_REDIR_IN)
+			redir->type = REDIR_IN;
+		else if (tok->type == T_REDIR_OUT)
+			redir->type = REDIR_OUT;
+		else if (tok->type == T_REDIR_APPEND)
+			redir->type = REDIR_APPEND;
+		else if (tok->type == T_REDIR_HEREDOC)
+			redir->type = REDIR_HEREDOC;
+
+		if (tok->type == T_REDIR_IN || tok->type == T_REDIR_HEREDOC)
+			ft_lstadd_back(&b->redir_in, ft_lstnew(redir));
+		else
+			ft_lstadd_back(&b->redir_out, ft_lstnew(redir));
+
+		if (tok->type == T_REDIR_HEREDOC && tok->next)
+			b->cmd->command = strdup(tok->next->value);
+	}
 }
 
-void handle_out_redir(t_token *tok, t_cmd_builder *b)
-{
-    if (tok->type == T_REDIR_OUT && tok->next)
-        ft_lstadd_back(&b->redir_out, ft_lstnew(strdup(tok->next->value)));
-    if (tok->type == T_APPEND && tok->next)
-        b->cmd->append = strdup(tok->next->value);
-}
