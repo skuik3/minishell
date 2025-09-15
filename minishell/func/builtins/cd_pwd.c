@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 20:05:28 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/15 11:53:28 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int number_exit(char *args)
 
 int run_exit(t_biggie *bigs)
 {
-    if (bigs->cmd->arguments[0] == NULL){
+    if (bigs->cmd->arguments == NULL){
         printf("EXIT>%d", bigs->exit_bef); // exit prev command
         exit(bigs->exit_status);
     }

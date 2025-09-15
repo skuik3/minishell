@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 20:07:43 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/15 12:01:08 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int multiple_commands(t_biggie *bigs)
             if (bigs->cmd->is_first == 1)
             {
                 bigs->exit_status = first_multiple(bigs);
-                printf("BBBB>%d", bigs->exit_status);
+                // printf("BBBB>%d", bigs->exit_status);
                 if (bigs->exit_status != 0) // should i just return exit status wihtout check, would make more sense
                     exit (bigs->exit_status);
             }

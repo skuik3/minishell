@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nonbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 12:04:27 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/15 11:50:33 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ char **adding_command(t_command *cmd)
     int arr_len;
     int i;
 
-    arr_len = counting_envlen(cmd->arguments);
+    arr_len = 0;
+    if (cmd->arguments != NULL)
+        arr_len = counting_envlen(cmd->arguments);
     cmdw_args = malloc(sizeof(char *) * (arr_len + 2));
     if (cmdw_args == NULL)
     {
@@ -66,7 +68,7 @@ char **adding_command(t_command *cmd)
     }
     cmdw_args[0] = ft_strdup(cmd->command);
     i = 1;
-    while (cmd->arguments[i - 1] != NULL)
+    while (cmd->arguments != NULL && cmd->arguments[i - 1] != NULL)
     {
         cmdw_args[i] = ft_strdup(cmd->arguments[i - 1]);
         i++;
