@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 12:01:08 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/15 14:20:14 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ int command_execution(t_biggie *bigs)
     while (bigs->cmd->next != NULL)
     {
         bigs->cmd = bigs->cmd->next;
+        bigs->cmd->envar = bigs->env;
         bigs->cmd->is_first = 0;
     }
     bigs->cmd = head;

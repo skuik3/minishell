@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 11:53:28 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/15 12:17:17 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ char *find_path(env_t *env, char *find_var)
 
     i = 0;
     len = ft_strlen(find_var);
+    if (env->mod == NULL)
+    {
+        printf("HAHAHHAHAHHA");
+        return (NULL);
+    }
     while (env->mod[i] != NULL)
     {
         variable = find_variable(env->mod[i]);
