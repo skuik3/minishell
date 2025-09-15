@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/09 14:42:37 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:19:14 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int first_multiple(t_biggie *bigs) //in child process
 
 int other_multiple(t_biggie *bigs)
 {
-    int status;
-
     if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
     {
         if (check_redirect(bigs->cmd) == 1)

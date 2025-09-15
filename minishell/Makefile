@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+         #
+#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/11 11:44:39 by anezkahavra      ###   ########.fr        #
+#    Updated: 2025/09/14 20:04:01 by anezka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,15 +43,21 @@ OBJ = $(SRC:.c=.o)
 CC = cc
 FLAGS = -Wall -Wextra -Werror
 FLAGS = -I/usr/local/opt/readline/include -g
-LIBS = -pthread -lreadline -L/usr/local/opt/readline/lib
+LIBS = -pthread -lreadline -lreadline -L/usr/local/opt/readline/lib -lncurses
+
+
+OBJ = $(SRC:.c=.o)
+CC = cc
+FLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include -g
+LIBS = -pthread -L/usr/local/opt/readline/lib -lreadline -lncurses
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(FLAGS) $(LIBS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LIBS)
 
 %.o: %.c
-	cc $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
@@ -60,5 +66,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/12 10:07:02 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:16:00 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void handle_signal_heredoc(int signal);
 //builtin fce
 int run_pwd(void);
 int run_echo(char **string);
-int run_cd(char *path, env_t *env); //todo home
+int run_cd(char **path, env_t *env); //todo home
 int run_env(char **envp);
 int run_exit(t_biggie *bigs); //todo s ciselkami
 int run_export(env_t *envp, char **arguments);
@@ -211,7 +211,7 @@ int unset_position(char *envp, char *variable, int i);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);
-t_pipe *creating_first_pipe(t_pipe *pipe_cmd);
+t_pipe *creating_first_pipe(void);
 t_pipe *adding_pipe(t_pipe *pipe_cmd);
 //redirect
 int redirect_out(t_command *cmd);

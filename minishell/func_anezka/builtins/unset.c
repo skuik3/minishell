@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/12 10:07:56 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:07:11 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,8 @@ int find_unset(char *arguments, env_t *envp)
 
 int unseting(env_t *envp, char *arguments)
 {
-    int i;
     int unset;
 
-    i = 0;
     unset = find_unset(arguments, envp);
     if (unset != -2)
     {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:57:39 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/05 12:22:28 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:15:20 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ t_pipe *adding_pipe(t_pipe *pipe_cmd)
     return(pipe_cmd);
 }
 
-t_pipe *creating_first_pipe(t_pipe *pipe_cmd)
+t_pipe *creating_first_pipe(void)
 {
+    t_pipe *pipe_cmd;
+
     pipe_cmd = malloc(sizeof(t_pipe));
     if (pipe_cmd == NULL)
     {
@@ -75,7 +77,7 @@ t_pipe *prepare_pipes(t_command *cmd)
 
     pipe_count = counting_pipes(cmd);
     i = 0;
-    pipe_cmd = creating_first_pipe(pipe_cmd);
+    pipe_cmd = creating_first_pipe();
     head = pipe_cmd;
     while (i < pipe_count - 1)
     {

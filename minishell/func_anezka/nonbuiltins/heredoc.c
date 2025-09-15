@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/08 12:19:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/15 08:57:23 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char *get_line_heredoc(t_redir *last)
     }
     return (returned);
 }
-
+//check if casting does not affect
 int redirecting_heredoc(t_redir *heredoc)
 {
     char *promt;
@@ -78,6 +78,7 @@ int redirecting_heredoc(t_redir *heredoc)
     {        
         signal(SIGINT, SIG_DFL);
         promt = get_line_heredoc(heredoc);
+        (void)promt;
         exit(0);
     }
     if (g_signal == SIGINT)

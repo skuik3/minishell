@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/07/28 23:01:39 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 18:13:59 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int run_echo(char **arguments)
     int k;
 
     i = 0;
-    if (arguments[0] == NULL)
+    if (arguments == NULL)
     {
         ft_putstr_fd("\n", STDOUT_FILENO);
         return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/07 18:24:16 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/15 08:49:44 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int redirecting_in(t_redir *redirin)
 int last_redirect_in(t_redir *last)
 {
     int fd;
-    char *input;
     int returned;
 
     returned = 0;
@@ -62,7 +61,6 @@ int last_redirect_in(t_redir *last)
 int redirect_in(t_command *cmd)
 {
     int i;
-    int redir;
     int returned;
 
     i = 0;

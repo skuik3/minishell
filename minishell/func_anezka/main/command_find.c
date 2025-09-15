@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_find.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:02:16 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:07:43 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int what_builtin(t_biggie *bigs)
     else if (ft_strcmp(bigs->cmd->command, "pwd") == 0)
         returned = run_pwd();
     else if (ft_strcmp(bigs->cmd->command, "cd") == 0)
-        returned = run_cd(bigs->cmd->arguments[0], bigs->cmd->envar);
+        returned = run_cd(bigs->cmd->arguments, bigs->cmd->envar);
     else if (ft_strcmp(bigs->cmd->command, "env") == 0)
         returned = run_env(bigs->cmd->envar->mod);
     else if (ft_strcmp(bigs->cmd->command, "exit") == 0)
@@ -210,7 +210,6 @@ int multiple_commands(t_biggie *bigs)
 
 int command_execution(t_biggie *bigs)
 {
-    t_pipe *pipe_cmd;
     t_command *head;
 
     g_signal = 0;

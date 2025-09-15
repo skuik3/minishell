@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:01:39 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:05:28 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ char *find_path(env_t *env, char *find_var)
     return (dest_var);
 }
 
-int run_cd(char *path, env_t *env)
+int run_cd(char **path, env_t *env)
 {
-    if (path == NULL || path[0] == '~')
-        path = find_path(env, "HOME");
-    if (chdir(path) != 0)
+    if (path == NULL || ft_strcmp(path[0], "~") == 0) //check if ok
+        path[0] = find_path(env, "HOME");
+    if (chdir(path[0]) != 0)
     {
         perror("");
         return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/10 15:08:05 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/14 20:06:18 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char  **put_envp(char **old_envp, char *new_arg)
 int inner_check(char *envp[], int i)
 {
 	int j;
-	char *temp;
 
 	j = 0;
 	while (envp[i][j] != '\0' && envp[i + 1][j] != '\0')
@@ -94,7 +93,6 @@ int inner_check(char *envp[], int i)
 int get_order(char **envp)
 {
 	int i;
-	int k;
 	char *temp;
 	int swapped;
 
