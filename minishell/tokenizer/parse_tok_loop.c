@@ -6,7 +6,11 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+=======
+/*   Updated: 2025/09/15 11:46:26 by skuik            ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +209,12 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b)
 void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 {
 	b->cmd->arguments = list_to_str_array(b->args);
+<<<<<<< Updated upstream
 	b->cmd->arg_count = list_size(b->args);
 
+=======
+	//makb->cmd->arg_count = list_size(b->args);
+>>>>>>> Stashed changes
 	b->cmd->redir_in = list_to_redir_array(b->redir_in);
 	b->cmd->redir_in_count = list_size(b->redir_in);
 

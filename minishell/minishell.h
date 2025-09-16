@@ -6,7 +6,11 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+=======
+/*   Updated: 2025/09/15 13:58:07 by skuik            ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +78,12 @@ typedef struct s_token {
 
 typedef struct s_redir {
     char *filename;
+<<<<<<< Updated upstream
     t_redir_type type;
+=======
+    t_redir_type type; 
+    int *pipe_forhdc;
+>>>>>>> Stashed changes
 } t_redir;
 
 typedef struct s_command {

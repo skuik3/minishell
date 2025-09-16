@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/16 15:39:04 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void print_cmd(t_command *cmd)
 		i++;
 		cmd = cmd->next;
 	}
+	printf("\n");
 	printf("%d commands in pipeline.\n", i - 1);
+	printf("\n");
 }
 
 int is_exit_input(const char *line, ssize_t n)
@@ -82,26 +84,30 @@ int is_exit_input(const char *line, ssize_t n)
 	return (0);
 }
 
-t_command *run_shell_line(char *line)
+t_command *run_shell_line(char *line) //, env_t *env
 {
-	t_token *tokens;
-	t_command *cmd_list = NULL;
+    t_token *tokens;
+    t_command *cmd_list = NULL;
 
-	printf("Input line: [%s]\n", line);
-	tokens = tokenize(line);
-	printf("Tokens:\n");
-	if (!tokens)
-	{
-		fprintf(stderr, "Tokenization failed.\n");
-		return (NULL);
-	}
-	if (!init_commands(&cmd_list, tokens))
-	{
-		fprintf(stderr, "Parsing failed.\n");
-		free_tokens(tokens);
-		return (NULL);
-	}
-	print_cmd(cmd_list);
-	free_tokens(tokens);
-	return (cmd_list);
+    if (!line)
+        return NULL;
+
+    printf("Input line: [%s]\n", line);
+    tokens = tokenize(line);
+    if (!tokens)
+    {
+        fprintf(stderr, "Tokenization failed.\n");
+        return NULL;
+    }
+    // if (env)
+    //     expand_all_tokens(tokens, env);
+    if (!init_commands(&cmd_list, tokens))
+    {
+        fprintf(stderr, "Parsing failed.\n");
+        free_tokens(tokens);
+        return NULL;
+    }
+    print_cmd(cmd_list); // optional, for debugging
+    free_tokens(tokens);
+    return cmd_list;
 }
