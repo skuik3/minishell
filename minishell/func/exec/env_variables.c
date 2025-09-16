@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:29:02 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:04:40 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/16 15:24:03 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

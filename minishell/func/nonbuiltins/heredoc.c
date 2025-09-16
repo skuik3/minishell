@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 08:57:23 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/16 15:28:59 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,6 @@ int last_heredoc(t_redir *last)
     return (0);
 }
 
-char *get_line_heredoc(t_redir *last)
-{
-    char *line;
-    char *returned;
-
-    returned = NULL;
-    while (1 && g_signal != SIGINT)
-    {
-        write (STDOUT_FILENO, "> ", 3);
-        line = get_next_line(STDIN_FILENO);
-        if (ft_strcmp(line, ft_strjoin(last->filename, "\n")) == 0)
-            break ;
-        returned = ft_strjoin(returned, line);        
-    }
-    return (returned);
-}
 //check if casting does not affect
 int redirecting_heredoc(t_redir *heredoc)
 {
@@ -91,14 +75,11 @@ int do_heredoc(t_command *cmd)
 {
     int i;
     int returned;
-    // int hdc;
 
     i = 0;
     returned = 0;
-    // hdc = where_last_heredoc(cmd, REDIR_HEREDOC);
     while (cmd->redir_in[i + 1] != NULL)
     {
-        // printf("\nBBBB\n");
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = redirecting_heredoc(cmd->redir_in[i]);
         if (returned == SIGINT)
@@ -107,29 +88,11 @@ int do_heredoc(t_command *cmd)
     }
     while (cmd->redir_in[i] != NULL)
     {
-        // printf("\nCCCC\n");
         if (cmd->redir_in[i]->type == REDIR_HEREDOC)
             returned = last_heredoc(cmd->redir_in[i]);
         i++;
     }
-    // printf("\nDDDD>%d\n", returned); 
     return (returned);
-}
-
-int heredoc_present(t_redir **redir)
-{
-    int i;
-
-    i = 0;
-    if (redir == NULL)
-        return (0);
-    while (redir[i] != NULL)
-    {
-        if (redir[i]->type == REDIR_HEREDOC)
-            return (1);
-        i++;
-    }
-    return (0);
 }
 
 int check_heredoc(t_command *cmd)
@@ -137,19 +100,14 @@ int check_heredoc(t_command *cmd)
     int returned;
 
     returned = 0;
-    // exit(0);
     if (cmd->next == NULL && cmd->is_first == 1)
     {
-        // printf("\nAAAA\n");
         if (heredoc_present(cmd->redir_in) == 1)
             returned = do_heredoc(cmd);
         return (returned);
     }
     while (cmd != NULL)
     {
-        // write(1, "B\n", 2);
-        // printf("%s\n", cmd->command);
-
         if (heredoc_present(cmd->redir_in) == 1)
             returned = do_heredoc_multiple(cmd);
         if (returned == SIGINT)

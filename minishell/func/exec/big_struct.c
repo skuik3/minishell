@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   big_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 11:44:46 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:03:37 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/16 15:22:29 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

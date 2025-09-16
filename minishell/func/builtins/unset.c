@@ -6,36 +6,11 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 20:07:11 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/16 15:19:32 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char *find_variable(char *arguments)
-{
-    char *variable;
-    int i;
-    int len;
-
-    len = 0;
-    while (arguments[len] != '\0' && arguments[len] != '=')
-        len++;
-    variable = malloc(sizeof(char) * (len + 1));
-    if (variable == NULL)
-    {
-        perror("");
-        return (NULL);
-    }
-    i = 0;
-    while (arguments[i] != '\0' && arguments[i] != '=')
-    {
-        variable[i] = arguments[i];
-        i++;
-    }
-    variable[i] = '\0';
-    return(variable);
-}
 
 char **put_unset(char **old_env, int unset)
 {
@@ -62,7 +37,6 @@ char **put_unset(char **old_env, int unset)
         i++; 
     }
     new_envp[i] = NULL;
-    // run_env(new_envp);
     free(old_env);
     return (new_envp);
 }

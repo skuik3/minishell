@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 09:07:00 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/16 15:16:56 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ char **prepare_unset(char *argument)
 {
     char **unset;
     char *variable;
-    // int len;
 
     variable = find_variable(argument);
-    // len = ft_strlen(variable);
     unset = malloc(sizeof(char *) * 2);
     if (unset == NULL)
     {

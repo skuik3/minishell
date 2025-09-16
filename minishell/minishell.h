@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 10:41:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/16 15:20:04 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,8 @@ int check_variable(char *variable);
 int unseting(env_t *envp, char *arguments);
 int find_unset(char *arguments, env_t *envp);
 int unset_position(char *envp, char *variable, int i);
+int export_argument(env_t *envp, char *argument);
+int inner_check(char *envp[], int i);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);
