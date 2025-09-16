@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 10:25:00 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/16 10:33:59 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,10 @@ int run_export(env_t *envp, char **arguments)
 				run_unset(envp, unset);
 			}
 			else
-				return (0);
+			{
+				i++;
+				continue;
+			}
 		}
 		envp->mod = put_envp(envp->mod, add_variable);
 		i++;

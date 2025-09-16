@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 14:20:11 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/16 10:39:14 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int main(int argc, char *argv[], char *envp[])
         signal(SIGINT, handle_signal_main);
         signal(EOF, SIG_IGN);
         signal(SIGQUIT, SIG_IGN);
-        promt = readline("minishell>");
+        promt = readline("minishell> ");
         if (promt == NULL)
             break;
         cmd = run_shell_line(promt);
-        cmd->envar = adding_env(cmd, envp);
+        cmd->envar = bigs->env;
         g_signal = 0;
         bigs->cmd = cmd;
         bigs->exit_bef = command_execution(bigs);
