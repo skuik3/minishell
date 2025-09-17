@@ -6,7 +6,7 @@
 #    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/16 15:47:27 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/17 09:15:36 by anezka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,6 +97,9 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
+
+val:
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
 
 clean:
 	rm -f $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:19:32 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 11:05:11 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char **put_unset(char **old_env, int unset)
        new_envp[i] = old_env[i];
        i++; 
     }
+    free(old_env[i]);
     while (old_env[i + 1] != NULL)
     {
         new_envp[i] = old_env[i + 1];
@@ -79,6 +80,7 @@ int find_unset(char *arguments, env_t *envp)
         }
         i++;
     }
+    free(variable);
     return (unset);
 }
 

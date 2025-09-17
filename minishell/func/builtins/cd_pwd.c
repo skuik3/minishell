@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:56:39 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 09:08:52 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,27 @@ int run_cd(char **path, env_t *env)
 {
     char *temp;
 
-    if (path == NULL || ft_strcmp(path[0], "~") == 0) //check if ok
-        temp = find_path(env, "HOME");
-    if (temp == NULL)
-        return (1);
-    if (path != NULL || ft_strcmp(path[0], "~") != 0)
-        temp = path[0];
-    if (chdir(temp) != 0)
+    if (path == NULL || ft_strcmp(path[0], "~") == 0)
     {
-        perror("");
-        return (1);
+        temp = find_path(env, "HOME");
+        if (temp == NULL)
+            return (1);
+        if (chdir(temp) != 0)
+        {
+            perror("");
+            free(temp);
+            return (1);
+        }
+        free(temp);
     }
-    free_arguments(path);
-    free(temp);
-    //just for easy check
-    // run_pwd();path[0]
-    // free(path);
+    else
+    {
+        if (chdir(path[0]) != 0)
+        {
+            perror("");
+            return (1);
+        }
+    }
     return (0);
 }
 

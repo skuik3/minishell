@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:40:23 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 09:50:40 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int variable_present(char *variable, env_t *envp)
         present = find_variable(envp->mod[i]);
         if (ft_strcmp(variable, present) == 0)
             return (0);
+        free(present);
         i++;
     }
     return (1);
@@ -52,6 +53,7 @@ char **prepare_unset(char *argument)
     }
     unset[0] = ft_strdup(variable);
     unset[1] = NULL;
+    free(variable);
     return (unset);
 }
 
@@ -88,5 +90,6 @@ int check_variable(char *variable)
             return (1);
         i++;
     }
+    free(just_variable);
     return (0);
 }
