@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 09:50:40 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 13:36:55 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,17 @@ int check_variable(char *variable)
     i = 1;
     just_variable = find_variable(variable);
     if (ft_isalpha(just_variable[0]) != 1)
+    {
+        free(just_variable);
         return (1);
+    }
     while (just_variable[i] != '\0')
     {
         if (ft_isalnum(just_variable[i]) != 1)
+        {
+            free(just_variable);
             return (1);
+        }
         i++;
     }
     free(just_variable);

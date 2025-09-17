@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 10:54:50 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 13:38:08 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ int export_argument(env_t *envp, char *argument)
 	if (check_variable(add_variable) == 1)
 	{
 		write(1, "not a valid identifier\n", 24);
+		free(var);
+		if (value_present(argument) != 0)
+			free(add_variable);
 		return (1);
 	}
 	if (variable_present(var, envp) == 0)
