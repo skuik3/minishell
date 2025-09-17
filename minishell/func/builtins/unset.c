@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 11:05:11 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 14:22:17 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,10 @@ int find_unset(char *arguments, env_t *envp)
     int unset;
 
     i = 0;
+    unset = -2;
     variable = find_variable(arguments);
-    if (ft_strcmp(variable, arguments) != 0) //proc
-        return (free(variable), 1);
+    if (ft_strcmp(variable, arguments) != 0)
+        return (free(variable), -2);
     while (envp->mod[i] != NULL)
     {
         if (envp->mod[i][0] == variable[0])

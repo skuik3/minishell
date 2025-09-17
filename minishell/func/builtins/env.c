@@ -6,12 +6,13 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 14:56:19 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 13:41:58 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+//ISSUE IF AFTER INV ARGUMENT!!
 int run_env(char **envp)
 {
     int i;
