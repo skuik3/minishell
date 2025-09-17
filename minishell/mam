@@ -1,0 +1,10 @@
+func
+helper_funcs
+main.c
+main.o
+Makefile
+mam
+minishell
+minishell.h
+supp.supp
+tokenizer

@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 14:22:17 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 14:27:49 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int run_unset(env_t *envp, char **arguments)
         i++;
     }
     //for check
-    get_order(envp->mod);
-    run_env(envp->mod);
+    // get_order(envp->mod);
+    // run_env(envp->mod);
     return (returned);
 }

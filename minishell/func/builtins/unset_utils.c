@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 14:58:46 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/17 10:56:28 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 15:40:48 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char  **put_envp(char **old_envp, char *new_arg)
     new_envp[i] = ft_strdup(new_arg);
 	new_envp[i + 1] = NULL;
 	free (old_envp);
-	// free(new_arg);
 	return (new_envp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 13:36:55 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 15:36:14 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int variable_present(char *variable, env_t *envp)
     {
         present = find_variable(envp->mod[i]);
         if (ft_strcmp(variable, present) == 0)
+        {
+            free(present);
             return (0);
+        }
         free(present);
         i++;
     }

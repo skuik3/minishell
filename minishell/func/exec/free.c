@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 10:04:01 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:56:36 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 14:59:05 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void free_redir(t_redir **redir) {
     while (redir[i] != NULL)
     {
         free(redir[i]->filename);
-        free(redir[i]->pipe_forhdc);
+        if (redir[i]->pipe_forhdc != NULL)
+            free(redir[i]->pipe_forhdc);
         free(redir[i]);
         i++;
     }
@@ -99,6 +100,7 @@ void free_big(t_biggie *bigs)
         current = bigs->cmd;
         bigs->cmd = bigs->cmd->next;
         free_commands(current);
+        free(current);
 
     }
     bigs->cmd = NULL;

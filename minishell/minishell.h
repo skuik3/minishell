@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:57:23 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 14:27:23 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ char **prepare_unset(char *argument);
 int value_present(char *argument);
 char **adding_command(t_command *cmd);
 int just_nb(char *nb);
+int unset_value(env_t *envp, char *argument);
 int number_exit(char *args);
 int check_variable(char *variable);
 int unseting(env_t *envp, char *arguments);

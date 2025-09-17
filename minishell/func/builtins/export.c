@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 13:38:08 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 15:41:40 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,28 @@ int inner_check(char *envp[], int i)
 	return (0);
 }
 
+int unset_value(env_t *envp, char *argument)
+{
+	char **unset;
+
+	if (value_present(argument) == 0)
+	{
+		unset = prepare_unset(argument);
+		run_unset(envp, unset);
+		free(unset[0]);
+		free(unset);
+		return (0);
+	}
+	return (-2);
+}
+
 int export_argument(env_t *envp, char *argument)
 {
 	char *add_variable;
-	char **unset;
 	char *var;
+	int	present;
 
+	present = 0;
 	add_variable = adding_variable(argument);
 	var = find_variable(add_variable);
 	if (check_variable(add_variable) == 1)
@@ -70,15 +86,14 @@ int export_argument(env_t *envp, char *argument)
 		return (1);
 	}
 	if (variable_present(var, envp) == 0)
+		present = unset_value(envp, argument);
+	free(var);
+	if (present == -2)
 	{
-		if (value_present(argument) == 0)
-		{
-			unset = prepare_unset(argument);
-			run_unset(envp, unset);
-		}
+		free(add_variable);
+		return (0);
 	}
 	envp->mod = put_envp(envp->mod, add_variable);
-	free(var);
 	if (value_present(argument) != 0)
 		free(add_variable);
 	return (0);
@@ -100,8 +115,8 @@ int run_export(env_t *envp, char **arguments)
 		export_argument(envp, arguments[i]);
 		i++;
 	}
- // just fo easy check, delete later
-    get_order(envp->mod);
-    run_env(envp->mod);
+	// just fo easy check, delete later
+    // get_order(envp->mod);
+    // run_env(envp->mod);
     return (0);
 }
