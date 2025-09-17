@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:29:04 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 08:56:47 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *get_line_heredoc(t_redir *last)
     {
         write (STDOUT_FILENO, "> ", 3);
         line = get_next_line(STDIN_FILENO);
-        if (ft_strcmp(line, ft_strjoin(last->filename, "\n")) == 0)
+        if (ft_strcmp(line, ft_strjoin(ft_strdup(last->filename), "\n")) == 0)
             break ;
         returned = ft_strjoin(returned, line);        
     }

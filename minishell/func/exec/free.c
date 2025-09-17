@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 10:04:01 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:04:06 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/17 08:56:36 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void free_arguments(char **arguments)
     int i;
 
     i = 0;
+    if (arguments == NULL)
+        return ;
     while (arguments[i] != NULL)
     {
         free(arguments[i]);
+        arguments[i] = NULL;
         i++;
     }
     free(arguments);
+    arguments = NULL;
 }
 
 void free_redir(t_redir **redir) {
@@ -34,6 +38,7 @@ void free_redir(t_redir **redir) {
         free(redir[i]->filename);
         free(redir[i]->pipe_forhdc);
         free(redir[i]);
+        i++;
     }
     free(redir);
 }

@@ -6,7 +6,7 @@
 #    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/16 15:32:11 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/16 15:47:27 by anezka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = main.c\
 	func/builtins/exit.c\
 	func/exec/big_struct.c\
 	func/exec/command_find.c\
+	func/exec/single_command.c\
 	func/exec/env_variables.c\
 	func/exec/forks.c\
 	func/exec/free.c\

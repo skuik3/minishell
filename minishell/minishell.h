@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:20:04 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 08:57:23 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_biggiest_struct
 // ANEZKAS_PART
 void free_big(t_biggie *bigs);
 void clean_big(t_biggie *bigs);
+void free_arguments(char **arguments);
 //main_execution
 int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);
@@ -170,6 +171,7 @@ int other_multiple(t_biggie *bigs);
 int first_multiple(t_biggie *bigs);
 t_biggie *setting_big(void);
 void close_herepipe(t_command *cmd);
+int check_before_single(t_biggie *bigs);
 //utils for main_execution
 int saving_env(char ***env, char *envp[]);
 int is_builtint(char *command);
