@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 08:49:44 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/16 15:31:05 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int redirecting_in(t_redir *redirin)
         return (1);
     return (0);   
 }
+
 //check if permission to write denied bahaviour
 int last_redirect_in(t_redir *last)
 {
@@ -65,7 +66,6 @@ int redirect_in(t_command *cmd)
 
     i = 0;
     returned = 0;
-    // redir = where_last_heredoc(cmd, REDIR_IN);
     while (cmd->redir_in[i + 1] != NULL)
     {
         if (cmd->redir_in[i]->type == REDIR_IN)

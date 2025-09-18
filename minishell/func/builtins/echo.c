@@ -6,16 +6,28 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 18:13:59 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/16 14:54:05 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+int write_echo(char *argument)
+{
+    int i;
+
+    i = 0;
+    while (argument[i]!= '\0')
+    {
+        write(STDOUT_FILENO, &argument[i], 1);
+        i++;
+    }
+    return (0);
+}
+
 int run_echo(char **arguments)
 {
     int i;
-    int k;
 
     i = 0;
     if (arguments == NULL)
@@ -27,12 +39,7 @@ int run_echo(char **arguments)
         i++;
     while (arguments[i] != NULL)
     {
-        k = 0;
-        while (arguments[i][k] != '\0')
-        {
-            write(STDOUT_FILENO, &arguments[i][k], 1);
-            k++;
-        }
+        write_echo(arguments[i]);
         if (arguments[i + 1] != NULL)
             write(STDOUT_FILENO, " ", 1);
         i++;

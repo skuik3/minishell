@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 10:39:14 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 08:56:50 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int main(int argc, char *argv[], char *envp[])
     bigs->env = adding_env(NULL, envp);
     while (1)
     {
-        clean_big(bigs);
         signal(SIGINT, handle_signal_main);
         signal(EOF, SIG_IGN);
         signal(SIGQUIT, SIG_IGN);
@@ -53,7 +52,8 @@ int main(int argc, char *argv[], char *envp[])
         bigs->cmd = cmd;
         bigs->exit_bef = command_execution(bigs);
         add_history(promt);
+        clean_big(bigs);
     }
-    free(bigs);
+    free_big(bigs);
     return (0);
 }

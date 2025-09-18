@@ -2,5 +2,5 @@
     ignore_libreadline_leaks
     Memcheck:Leak
     ...
-    obhj:/libreadline.so.
+    obj:*/libreadline.so.*
 }

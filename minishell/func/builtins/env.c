@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 10:57:49 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/17 13:41:58 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+//ISSUE IF AFTER INV ARGUMENT!!
 int run_env(char **envp)
 {
     int i;
@@ -24,7 +25,8 @@ int run_env(char **envp)
     }
     while (envp[i] != NULL)
     {
-        printf("%s\n", envp[i]); //ft_printf
+        ft_putstr_fd(envp[i], STDOUT_FILENO);
+        ft_putstr_fd("\n", STDOUT_FILENO);
         i++;
     }
     return (0);

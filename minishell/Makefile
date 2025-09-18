@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
+#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/15 11:29:22 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/17 09:15:36 by anezka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,19 @@ SRC = main.c\
 	func/builtins/export.c\
 	func/builtins/export_utils.c\
 	func/builtins/unset.c\
+	func/builtins/unset_utils.c\
+	func/builtins/exit.c\
 	func/exec/big_struct.c\
 	func/exec/command_find.c\
+	func/exec/single_command.c\
 	func/exec/env_variables.c\
 	func/exec/forks.c\
 	func/exec/free.c\
 	func/exec/libft_utils.c\
 	func/exec/signals.c\
 	func/exec/utils.c\
-	func/nonbuiltins/heredoc_multiple.c\
+	func/exec/builtins_commands.c\
+	func/nonbuiltins/heredoc_utils.c\
 	func/nonbuiltins/heredoc.c\
 	func/nonbuiltins/nonbuiltins.c\
 	func/nonbuiltins/pipes.c\
@@ -93,6 +97,9 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
+
+val:
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
 
 clean:
 	rm -f $(OBJ)

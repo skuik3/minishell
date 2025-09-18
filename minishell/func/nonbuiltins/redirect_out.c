@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 10:59:04 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/17 16:08:38 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// 2> for redirecting error output / probably not needed 
 
 int check_redirect(t_command *cmd)
 {
@@ -55,7 +53,7 @@ int appending(t_redir *append)
 {
     int fd;
 
-    if (access(append->filename, F_OK) != 0)
+    if (access(append->filename, F_OK) == 0)
         return(0);
     fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (fd == -1)

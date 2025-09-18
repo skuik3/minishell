@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 09:07:00 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 15:36:14 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int variable_present(char *variable, env_t *envp)
     {
         present = find_variable(envp->mod[i]);
         if (ft_strcmp(variable, present) == 0)
+        {
+            free(present);
             return (0);
+        }
+        free(present);
         i++;
     }
     return (1);
@@ -42,10 +46,8 @@ char **prepare_unset(char *argument)
 {
     char **unset;
     char *variable;
-    // int len;
 
     variable = find_variable(argument);
-    // len = ft_strlen(variable);
     unset = malloc(sizeof(char *) * 2);
     if (unset == NULL)
     {
@@ -54,6 +56,7 @@ char **prepare_unset(char *argument)
     }
     unset[0] = ft_strdup(variable);
     unset[1] = NULL;
+    free(variable);
     return (unset);
 }
 
@@ -83,13 +86,19 @@ int check_variable(char *variable)
     i = 1;
     just_variable = find_variable(variable);
     if (ft_isalpha(just_variable[0]) != 1)
+    {
+        free(just_variable);
         return (1);
+    }
     while (just_variable[i] != '\0')
     {
         if (ft_isalnum(just_variable[i]) != 1)
+        {
+            free(just_variable);
             return (1);
+        }
         i++;
     }
+    free(just_variable);
     return (0);
 }
-
