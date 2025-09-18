@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:54:48 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 21:58:06 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/18 19:58:35 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,40 @@ void	free_cmd(t_command *cmd)
 	}
 }
 
+void	free_list(t_list *list)
+{
+	t_list *temp;
+
+	while (list)
+	{
+		temp = list;
+		list = list->next;
+		free(temp);
+	}
+}
+
+void	free_string_list(t_list *list)
+{
+	t_list *temp;
+
+	while (list)
+	{
+		temp = list;
+		list = list->next;
+		if (temp->content)
+			free(temp->content);
+		free(temp);
+	}
+}
+
 void	free_cmd_builder(t_cmd_builder *builder)
 {
 	if (!builder)
 		return ;
 
 	free_cmd(builder->cmd);
-	// free_list(builder->args);
-	// free_list(builder->redir_in);
-	// free_list(builder->redir_out);
+	free_list(builder->args);
+	free_list(builder->redir_in);
+	free_list(builder->redir_out);
 	free(builder);
 }
-

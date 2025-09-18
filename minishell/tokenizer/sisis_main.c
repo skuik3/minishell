@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/18 20:01:01 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void print_cmd(t_command *cmd)
 		i++;
 		cmd = cmd->next;
 	}
+	printf("\n");
 	printf("%d commands in pipeline.\n", i - 1);
+	printf("\n");
 }
 
 int is_exit_input(const char *line, ssize_t n)
@@ -82,7 +84,7 @@ int is_exit_input(const char *line, ssize_t n)
 	return (0);
 }
 
-t_command *run_shell_line(char *line)
+t_command *run_shell_line(char *line, env_t *env)
 {
 	t_token *tokens;
 	t_command *cmd_list = NULL;
@@ -95,7 +97,7 @@ t_command *run_shell_line(char *line)
 		fprintf(stderr, "Tokenization failed.\n");
 		return (NULL);
 	}
-	if (!init_commands(&cmd_list, tokens))
+	if (!init_commands(&cmd_list, tokens, env))
 	{
 		fprintf(stderr, "Parsing failed.\n");
 		free_tokens(tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:56:50 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 20:13:42 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,19 @@ int main(int argc, char *argv[], char *envp[])
         promt = readline("minishell> ");
         if (promt == NULL)
             break;
-        cmd = run_shell_line(promt);
+        cmd = run_shell_line(promt, bigs->env);
+        if (cmd == NULL)
+        {
+            free(promt);
+            continue ;
+        }
         cmd->envar = bigs->env;
         g_signal = 0;
         bigs->cmd = cmd;
         bigs->exit_bef = command_execution(bigs);
         add_history(promt);
         clean_big(bigs);
+        free(promt);
     }
     free_big(bigs);
     return (0);

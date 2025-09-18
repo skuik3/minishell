@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/15 10:44:28 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/18 20:00:12 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_redir	*new_redir(t_token *tok, t_redir_type type)
 		return (NULL);
 	r->filename = strdup(tok->value);
 	r->type = type;
+	r->pipe_forhdc = NULL;
+	r->position = 0;
 	return (r);
 }
 
@@ -176,7 +178,7 @@ bool	init_cmd_builder(t_cmd_builder *b, t_command **out)
 }
 
 
-bool	process_tokens(t_token *tok, t_cmd_builder *b)
+bool	process_tokens(t_token *tok, t_cmd_builder *b, env_t *env)
 {
 	bool is_first_token = true;
 
@@ -189,13 +191,16 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b)
 		}
 		else if (tok->type == T_WORD)
 		{
+			char *expanded_value = expand_variables(tok->value, env);
 			if (is_first_token)
 			{
-				b->cmd->command = strdup(tok->value);
+				b->cmd->command = expanded_value ? expanded_value : strdup(tok->value);
 				is_first_token = false;
 			}
 			else
-				list_add_back(&b->args, strdup(tok->value));
+			{
+				list_add_back(&b->args, expanded_value ? expanded_value : strdup(tok->value));
+			}
 		}
 		tok = tok->next;
 	}
@@ -214,7 +219,7 @@ void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 }
 
 
-bool	parse_tokens(t_token *tok, t_command **out)
+bool	parse_tokens(t_token *tok, t_command **out, env_t *env)
 {
 	t_cmd_builder b;
 
@@ -222,8 +227,18 @@ bool	parse_tokens(t_token *tok, t_command **out)
 		return (false);
 	if (!init_cmd_builder(&b, out))
 		return (false);
-	if (!process_tokens(tok, &b))
+	if (!process_tokens(tok, &b, env))
+	{
+		free(b.cmd);
+		free_string_list(b.args);
+		free_list(b.redir_in);
+		free_list(b.redir_out);
 		return (false);
+	}
 	finalize_cmd_builder(&b, out);
+	free_string_list(b.args);
+	free_list(b.redir_in);
+	free_list(b.redir_out);
+	
 	return (true);
 }

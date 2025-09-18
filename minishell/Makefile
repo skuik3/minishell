@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
+#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/17 09:15:36 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/18 19:39:42 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRC = main.c\
 	helper_funcs/ft_strrchr.c\
 	helper_funcs/ft_strtrim.c\
 	helper_funcs/ft_substr.c\
+	helper_funcs/ft_strncmp.c\
 	helper_funcs/get_next_line_utils.c\
 	helper_funcs/get_next_line.c\
 	
