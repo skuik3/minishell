@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 10:04:01 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 14:59:05 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 16:05:59 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void free_redir(t_redir **redir) {
     while (redir[i] != NULL)
     {
         free(redir[i]->filename);
-        if (redir[i]->pipe_forhdc != NULL)
+        if (redir[i]->type == REDIR_HEREDOC)
             free(redir[i]->pipe_forhdc);
         free(redir[i]);
         i++;

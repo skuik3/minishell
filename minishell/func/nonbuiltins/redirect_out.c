@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:31:37 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/17 16:08:38 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int appending(t_redir *append)
 {
     int fd;
 
-    if (access(append->filename, F_OK) != 0)
+    if (access(append->filename, F_OK) == 0)
         return(0);
     fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (fd == -1)
