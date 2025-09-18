@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:23:05 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/16 15:23:54 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 19:52:30 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int what_builtin(t_biggie *bigs)
     else if (ft_strcmp(bigs->cmd->command, "cd") == 0)
         returned = run_cd(bigs->cmd->arguments, bigs->cmd->envar);
     else if (ft_strcmp(bigs->cmd->command, "env") == 0)
-        returned = run_env(bigs->cmd->envar->mod);
+        returned = run_env(bigs);
     else if (ft_strcmp(bigs->cmd->command, "exit") == 0)
         returned = run_exit(bigs);
     else if (ft_strcmp(bigs->cmd->command, "export") == 0)
-        returned = run_export(bigs->cmd->envar, bigs->cmd->arguments);
+        returned = run_export(bigs);
     else if (ft_strcmp(bigs->cmd->command, "unset") == 0)
         returned = run_unset(bigs->cmd->envar, bigs->cmd->arguments);
     else if (bigs->cmd->command != NULL)

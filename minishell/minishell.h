@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 14:27:23 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 19:51:57 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,9 +183,9 @@ void handle_signal_heredoc(int signal);
 int run_pwd(void);
 int run_echo(char **string);
 int run_cd(char **path, env_t *env); //todo home
-int run_env(char **envp);
+int run_env(t_biggie *bigs);
 int run_exit(t_biggie *bigs); //todo s ciselkami
-int run_export(env_t *envp, char **arguments);
+int run_export(t_biggie *bigs);
 int run_unset(env_t *envp, char **arguments);
 //utils for builtin fce
 int copy_string(char **env, char *orig_env);
