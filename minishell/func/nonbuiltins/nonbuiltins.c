@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nonbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 12:21:14 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 13:45:44 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,38 @@ char *command_path(t_command *cmd)
     char **arr_path;
     int i;
     char *path;
+    char *temp_path;//nwe
 
     i = 0;
     env_path = find_path(cmd->envar, "PATH");
+    if (!env_path)//new
+        return (NULL);//nwe
     arr_path = ft_split(env_path, ':');
+    free(env_path);//new
+    if (!arr_path)//new
+        return (NULL);//new
     while (arr_path[i] != NULL)
     {
-        path = ft_strjoin(arr_path[i], "/");
-        path = ft_strjoin(path, cmd->command);
+        // //path = ft_strjoin(arr_path[i], "/");
+        // //path = ft_strjoin(path, cmd->command);
+        temp_path = ft_strdup(arr_path[i]);//new
+        if (!temp_path)//
+            break;//
+        temp_path = ft_strjoin(temp_path, "/");//
+        if (!temp_path)//
+            break;//
+        path = ft_strjoin(temp_path, cmd->command);//
+        if (!path)///
+            break;//new
         if (access(path, F_OK) == 0)
+        {
+            free_array(arr_path);//new
             return (path);
+        }
+        free(path);//new
         i++;
     }
+    free_array(arr_path);//new
     return (NULL);
 }
 
@@ -93,6 +113,7 @@ int executing(t_command *cmd)
         if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
         {
             perror("");
+            free_array(cmdw_args);//new
             return (1);
         }
     }
@@ -102,11 +123,14 @@ int executing(t_command *cmd)
         if (path == NULL)
         {
             write(1, "Command not found\n", 19);
+            free_array(cmdw_args);//new
             return (127);
         }
         if (execve(path, cmdw_args, cmd->envar->mod) == -1)
         {
             perror("");
+            free_array(cmdw_args);//new
+            free(path);//new
             return (1);
         }
     }

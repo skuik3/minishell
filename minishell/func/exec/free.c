@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 10:04:01 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:04:06 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/18 14:41:46 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,29 @@ void free_arguments(char **arguments)
     free(arguments);
 }
 
-void free_redir(t_redir **redir) {
+void free_redir(t_redir **redir, int count)//int count is new too
+{
     int i;
-
+    //new
+    if (!redir || count <= 0)
+        return;
+    //
     i = 0;
-    while (redir[i] != NULL)
+    //while (redir[i] != NULL)
+    while (i < count)
     {
-        free(redir[i]->filename);
-        free(redir[i]->pipe_forhdc);
-        free(redir[i]);
+        //free(redir[i]->filename);
+        //free(redir[i]->pipe_forhdc);
+        //free(redir[i]);
+        if (redir[i])//new
+        {
+            if (redir[i]->filename)
+                free(redir[i]->filename);
+            if (redir[i]->pipe_forhdc)
+                free(redir[i]->pipe_forhdc);
+            free(redir[i]);
+        }
+        i++;//
     }
     free(redir);
 }
@@ -67,10 +81,10 @@ void free_commands(t_command *cmd)
         free_arguments(cmd->arguments);
     cmd->arguments = NULL;
     if (cmd->redir_in != NULL)
-        free_redir(cmd->redir_in);
+        free_redir(cmd->redir_in, cmd->redir_in_count);//free_redir(cmd->redir_in);//this was before 
     cmd->redir_in = NULL;
     if (cmd->redir_out != NULL)
-        free_redir(cmd->redir_out);
+        free_redir(cmd->redir_out, cmd->redir_out_count);//free_redir(cmd->redir_out);//this was before
     cmd->redir_out = NULL;
     // if (cmd->envar != NULL)
     //     free_env(cmd->envar);
@@ -79,8 +93,13 @@ void free_commands(t_command *cmd)
 
 void free_pipes(t_pipe *pipe)
 {
-    free(pipe->pipe);
-    pipe->pipe = NULL;
+    //free(pipe->pipe);
+    //pipe->pipe = NULL;
+    if (!pipe)
+        return;
+    if (pipe->pipe)
+        free(pipe->pipe);
+    free(pipe);
 }
 
 void free_big(t_biggie *bigs)
@@ -94,7 +113,7 @@ void free_big(t_biggie *bigs)
         current = bigs->cmd;
         bigs->cmd = bigs->cmd->next;
         free_commands(current);
-
+        free(current);//new
     }
     bigs->cmd = NULL;
     if (bigs->env != NULL)
@@ -102,8 +121,10 @@ void free_big(t_biggie *bigs)
     bigs->env = NULL;
     while (bigs->pipe_cmd != NULL)
     {
-        free_pipes(bigs->pipe_cmd);
+        //free_pipes(bigs->pipe_cmd);
+        t_pipe *temp = bigs->pipe_cmd;//new
         bigs->pipe_cmd = bigs->pipe_cmd->next;
+        free_pipes(temp);//new
     }
     bigs->pipe_cmd = NULL;
     free(bigs);

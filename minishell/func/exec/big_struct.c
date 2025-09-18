@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   big_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 11:44:46 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/11 10:03:37 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/18 14:02:54 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ void clean_big(t_biggie *bigs)
     {
         next = current->next;
         free_commands(current);
+        free(current);//
         current = next;
     }
     bigs->cmd = NULL;
+    while (bigs->pipe_cmd != NULL)//new
+    {
+        t_pipe *temp = bigs->pipe_cmd;//new
+        bigs->pipe_cmd = bigs->pipe_cmd->next;//new
+        free_pipes(temp);//new
+    }
 }

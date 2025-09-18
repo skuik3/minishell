@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/15 10:41:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/18 14:02:26 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,10 @@ void free_tokens(t_token *head);
 void free_commands(t_command *cmd);
 void free_array(char **arr);
 void free_argv(char **argv);
+void free_list(t_list *list);
+void free_string_list(t_list *list);
+void free_cmd(t_command *cmd);
+void free_pipes(t_pipe *pipe);
 //parse_token.c
 t_token *new_token(const char *start, size_t len, t_token_type type);
 t_redir_type get_redir_type(const char *str, size_t len);
@@ -287,5 +291,16 @@ void print_command(t_command *cmd, int index);
 void print_commands(t_command *cmd);
 int is_exit_input(const char *line, ssize_t n);
 t_command *run_shell_line(char *line);
+
+//t_token *new_token(const char *str, size_t len, t_token_type type, int pos);
+t_redir *new_redir(t_token *tok, t_redir_type type);
+void add_redir_token(t_token *tok, t_cmd_builder *b);
+void list_add_back(t_list **list, void *content);
+bool init_cmd_builder(t_cmd_builder *b, t_command **out);
+bool process_tokens(t_token *tok, t_cmd_builder *b);
+void finalize_cmd_builder(t_cmd_builder *b, t_command **out);
+bool parse_tokens(t_token *tok, t_command **out);
+
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:57:39 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 20:15:20 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 14:07:11 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ t_pipe *prepare_pipes(t_command *cmd)
         if (pipe(pipe_cmd->pipe))
         {
             perror("");
+            while (head != NULL)//new
+            {
+                t_pipe *temp = head;//new
+                head = head->next;//new
+                free_pipes(temp);//new
+            }
             return (NULL);
         }
         pipe_cmd = pipe_cmd->next;

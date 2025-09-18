@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 10:39:14 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 14:06:47 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,19 @@ int main(int argc, char *argv[], char *envp[])
         if (promt == NULL)
             break;
         cmd = run_shell_line(promt);
+        if (cmd == NULL)//new
+        {
+            free(promt);//new
+            continue;//new
+        }//new
         cmd->envar = bigs->env;
         g_signal = 0;
         bigs->cmd = cmd;
         bigs->exit_bef = command_execution(bigs);
         add_history(promt);
+        free(promt);//new
     }
+    clean_big(bigs);//new
     free(bigs);
     return (0);
 }

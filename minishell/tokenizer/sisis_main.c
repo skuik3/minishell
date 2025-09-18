@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/11 22:37:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/18 14:42:35 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void print_cmd(t_command *cmd)
 		i++;
 		cmd = cmd->next;
 	}
+	printf("\n");
 	printf("%d commands in pipeline.\n", i - 1);
+	printf("\n");
 }
 
 int is_exit_input(const char *line, ssize_t n)

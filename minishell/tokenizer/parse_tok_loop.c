@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/15 10:44:28 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/18 13:48:55 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_redir	*new_redir(t_token *tok, t_redir_type type)
 		return (NULL);
 	r->filename = strdup(tok->value);
 	r->type = type;
+	r->pipe_forhdc = NULL;
+	r->position = 0;
 	return (r);
 }
 
@@ -223,7 +225,17 @@ bool	parse_tokens(t_token *tok, t_command **out)
 	if (!init_cmd_builder(&b, out))
 		return (false);
 	if (!process_tokens(tok, &b))
+	{
+		free(b.cmd);
+		free_string_list(b.args);
+		free_list(b.redir_in);
+		free_list(b.redir_out);
 		return (false);
+	}
 	finalize_cmd_builder(&b, out);
+	free_string_list(b.args);
+	free_list(b.redir_in);
+	free_list(b.redir_out);
+	
 	return (true);
 }

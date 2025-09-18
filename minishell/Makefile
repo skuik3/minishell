@@ -6,7 +6,7 @@
 #    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/15 11:29:22 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/18 11:20:51 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRC = main.c\
 	helper_funcs/ft_strrchr.c\
 	helper_funcs/ft_strtrim.c\
 	helper_funcs/ft_substr.c\
+	helper_funcs/ft_strncmp.c\
 	helper_funcs/get_next_line_utils.c\
 	helper_funcs/get_next_line.c\
 	
