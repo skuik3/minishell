@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 16:08:38 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 18:40:25 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int redirecting_out(t_redir *redirout)
 {
     int fd;
 
-    if (access(redirout->filename, F_OK) == 0)
+    if (access(redirout->filename, W_OK) == 0)
     {
         if (unlink(redirout->filename) == -1)
             return (1);
@@ -48,12 +48,12 @@ int redirecting_out(t_redir *redirout)
     close(fd);
     return (0);
 }
-//should also change to R_OK?, same case later
+
 int appending(t_redir *append)
 {
     int fd;
 
-    if (access(append->filename, F_OK) == 0)
+    if (access(append->filename, W_OK) == 0)
         return(0);
     fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
     if (fd == -1)
@@ -68,7 +68,7 @@ int last_redirect_out(t_redir *last)
 
     if (last->type == REDIR_OUT)
     {
-        if (access(last->filename, F_OK) == 0)
+        if (access(last->filename, W_OK) == 0)
         {
             if (unlink(last->filename) == -1)
                 return (1);

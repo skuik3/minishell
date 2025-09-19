@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:30:24 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 15:51:12 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ char *command_path(t_command *cmd)
         path = ft_strjoin(path, cmd->command);
         if (access(path, F_OK) == 0)
             return (path);
+        free(path);
         i++;
     }
+    free(env_path);
+    free(arr_path);
     return (NULL);
 }
 
@@ -102,6 +105,7 @@ int executing(t_command *cmd)
         if (path == NULL)
         {
             write(1, "Command not found\n", 19);
+            free_arguments(cmdw_args);
             return (127);
         }
         if (execve(path, cmdw_args, cmd->envar->mod) == -1)

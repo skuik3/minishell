@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 15:41:40 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/18 19:52:42 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,19 @@ int export_argument(env_t *envp, char *argument)
 	return (0);
 }
 
-int run_export(env_t *envp, char **arguments)
+int run_export(t_biggie *bigs)
 {
+	env_t *envp;
+	char **arguments;
     int   i;
 
     i = 0;
+	envp = bigs->cmd->envar;
+	arguments = bigs->cmd->arguments;
     if (arguments == NULL)
     {
         get_order(envp->mod);
-        run_env(envp->mod);
+        run_env(bigs);
         return (0);
     }
 	while (arguments[i] != NULL)

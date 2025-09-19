@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:56:47 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 22:02:45 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@ char *get_line_heredoc(t_redir *last)
 {
     char *line;
     char *returned;
+    char *cmp_line;
+    char *hrd_line;
 
     returned = NULL;
+    hrd_line = ft_strdup(last->filename);
+    cmp_line = ft_strjoin(hrd_line, "\n");
     while (1 && g_signal != SIGINT)
     {
         write (STDOUT_FILENO, "> ", 3);
         line = get_next_line(STDIN_FILENO);
-        if (ft_strcmp(line, ft_strjoin(ft_strdup(last->filename), "\n")) == 0)
+        if (ft_strcmp(line, cmp_line) == 0)
             break ;
-        returned = ft_strjoin(returned, line);        
+        returned = ft_strjoin(returned, line);
+        free(line);    
     }
+    free(cmp_line);
+    free(line);
     return (returned);
 }
 
@@ -46,12 +53,14 @@ int heredoc_present(t_redir **redir)
     return (0);
 }
 
-int last_heredoc_multiple(t_redir *last)
+int last_heredoc_multiple(t_biggie *bigs, int i)
 {
     int pid;
     char *promt;
     int status;
+    t_redir *last;
 
+    last = bigs->cmd->redir_in[i];
     last->pipe_forhdc = malloc(sizeof(int) * 2);
     if (last->pipe_forhdc == NULL)
         return (1);
@@ -68,6 +77,8 @@ int last_heredoc_multiple(t_redir *last)
         promt = get_line_heredoc(last);
         write(last->pipe_forhdc[1], promt, ft_strlen(promt));
         close(last->pipe_forhdc[1]);
+        free(promt);
+        free_big(bigs);
         exit(0);
     }
     waitpid(pid, &status, 0);
@@ -80,22 +91,23 @@ int last_heredoc_multiple(t_redir *last)
     return (0);
 }
 
-int do_heredoc_multiple(t_command *cmd)
+int do_heredoc_multiple(t_biggie *bigs)
 {
     int i;
     int returned;
 
     i = 0;
     returned = 0;
-    while (cmd->redir_in[i + 1] != NULL)
+    setting_pipe_hdc(bigs);
+    while (bigs->cmd->redir_in[i + 1] != NULL)
     {
-        if (cmd->redir_in[i]->type == REDIR_HEREDOC)
-            returned = redirecting_heredoc(cmd->redir_in[i]);
+        if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
+            returned = redirecting_heredoc(bigs, i);
         if (returned == SIGINT)
             return(returned);
         i++;
     }
-    if (cmd->redir_in[i]->type == REDIR_HEREDOC)
-       returned = last_heredoc_multiple(cmd->redir_in[i]);
+    if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
+       returned = last_heredoc_multiple(bigs, i);
     return (returned);
 }

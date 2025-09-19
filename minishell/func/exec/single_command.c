@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:45:02 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/16 15:53:30 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 16:25:57 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int check_before_single(t_biggie *bigs)
 {
-    bigs->exit_status = check_heredoc(bigs->cmd);
+    bigs->exit_status = check_heredoc(bigs);
     if (bigs->exit_status == 1)
     {
         perror("");
@@ -36,6 +36,7 @@ int check_before_single(t_biggie *bigs)
 int single_nonbuiltin(t_biggie *bigs)
 {
     int pid;
+    int status;
 
     signal(SIGINT, handle_signal_child);
     pid = fork();
@@ -47,8 +48,9 @@ int single_nonbuiltin(t_biggie *bigs)
     else if (pid == 0)
     {
         signal(SIGINT, SIG_DFL);
-        bigs->exit_status = executing(bigs->cmd);
-        exit(bigs->exit_status);
+        status = executing(bigs->cmd);
+        free_big(bigs);
+        exit(status);
     }
     waitpid(pid, &bigs->exit_status, 0);
     bigs->exit_status = WEXITSTATUS(bigs->exit_status);

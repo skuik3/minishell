@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 18:34:13 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/19 20:21:55 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,9 @@ void handle_signal_heredoc(int signal);
 int run_pwd(void);
 int run_echo(char **string);
 int run_cd(char **path, env_t *env); //todo home
-int run_env(char **envp);
+int run_env(t_biggie *bigs);
 int run_exit(t_biggie *bigs); //todo s ciselkami
-int run_export(env_t *envp, char **arguments);
+int run_export(t_biggie *bigs);
 int run_unset(env_t *envp, char **arguments);
 //utils for builtin fce
 int copy_string(char **env, char *orig_env);
@@ -229,14 +229,15 @@ int redirecting_in(t_redir *redirin);
 int last_redirect_in(t_redir *last);
 int redirect_in(t_command *cmd);
 int heredoc_present(t_redir **redir);
-int check_heredoc (t_command *cmd);
-int do_heredoc(t_command *cmd);
+int check_heredoc (t_biggie *bigs);
+int do_heredoc(t_biggie *bigs);
 char *get_line_heredoc(t_redir *last);
-int last_heredoc(t_redir *last);
-int redirecting_heredoc(t_redir *heredoc);
+int last_heredoc(t_biggie *bigs, int i);
+int redirecting_heredoc(t_biggie *bigs, int i);
 int where_last_heredoc(t_command *cmd, int redi);
-int last_heredoc_multiple(t_redir *last);
-int do_heredoc_multiple(t_command *cmd);
+int last_heredoc_multiple(t_biggie *bigs, int i);
+int do_heredoc_multiple(t_biggie *bigs);
+int setting_pipe_hdc(t_biggie *bigs);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils
