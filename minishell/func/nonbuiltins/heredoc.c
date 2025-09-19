@@ -6,19 +6,20 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 15:28:59 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 22:03:35 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int last_heredoc(t_redir *last)
+int last_heredoc(t_biggie *bigs, int i)
 {
     int pid;
-
+    t_redir *last;
     char *promt;
     int status;
 
+    last = bigs->cmd->redir_in[i];
     last->pipe_forhdc = malloc(sizeof(int) * 2);
     if (last->pipe_forhdc == NULL)
         return (1);
@@ -33,8 +34,11 @@ int last_heredoc(t_redir *last)
         signal(SIGINT, SIG_DFL);
         close(last->pipe_forhdc[0]);
         promt = get_line_heredoc(last);
-        write(last->pipe_forhdc[1], promt, ft_strlen(promt));
+        if (promt != NULL)
+            write(last->pipe_forhdc[1], promt, ft_strlen(promt));
         close(last->pipe_forhdc[1]);
+        free(promt);
+        free_big(bigs);
         exit(0);
     }
     close(last->pipe_forhdc[1]);
@@ -48,12 +52,14 @@ int last_heredoc(t_redir *last)
 }
 
 //check if casting does not affect
-int redirecting_heredoc(t_redir *heredoc)
+int redirecting_heredoc(t_biggie *bigs, int i)
 {
     char *promt;
     int pid;
     int status;
+    t_redir *heredoc;
 
+    heredoc = bigs->cmd->redir_in[i];
     signal(SIGINT, handle_signal_child);
     pid = fork();
     if (pid < -1)
@@ -63,6 +69,8 @@ int redirecting_heredoc(t_redir *heredoc)
         signal(SIGINT, SIG_DFL);
         promt = get_line_heredoc(heredoc);
         (void)promt;
+        free(promt);
+        free_big(bigs);
         exit(0);
     }
     if (g_signal == SIGINT)
@@ -71,48 +79,66 @@ int redirecting_heredoc(t_redir *heredoc)
     return (status);
 }
 
-int do_heredoc(t_command *cmd)
+int setting_pipe_hdc(t_biggie *bigs)
+{
+    int i;
+
+    i = 0;
+    while (bigs->cmd->redir_in[i] != NULL)
+    {
+        if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
+            bigs->cmd->redir_in[i]->pipe_forhdc = NULL;
+        i++;
+    }
+    return (0);
+}
+
+int do_heredoc(t_biggie *bigs)
 {
     int i;
     int returned;
 
     i = 0;
     returned = 0;
-    while (cmd->redir_in[i + 1] != NULL)
+    setting_pipe_hdc(bigs);
+    while (bigs->cmd->redir_in[i + 1] != NULL)
     {
-        if (cmd->redir_in[i]->type == REDIR_HEREDOC)
-            returned = redirecting_heredoc(cmd->redir_in[i]);
+        if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
+            returned = redirecting_heredoc(bigs, i);
         if (returned == SIGINT)
             return(returned);
         i++;
     }
-    while (cmd->redir_in[i] != NULL)
+    while (bigs->cmd->redir_in[i] != NULL)
     {
-        if (cmd->redir_in[i]->type == REDIR_HEREDOC)
-            returned = last_heredoc(cmd->redir_in[i]);
+        if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
+            returned = last_heredoc(bigs, i);
         i++;
     }
     return (returned);
 }
 
-int check_heredoc(t_command *cmd)
+int check_heredoc(t_biggie *bigs)
 {
     int returned;
+    t_command *head;
 
     returned = 0;
-    if (cmd->next == NULL && cmd->is_first == 1)
+    head = bigs->cmd;
+    if (bigs->cmd->next == NULL && bigs->cmd->is_first == 1)
     {
-        if (heredoc_present(cmd->redir_in) == 1)
-            returned = do_heredoc(cmd);
+        if (heredoc_present(bigs->cmd->redir_in) == 1)
+            returned = do_heredoc(bigs);
         return (returned);
     }
-    while (cmd != NULL)
+    while (bigs->cmd != NULL)
     {
-        if (heredoc_present(cmd->redir_in) == 1)
-            returned = do_heredoc_multiple(cmd);
+        if (heredoc_present(bigs->cmd->redir_in) == 1)
+            returned = do_heredoc_multiple(bigs);
         if (returned == SIGINT)
             return(returned);
-        cmd = cmd->next;
+        bigs->cmd = bigs->cmd->next;
     }
+    bigs->cmd = head;
     return (returned);
 }

@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:56:42 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 22:03:40 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int check_before_multiple(t_biggie *bigs)
 {
-    bigs->exit_status = check_heredoc(bigs->cmd);
+    bigs->exit_status = check_heredoc(bigs);
     if (bigs->exit_status == 1)
     {
         perror("");

@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/18 19:51:57 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 20:21:55 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,14 +228,15 @@ int redirecting_in(t_redir *redirin);
 int last_redirect_in(t_redir *last);
 int redirect_in(t_command *cmd);
 int heredoc_present(t_redir **redir);
-int check_heredoc (t_command *cmd);
-int do_heredoc(t_command *cmd);
+int check_heredoc (t_biggie *bigs);
+int do_heredoc(t_biggie *bigs);
 char *get_line_heredoc(t_redir *last);
-int last_heredoc(t_redir *last);
-int redirecting_heredoc(t_redir *heredoc);
+int last_heredoc(t_biggie *bigs, int i);
+int redirecting_heredoc(t_biggie *bigs, int i);
 int where_last_heredoc(t_command *cmd, int redi);
-int last_heredoc_multiple(t_redir *last);
-int do_heredoc_multiple(t_command *cmd);
+int last_heredoc_multiple(t_biggie *bigs, int i);
+int do_heredoc_multiple(t_biggie *bigs);
+int setting_pipe_hdc(t_biggie *bigs);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils

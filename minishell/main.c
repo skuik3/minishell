@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/17 08:56:50 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 21:54:16 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int main(int argc, char *argv[], char *envp[])
         if (promt == NULL)
             break;
         cmd = run_shell_line(promt);
+        if (cmd == NULL)
+            continue;
         cmd->envar = bigs->env;
         g_signal = 0;
         bigs->cmd = cmd;
