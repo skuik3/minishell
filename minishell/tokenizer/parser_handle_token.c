@@ -6,15 +6,15 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/15 11:24:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/19 17:46:09 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list *ft_lstnew(void *content)
+t_list	*ft_lstnew(void *content)
 {
-	t_list *node;
+	t_list	*node;
 
 	node = malloc(sizeof(t_list));
 	if (!node)
@@ -26,14 +26,14 @@ t_list *ft_lstnew(void *content)
 
 void	ft_lstadd_back(t_list **lst, t_list *new_node)
 {
-	t_list *current;
+	t_list	*current;
 
 	if (!lst || !new_node)
-		return;
+		return ;
 	if (!*lst)
 	{
 		*lst = new_node;
-		return;
+		return ;
 	}
 	current = *lst;
 	while (current->next)
@@ -41,10 +41,39 @@ void	ft_lstadd_back(t_list **lst, t_list *new_node)
 	current->next = new_node;
 }
 
+static char	*get_filename_from_token(t_token *tok)
+{
+	if (tok->next)
+		return (strdup(tok->next->value));
+	return (strdup(""));
+}
+
+static void	handle_redir_token(t_token *tok, t_cmd_builder *b)
+{
+	t_redir	*redir;
+
+	redir = malloc(sizeof(t_redir));
+	if (!redir)
+		return ;
+	redir->filename = get_filename_from_token(tok);
+	if (tok->type == T_REDIR_IN)
+		redir->type = REDIR_IN;
+	else if (tok->type == T_REDIR_OUT)
+		redir->type = REDIR_OUT;
+	else if (tok->type == T_REDIR_APPEND)
+		redir->type = REDIR_APPEND;
+	else if (tok->type == T_REDIR_HEREDOC)
+		redir->type = REDIR_HEREDOC;
+	if (tok->type == T_REDIR_IN || tok->type == T_REDIR_HEREDOC)
+		ft_lstadd_back(&b->redir_in, ft_lstnew(redir));
+	else
+		ft_lstadd_back(&b->redir_out, ft_lstnew(redir));
+	if (tok->type == T_REDIR_HEREDOC && tok->next)
+		b->cmd->command = strdup(tok->next->value);
+}
+
 void	handle_token(t_token *tok, t_cmd_builder *b)
 {
-	t_redir *redir;
-
 	if (tok->type == T_WORD)
 	{
 		if (!b->cmd->command)
@@ -53,26 +82,6 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 	}
 	else if (tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
 	{
-		redir = malloc(sizeof(t_redir));
-		if (!redir)
-			return;
-		redir->filename = strdup(tok->next ? tok->next->value : "");
-		if (tok->type == T_REDIR_IN)
-			redir->type = REDIR_IN;
-		else if (tok->type == T_REDIR_OUT)
-			redir->type = REDIR_OUT;
-		else if (tok->type == T_REDIR_APPEND)
-			redir->type = REDIR_APPEND;
-		else if (tok->type == T_REDIR_HEREDOC)
-			redir->type = REDIR_HEREDOC;
-
-		if (tok->type == T_REDIR_IN || tok->type == T_REDIR_HEREDOC)
-			ft_lstadd_back(&b->redir_in, ft_lstnew(redir));
-		else
-			ft_lstadd_back(&b->redir_out, ft_lstnew(redir));
-
-		if (tok->type == T_REDIR_HEREDOC && tok->next)
-			b->cmd->command = strdup(tok->next->value);
+		handle_redir_token(tok, b);
 	}
 }
-

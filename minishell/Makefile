@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
+#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/17 09:15:36 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/19 18:30:42 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,13 +37,18 @@ SRC = main.c\
 	func/nonbuiltins/pipes.c\
 	func/nonbuiltins/redirect_in.c\
 	func/nonbuiltins/redirect_out.c\
+	tokenizer/alloc_stuff.c\
 	tokenizer/free.c\
+	tokenizer/free2.c\
+	tokenizer/get_type.c\
 	tokenizer/parse_pipes.c\
 	tokenizer/parse_tok_loop.c\
 	tokenizer/parse_token.c\
 	tokenizer/parser_handle_token.c\
 	tokenizer/process.c\
-	tokenizer/special_cases.c\
+	tokenizer/special_case.c\
+	tokenizer/special_case2.c\
+	tokenizer/special_case3.c\
 	tokenizer/tokenizing.c\
 	tokenizer/sisis_main.c\
 	helper_funcs/ft_atoi.c\
@@ -74,6 +79,7 @@ SRC = main.c\
 	helper_funcs/ft_strrchr.c\
 	helper_funcs/ft_strtrim.c\
 	helper_funcs/ft_substr.c\
+	helper_funcs/ft_strncmp.c\
 	helper_funcs/get_next_line_utils.c\
 	helper_funcs/get_next_line.c\
 	

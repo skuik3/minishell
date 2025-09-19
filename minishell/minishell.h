@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
 /*   Updated: 2025/09/19 20:21:55 by anezka           ###   ########.fr       */
@@ -30,6 +30,7 @@
 #include <sys/ioctl.h>
 
 extern int g_signal;
+extern int g_last_exit_status;//new
 
 #include "helper_funcs/libft.h"
 
@@ -278,12 +279,12 @@ size_t parse_quoted(const char *input, size_t i, t_token **tokens);
 size_t parse_operator(const char *input, size_t i, t_token **tokens);
 size_t parse_word(const char *input, size_t i, t_token **tokens);
 //parse_tok_loop.c
-bool parse_tokens(t_token *tok, t_command **out);
+bool	parse_tokens(t_token *tok, t_command **out, env_t *env);
 void list_add_back(t_list **list, void *content);
 char **list_to_array(t_list *list);
 //parse_pipes.c
 void find_segment_end(t_token **end, t_token *tokens);
-bool init_commands(t_command **head, t_token *tokens);
+bool    init_commands(t_command **head, t_token *tokens, env_t *env);
 //process.c
 const char *token_type_to_string(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
@@ -292,6 +293,39 @@ void print_list(char **arr, const char *label);
 void print_command(t_command *cmd, int index);
 void print_commands(t_command *cmd);
 int is_exit_input(const char *line, ssize_t n);
-t_command *run_shell_line(char *line);
+t_command *run_shell_line(char *line, env_t *env);
+
+//t_token *new_token(const char *str, size_t len, t_token_type type, int pos);
+t_redir *new_redir(t_token *tok, t_redir_type type);
+void add_redir_token(t_token *tok, t_cmd_builder *b);
+void list_add_back(t_list **list, void *content);
+bool init_cmd_builder(t_cmd_builder *b, t_command **out);
+//bool process_tokens(t_token *tok, t_cmd_builder *b);
+void finalize_cmd_builder(t_cmd_builder *b, t_command **out);
+char *expand_variables(const char *input, env_t *env);
+void	free_string_list(t_list *list);
+void	free_list(t_list *list);
+void	free_cmd(t_command *cmd);
+
+char	**alloc_str_array(t_list *list, int count);
+t_redir	**alloc_redir_array(t_list *list, int count);
+
+//secial_case.c
+int     is_valid_var_char(char c, int is_first);
+int     get_var_name_len(const char *str);
+char	*extract_var_name(const char *str, int len);
+char	*find_in_env_array(char **env, const char *var_name);
+char	*get_env_var(env_t *env, const char *var_name);
+
+//special_case2.c
+char	*join_expansion_parts(char *before, char *expansion, char *after);
+char	*handle_no_expansion(const char *input);
+char	*handle_empty_var(char *before);
+void	cleanup_expansion_vars(char *var_name, char *after, char *var_value, int is_special);
+char	*build_expansion_result(char *before, char *var_value, char *after);
+
+//special_case3.c
+char	*process_variable_expansion(char *dollar_pos, char *before, env_t *env);
+char	*expand_variables(const char *input, env_t *env);
 
 #endif

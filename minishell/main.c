@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
 /*   Updated: 2025/09/19 21:54:16 by anezka           ###   ########.fr       */
@@ -13,6 +13,7 @@
 #include "minishell.h"
 
 int g_signal = 0;
+int g_last_exit_status = 0;
 
 env_t *adding_env(t_command *cmd, char **envp)
 {
@@ -46,15 +47,20 @@ int main(int argc, char *argv[], char *envp[])
         promt = readline("minishell> ");
         if (promt == NULL)
             break;
-        cmd = run_shell_line(promt);
+        cmd = run_shell_line(promt, bigs->env);
         if (cmd == NULL)
-            continue;
+        {
+            free(promt);
+            continue ;
+        }
         cmd->envar = bigs->env;
         g_signal = 0;
         bigs->cmd = cmd;
         bigs->exit_bef = command_execution(bigs);
+        g_last_exit_status = bigs->exit_bef;//new
         add_history(promt);
         clean_big(bigs);
+        free(promt);
     }
     free_big(bigs);
     return (0);
