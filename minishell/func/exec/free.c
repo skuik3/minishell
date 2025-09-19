@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 10:04:01 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 20:23:51 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 23:22:39 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ void free_pipes(t_pipe *pipe)
 void free_big(t_biggie *bigs)
 {
     t_command *current;
+    t_pipe *temp;
     
     if (bigs == NULL)
         return;
+    bigs->cmd = bigs->cmd_head;
     while (bigs->cmd != NULL)
     {
         current = bigs->cmd;
@@ -107,15 +109,20 @@ void free_big(t_biggie *bigs)
 
     }
     bigs->cmd = NULL;
+    bigs->cmd_head = NULL;
     if (bigs->env != NULL)
         free_env(bigs->env);
     bigs->env = NULL;
+    bigs->pipe_cmd = bigs->pipe_head;
     while (bigs->pipe_cmd != NULL)
     {
-        free_pipes(bigs->pipe_cmd);
+        temp = bigs->pipe_cmd;
         bigs->pipe_cmd = bigs->pipe_cmd->next;
+        free_pipes(temp);
+        free(temp);
     }
     bigs->pipe_cmd = NULL;
+    bigs->pipe_head = NULL;
     free(bigs);
     bigs = NULL;
 }

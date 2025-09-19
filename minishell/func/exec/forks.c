@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/14 20:19:14 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 23:35:56 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int other_multiple(t_biggie *bigs)
 int last_multiple(t_biggie *bigs)
 {
     int pid;
+    int status;
     
     pid = fork();
     if (pid < -1)
@@ -83,7 +84,7 @@ int last_multiple(t_biggie *bigs)
     {
         if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
         {
-            if (check_redirect(bigs->cmd) == 1) //check previous commit
+            if (check_redirect(bigs->cmd) == 1)
                 return (1);
         }
         if (bigs->cmd->redir_in == NULL)
@@ -91,19 +92,21 @@ int last_multiple(t_biggie *bigs)
             if (dup2(bigs->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
             {
                 perror("");
-                exit (1); //return prv
+                exit (1);
             }
         }
         close(bigs->pipe_cmd->pipe[0]);
         if (is_builtint(bigs->cmd->command) == 0)
-            bigs->exit_status = what_builtin(bigs);
+            status = what_builtin(bigs);
         else if (is_builtint(bigs->cmd->command) == 1)
-            bigs->exit_status = executing(bigs->cmd);
-        exit(bigs->exit_status);
+            status = executing(bigs->cmd);
+        free_big(bigs);
+        exit(status);
     }
     close(bigs->pipe_cmd->pipe[0]);
     while (wait(&bigs->exit_status) != -1)
         ;
+    bigs->exit_status = WEXITSTATUS(bigs->exit_status);
     if (bigs->exit_status == 2)
         bigs->exit_status = 130;
     return (bigs->exit_status);

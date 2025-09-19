@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 21:54:16 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 23:18:02 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int main(int argc, char *argv[], char *envp[])
         cmd->envar = bigs->env;
         g_signal = 0;
         bigs->cmd = cmd;
+        bigs->cmd_head = cmd;
         bigs->exit_bef = command_execution(bigs);
         g_last_exit_status = bigs->exit_bef;//new
         add_history(promt);

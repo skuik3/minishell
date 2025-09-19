@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 20:21:55 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 23:23:18 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,10 @@ typedef struct s_node
 typedef struct s_biggiest_struct
 {
     t_command *cmd;
+    t_command *cmd_head;
     env_t *env;
     t_pipe  *pipe_cmd;
+    t_pipe *pipe_head;
     int exit_status;
     int exit_bef;
 }   t_biggie;
@@ -161,6 +163,7 @@ typedef struct s_biggiest_struct
 void free_big(t_biggie *bigs);
 void clean_big(t_biggie *bigs);
 void free_arguments(char **arguments);
+void free_pipes(t_pipe *pipe);
 //main_execution
 int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);

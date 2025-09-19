@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 22:03:40 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 23:38:19 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int multiple_commands(t_biggie *bigs)
     int pid;
     int orig_stdout;
     int orig_stdin;
+    int status;
 
     orig_stdout = dup(STDOUT_FILENO);
     orig_stdin = dup(STDIN_FILENO);
@@ -60,13 +61,17 @@ int multiple_commands(t_biggie *bigs)
             signal(SIGINT, SIG_DFL);
             if (bigs->cmd->is_first == 1)
             {
-                bigs->exit_status = first_multiple(bigs);
-                if (bigs->exit_status != 0) // should i just return exit status wihtout check, would make more sense
-                    exit (bigs->exit_status);
-            }
+                status = first_multiple(bigs);
+                if (status != 0) // should i just return exit status wihtout check, would make more sense
+                {
+                    free_big(bigs);
+                    exit (status);
+                }
+            }    
             else
-                bigs->exit_status = other_multiple(bigs);
-            exit(bigs->exit_status);
+                status = other_multiple(bigs);
+            free_big(bigs);
+            exit(status);
         }
         if (bigs->cmd->is_first == 1)
             close(bigs->pipe_cmd->pipe[1]);
@@ -101,6 +106,7 @@ int command_execution(t_biggie *bigs)
         return (bigs->exit_status);
     }
     bigs->pipe_cmd = prepare_pipes(bigs->cmd);
+    bigs->pipe_head = bigs->pipe_cmd;
     head = bigs->cmd;
     while (bigs->cmd->next != NULL)
     {

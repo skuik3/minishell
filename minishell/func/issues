@@ -1,0 +1,3 @@
+// memory builtins in multiple commands
+// exit bigs->exit_status = WEXITSTATUS(bigs->exit_status);
+// memory signals
