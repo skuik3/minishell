@@ -6,13 +6,14 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/18 20:13:42 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/19 16:07:01 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int g_signal = 0;
+int g_last_exit_status = 0;
 
 env_t *adding_env(t_command *cmd, char **envp)
 {
@@ -56,6 +57,7 @@ int main(int argc, char *argv[], char *envp[])
         g_signal = 0;
         bigs->cmd = cmd;
         bigs->exit_bef = command_execution(bigs);
+        g_last_exit_status = bigs->exit_bef;//new
         add_history(promt);
         clean_big(bigs);
         free(promt);

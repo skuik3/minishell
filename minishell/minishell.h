@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/18 20:23:54 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/19 18:34:13 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #include <sys/ioctl.h>
 
 extern int g_signal;
+extern int g_last_exit_status;//new
 
 #include "helper_funcs/libft.h"
 
@@ -304,5 +305,26 @@ char *expand_variables(const char *input, env_t *env);
 void	free_string_list(t_list *list);
 void	free_list(t_list *list);
 void	free_cmd(t_command *cmd);
+
+char	**alloc_str_array(t_list *list, int count);
+t_redir	**alloc_redir_array(t_list *list, int count);
+
+//secial_case.c
+int     is_valid_var_char(char c, int is_first);
+int     get_var_name_len(const char *str);
+char	*extract_var_name(const char *str, int len);
+char	*find_in_env_array(char **env, const char *var_name);
+char	*get_env_var(env_t *env, const char *var_name);
+
+//special_case2.c
+char	*join_expansion_parts(char *before, char *expansion, char *after);
+char	*handle_no_expansion(const char *input);
+char	*handle_empty_var(char *before);
+void	cleanup_expansion_vars(char *var_name, char *after, char *var_value, int is_special);
+char	*build_expansion_result(char *before, char *var_value, char *after);
+
+//special_case3.c
+char	*process_variable_expansion(char *dollar_pos, char *before, env_t *env);
+char	*expand_variables(const char *input, env_t *env);
 
 #endif

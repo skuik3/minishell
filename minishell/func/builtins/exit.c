@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/16 14:57:10 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/19 15:54:24 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int just_nb(char *nb)
 int run_exit(t_biggie *bigs)
 {
     if (bigs->cmd->arguments == NULL){
-        printf("EXIT>%d", bigs->exit_bef); // exit prev command
+       printf("EXIT>%d", bigs->exit_bef); // exit prev command
         exit(bigs->exit_status);
     }
     else
