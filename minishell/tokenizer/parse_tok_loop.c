@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:16:40 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/20 12:13:19 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,12 +191,18 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b, env_t *env)
 		{
 			add_redir_token(tok, b);
 			tok = tok->next;
+			if (tok)
+				tok = tok->next;
 		}
 		else if (tok->type == T_WORD)
 		{
 			process_word_token(tok, b, env, &is_first_token);
+			tok = tok->next;
 		}
-		tok = tok->next;
+		else
+		{
+			tok = tok->next;
+		}
 	}
 	return (true);
 }
