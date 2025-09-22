@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 23:35:56 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 09:53:51 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ int first_multiple(t_biggie *bigs) //in child process
     if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
     {
         if (check_redirect(bigs->cmd) == 1)
-            return (1);
+        {
+            perror("");
+            free_big(bigs);
+            exit(1);
+        }
     }
     if (bigs->cmd->redir_out == NULL)
     {
@@ -41,7 +45,11 @@ int other_multiple(t_biggie *bigs)
     if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
     {
         if (check_redirect(bigs->cmd) == 1)
-            return (1);
+        {
+            perror("");
+            free_big(bigs);
+            exit(1);
+        }
     }
     if (bigs->cmd->redir_in == NULL)
     {
@@ -85,7 +93,11 @@ int last_multiple(t_biggie *bigs)
         if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
         {
             if (check_redirect(bigs->cmd) == 1)
-                return (1);
+            {
+                perror("");
+                free_big(bigs);
+                exit(1);
+            }
         }
         if (bigs->cmd->redir_in == NULL)
         {

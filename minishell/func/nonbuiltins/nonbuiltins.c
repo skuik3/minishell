@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 15:51:12 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 09:42:22 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int executing(t_command *cmd)
 {
     char *path;
     char **cmdw_args;
+    struct stat sb;
 
     cmdw_args = adding_command(cmd);
     if (cmdw_args == NULL)
@@ -93,6 +94,13 @@ int executing(t_command *cmd)
     }
     if (is_path(cmd->command) == 0)
     {
+         if (stat(cmd->command, &sb) == 0 && S_ISDIR(sb.st_mode))
+        {
+
+            write(1, "That's a directory\n", 20);
+            free_arguments(cmdw_args);
+            return (126); // check with bash what to return
+        }
         if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
         {
             perror("");

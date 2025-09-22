@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 23:23:18 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 09:45:30 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include <sys/wait.h>
 // #include "get_next_line/get_next_line.h"
 #include <sys/ioctl.h>
+#include <sys/stat.h>
 
 extern int g_signal;
 extern int g_last_exit_status;//new
