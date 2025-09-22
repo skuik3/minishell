@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 22:03:35 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 14:39:27 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ int last_heredoc(t_biggie *bigs, int i)
     }
     close(last->pipe_forhdc[1]);
     waitpid(pid, &status, 0);
+    // bigs->exit_status = WEXITSTATUS(status);
     if (g_signal == SIGINT)
     {
         close(last->pipe_forhdc[0]);
         return (SIGINT);
     }
-    return (0);
+    return (bigs->exit_status);
 }
 
 //check if casting does not affect

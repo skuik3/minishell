@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 22:02:45 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 15:23:07 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ char *get_line_heredoc(t_redir *last)
     {
         write (STDOUT_FILENO, "> ", 3);
         line = get_next_line(STDIN_FILENO);
+        if (line == NULL)
+        {
+            free(cmp_line);
+            return (NULL);
+        }
         if (ft_strcmp(line, cmp_line) == 0)
             break ;
         returned = ft_strjoin(returned, line);
@@ -86,6 +91,7 @@ int last_heredoc_multiple(t_biggie *bigs, int i)
     if (g_signal == SIGINT) 
     {
         close(last->pipe_forhdc[0]);
+        free_big(bigs);
         return (SIGINT);
     }
     return (0);
@@ -108,6 +114,6 @@ int do_heredoc_multiple(t_biggie *bigs)
         i++;
     }
     if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
-       returned = last_heredoc_multiple(bigs, i);
+       returned = last_heredoc(bigs, i);
     return (returned);
 }
