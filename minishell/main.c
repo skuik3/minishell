@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/19 23:18:02 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/24 14:53:28 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int g_signal = 0;
-int g_last_exit_status = 0;
 
 env_t *adding_env(t_command *cmd, char **envp)
 {
@@ -25,15 +24,16 @@ env_t *adding_env(t_command *cmd, char **envp)
         return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
     saving_env(&env->start, envp);
     saving_env(&env->mod, envp);
+    env->exit_status = 0;
     return (env);
 }
 
 
 int main(int argc, char *argv[], char *envp[])
 {
-    char *promt;
-    t_command *cmd;
-    t_biggie *bigs;
+    char        *promt;
+    t_command   *cmd;
+    t_biggie    *bigs;
 
     (void)argc;
     (void)argv;    
@@ -58,7 +58,7 @@ int main(int argc, char *argv[], char *envp[])
         bigs->cmd = cmd;
         bigs->cmd_head = cmd;
         bigs->exit_bef = command_execution(bigs);
-        g_last_exit_status = bigs->exit_bef;//new
+        bigs->env->exit_status = bigs->exit_bef;
         add_history(promt);
         clean_big(bigs);
         free(promt);

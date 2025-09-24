@@ -6,7 +6,7 @@
 #    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/19 18:30:42 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/24 14:22:26 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC = main.c\
 	tokenizer/free.c\
 	tokenizer/free2.c\
 	tokenizer/get_type.c\
+	tokenizer/handle_and_check.c\
 	tokenizer/parse_pipes.c\
 	tokenizer/parse_tok_loop.c\
 	tokenizer/parse_token.c\
@@ -50,6 +51,7 @@ SRC = main.c\
 	tokenizer/special_case2.c\
 	tokenizer/special_case3.c\
 	tokenizer/tokenizing.c\
+	tokenizer/tokenizing2.c\
 	tokenizer/sisis_main.c\
 	helper_funcs/ft_atoi.c\
 	helper_funcs/ft_bzero.c\

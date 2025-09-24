@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/20 12:13:19 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 14:28:23 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 t_redir	*new_redir(t_token *tok, t_redir_type type)
 {
-	t_redir	*r = malloc(sizeof(t_redir));
+	t_redir	*r;
 
+	if (!tok)
+		return (NULL);
+	r = malloc(sizeof(t_redir));
 	if (!r)
 		return (NULL);
 	r->filename = strdup(tok->value);
+	if (!r->filename)
+	{
+		free(r);
+		return (NULL);
+	}
 	r->type = type;
 	r->pipe_forhdc = NULL;
 	r->position = 0;
@@ -64,9 +72,12 @@ void	add_redir_token(t_token *tok, t_cmd_builder *b)
 
 void	list_add_back(t_list **list, void *content)
 {
-	t_list	*new_node = malloc(sizeof(t_list));
+	t_list	*new_node;
 	t_list	*temp;
 
+	if (!list || !content)
+		return;
+	new_node = malloc(sizeof(t_list));
 	if (!new_node)
 		return ;
 	new_node->content = content;
@@ -156,11 +167,9 @@ bool	init_cmd_builder(t_cmd_builder *b, t_command **out)
 
 static char	*get_token_value(t_token *tok, env_t *env)
 {
-	char	*expanded_value;
-
-	expanded_value = expand_variables(tok->value, env);
-	if (expanded_value)
-		return (expanded_value);
+	(void)env;
+	if (!tok || !tok->value)
+		return (strdup(""));
 	return (strdup(tok->value));
 }
 
@@ -168,7 +177,11 @@ static void	process_word_token(t_token *tok, t_cmd_builder *b, env_t *env, bool 
 {
 	char	*value;
 
+	if (!tok || !b)
+		return;
 	value = get_token_value(tok, env);
+	if (!value)
+		return;
 	if (*is_first)
 	{
 		b->cmd->command = value;
@@ -209,8 +222,9 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b, env_t *env)
 
 void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 {
+	if (!b->cmd->command)
+		b->cmd->command = strdup("");
 	b->cmd->arguments = list_to_str_array(b->args);
-	//b->cmd->arg_count = list_size(b->args);
 	b->cmd->redir_in = list_to_redir_array(b->redir_in);
 	b->cmd->redir_in_count = list_size(b->redir_in);
 	b->cmd->redir_out = list_to_redir_array(b->redir_out);

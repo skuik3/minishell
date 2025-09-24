@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/22 09:45:30 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/24 14:22:40 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@
 #include <ctype.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 // #include "get_next_line/get_next_line.h"
 #include <sys/ioctl.h>
-#include <sys/stat.h>
 
 extern int g_signal;
-extern int g_last_exit_status;//new
 
 #include "helper_funcs/libft.h"
 
@@ -59,6 +58,7 @@ typedef struct environment_variables
 {
     char **start;
     char **mod;
+    int exit_status;
 } env_t;
 
 typedef struct pipe
@@ -160,11 +160,18 @@ typedef struct s_biggiest_struct
     int exit_bef;
 }   t_biggie;
 
+typedef struct s_exp_data
+{
+	const char	*input;
+	size_t		start;
+	size_t		end;
+	bool		expand;
+}	t_exp_data;
+
 // ANEZKAS_PART
 void free_big(t_biggie *bigs);
 void clean_big(t_biggie *bigs);
 void free_arguments(char **arguments);
-void free_pipes(t_pipe *pipe);
 //main_execution
 int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);
@@ -238,10 +245,10 @@ int do_heredoc(t_biggie *bigs);
 char *get_line_heredoc(t_redir *last);
 int last_heredoc(t_biggie *bigs, int i);
 int redirecting_heredoc(t_biggie *bigs, int i);
+int setting_pipe_hdc(t_biggie *bigs);
 int where_last_heredoc(t_command *cmd, int redi);
 int last_heredoc_multiple(t_biggie *bigs, int i);
 int do_heredoc_multiple(t_biggie *bigs);
-int setting_pipe_hdc(t_biggie *bigs);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils
@@ -257,6 +264,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 void	ft_putstr_fd(char *s, int fd);
 int	ft_isalnum(int c);
 int	ft_isalpha(int c);
+void free_pipes(t_pipe *pipe);
 
 // SISIS_PART
 
@@ -265,7 +273,7 @@ void append_token(t_token **head, t_token *new_tok);
 bool is_operator_start(char c);
 size_t skip_spaces(const char *input, size_t i);
 void print_tokens(t_token *head);
-t_token *tokenize(const char *input);
+t_token *tokenize(const char *input, env_t *env);
 //parser_handle_token.c
 void handle_token(t_token *tok, t_cmd_builder *b);
 void handle_in_redir(t_token *tok, t_cmd_builder *b);
@@ -280,6 +288,7 @@ t_token *new_token(const char *start, size_t len, t_token_type type);
 t_redir_type get_redir_type(const char *str, size_t len);
 t_token_type get_token_type_len(const char *str, size_t len);
 size_t parse_quoted(const char *input, size_t i, t_token **tokens);
+size_t parse_complete_word(const char *input, size_t i, t_token **tokens);
 size_t parse_operator(const char *input, size_t i, t_token **tokens);
 size_t parse_word(const char *input, size_t i, t_token **tokens);
 //parse_tok_loop.c
@@ -306,7 +315,7 @@ void list_add_back(t_list **list, void *content);
 bool init_cmd_builder(t_cmd_builder *b, t_command **out);
 //bool process_tokens(t_token *tok, t_cmd_builder *b);
 void finalize_cmd_builder(t_cmd_builder *b, t_command **out);
-char *expand_variables(const char *input, env_t *env);
+char *expand_var(const char *input, env_t *env);
 void	free_string_list(t_list *list);
 void	free_list(t_list *list);
 void	free_cmd(t_command *cmd);
@@ -329,7 +338,19 @@ void	cleanup_expansion_vars(char *var_name, char *after, char *var_value, int is
 char	*build_expansion_result(char *before, char *var_value, char *after);
 
 //special_case3.c
-char	*process_variable_expansion(char *dollar_pos, char *before, env_t *env);
-char	*expand_variables(const char *input, env_t *env);
+char	*process_var_expansion(char *dollar_pos, char *before, env_t *env);
+char	*expand_var(const char *input, env_t *env);
+
+//tokenizing.c
+void	append_seg_w_expans(char **result, t_exp_data data, env_t *env);
+
+//tokenizing2.c
+size_t	pr_quoted_part(const char *input, size_t i, char **result, env_t *env);
+size_t	pr_unquoted_part(const char *input, size_t i, char **result, env_t *env);
+size_t	parse_word_w_env(const char *input, size_t i, t_token **tokens, env_t *env);
+t_token	*tokenize(const char *input, env_t *env);
+
+//handle_and_check.c
+bool	validate_syntax(t_token *tokens);
 
 #endif
