@@ -6,15 +6,15 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 14:20:32 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:02:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	handle_pipe_and_end_tokens(t_token *current, bool expecting_cmd)
+bool	handle_pipe_and_end_tokens(t_token *curr, bool expecting_cmd)
 {
-	if (current->type == T_PIPE)
+	if (curr->type == T_PIPE)
 	{
 		if (expecting_cmd)
 		{
@@ -22,7 +22,7 @@ bool	handle_pipe_and_end_tokens(t_token *current, bool expecting_cmd)
 			return (false);
 		}
 	}
-	else if (current->type == T_END)
+	else if (curr->type == T_END)
 	{
 		if (expecting_cmd)
 		{
@@ -33,17 +33,17 @@ bool	handle_pipe_and_end_tokens(t_token *current, bool expecting_cmd)
 	return (true);
 }
 
-bool	handle_redirection_tokens(t_token *current)
+bool	handle_redirection_tokens(t_token *curr)
 {
-	if (!current->next || current->next->type != T_WORD)
+	if (!curr->next || curr->next->type != T_WORD)
 	{
-		if (current->type == T_REDIR_HEREDOC)
+		if (curr->type == T_REDIR_HEREDOC)
 			fprintf(stderr, "syntax error near unexpected token `<<'\n");
-		else if (current->type == T_REDIR_APPEND)
+		else if (curr->type == T_REDIR_APPEND)
 			fprintf(stderr, "syntax error near unexpected token `>>'\n");
-		else if (current->type == T_REDIR_OUT)
+		else if (curr->type == T_REDIR_OUT)
 			fprintf(stderr, "syntax error near unexpected token `>'\n");
-		else if (current->type == T_REDIR_IN)
+		else if (curr->type == T_REDIR_IN)
 			fprintf(stderr, "syntax error near unexpected token `<'\n");
 		return (false);
 	}
@@ -52,16 +52,16 @@ bool	handle_redirection_tokens(t_token *current)
 
 static bool	handle_final_token_check(t_token *tokens, bool expecting_cmd)
 {
-	t_token	*current;
+	t_token	*curr;
 
 	if (expecting_cmd && tokens)
 	{
-		current = tokens;
-		while (current->next)
-			current = current->next;
-		if (current->type == T_PIPE)
+		curr = tokens;
+		while (curr->next)
+			curr = curr->next;
+		if (curr->type == T_PIPE)
 			fprintf(stderr, "syntax error near unexpected token `|'\n");
-		else if (current->type == T_END)
+		else if (curr->type == T_END)
 			fprintf(stderr, "syntax error near unexpected token `;'\n");
 		else
 			fprintf(stderr, "syntax error near unexpected token\n");
@@ -72,29 +72,29 @@ static bool	handle_final_token_check(t_token *tokens, bool expecting_cmd)
 
 bool	validate_syntax(t_token *tokens)
 {
-	t_token	*current;
+	t_token	*curr;
 	bool	expecting_cmd;
 
-	current = tokens;
+	curr = tokens;
 	expecting_cmd = true;
-	while (current)
+	while (curr)
 	{
-		if (current->type == T_PIPE || current->type == T_END)
+		if (curr->type == T_PIPE || curr->type == T_END)
 		{
-			if (!handle_pipe_and_end_tokens(current, expecting_cmd))
+			if (!handle_pipe_and_end_tokens(curr, expecting_cmd))
 				return (false);
 			expecting_cmd = true;
 		}
-		else if (current->type >= T_REDIR_IN && current->type <= T_REDIR_HEREDOC)
+		else if (curr->type >= T_REDIR_IN && curr->type <= T_REDIR_HEREDOC)
 		{
-			if (!handle_redirection_tokens(current))
+			if (!handle_redirection_tokens(curr))
 				return (false);
 			expecting_cmd = false;
-			current = current->next;
+			curr = curr->next;
 		}
-		else if (current->type == T_WORD)
+		else if (curr->type == T_WORD)
 			expecting_cmd = false;
-		current = current->next;
+		curr = curr->next;
 	}
 	return (handle_final_token_check(tokens, expecting_cmd));
 }

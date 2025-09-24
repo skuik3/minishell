@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 14:53:07 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:40:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,5 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 		lstadd_back(&b->args, lstnew(strdup(tok->value)));
 	}
 	else if (tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
-	{
 		handle_redir_token(tok, b);
-	}
 }

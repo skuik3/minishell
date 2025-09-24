@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 14:13:40 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:41:42 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,9 @@ void	append_seg_w_expans(char **result, t_exp_data data, env_t *env)
 			free(expanded);
 		}
 		else
-		{
 			*result = ft_strjoin(*result, segment);
-		}
 	}
 	else
-	{
 		*result = ft_strjoin(*result, segment);
-	}
 	free(segment);
 }

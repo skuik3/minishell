@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokeniing2.c                                       :+:      :+:    :+:   */
+/*   tokenizing2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 14:14:35 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 18:01:17 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ size_t	pr_quoted_part(const char *input, size_t i, char **result, env_t *env)
 	start = i;
 	while (input[i] && input[i] != quote)
 		i++;
+	if (!input[i])
+	{
+		if (quote == '"')
+			printf("unexpected EOF while looking for matching `\"'\n");
+		else
+			printf("unexpected EOF while looking for matching `''\n");
+		printf("syntax error: unexpected end of file\n");
+		return (-1);
+	}
 	data = (t_exp_data){input, start, i, (quote == '"')};
 	append_seg_w_expans(result, data, env);
 	if (input[i] == quote)
@@ -47,12 +56,21 @@ size_t	parse_word_w_env(const char *input, size_t i, t_token **tokens,
 	env_t *env)
 {
 	char	*result;
+	size_t	new_i;
 
 	result = ft_strdup("");
 	while (input[i] && !isspace(input[i]) && !is_operator_start(input[i]))
 	{
 		if (input[i] == '"' || input[i] == '\'')
-			i = pr_quoted_part(input, i, &result, env);
+		{
+			new_i = pr_quoted_part(input, i, &result, env);
+			if (new_i == (size_t) - 1)
+			{
+				free(result);
+				return (-1);
+			}
+			i = new_i;
+		}
 		else
 			i = pr_unquoted_part(input, i, &result, env);
 	}
@@ -65,6 +83,7 @@ t_token	*tokenize(const char *input, env_t *env)
 {
 	t_token	*tokens;
 	size_t	i;
+	size_t	new_i;
 
 	tokens = NULL;
 	i = 0;
@@ -76,7 +95,15 @@ t_token	*tokenize(const char *input, env_t *env)
 		if (is_operator_start(input[i]))
 			i = parse_operator(input, i, &tokens);
 		else
-			i = parse_word_w_env(input, i, &tokens, env);
+		{
+			new_i = parse_word_w_env(input, i, &tokens, env);
+			if (new_i == (size_t) - 1)
+			{
+				free_tokens(tokens);
+				return (NULL);
+			}
+			i = new_i;
+		}
 	}
 	return (tokens);
 }

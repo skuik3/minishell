@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:59:57 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:22:53 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:23:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,40 @@ t_token	*new_token(const char *str, size_t len, t_token_type type)
 	tok->type = type;
 	tok->next = NULL;
 	return (tok);
+}
+
+t_redir	*new_redir(t_token *tok, t_redir_type type)
+{
+	t_redir	*r;
+
+	if (!tok)
+		return (NULL);
+	r = malloc(sizeof(t_redir));
+	if (!r)
+		return (NULL);
+	r->filename = strdup(tok->value);
+	if (!r->filename)
+	{
+		free(r);
+		return (NULL);
+	}
+	r->type = type;
+	r->pipe_forhdc = NULL;
+	r->position = 0;
+	return (r);
+}
+
+t_redir_type	get_redir_type_from_token(t_token_type tok_type)
+{
+	if (tok_type == T_REDIR_IN)
+		return (REDIR_IN);
+	if (tok_type == T_REDIR_HEREDOC)
+		return (REDIR_HEREDOC);
+	if (tok_type == T_REDIR_OUT)
+		return (REDIR_OUT);
+	if (tok_type == T_REDIR_APPEND)
+		return (REDIR_APPEND);
+	return (REDIR_IN);
 }
 
 t_redir_type	get_redir_type(const char *str, size_t len)

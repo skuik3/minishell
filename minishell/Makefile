@@ -6,7 +6,7 @@
 #    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/24 14:22:26 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/24 17:36:32 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRC = main.c\
 	tokenizer/free2.c\
 	tokenizer/get_type.c\
 	tokenizer/handle_and_check.c\
+	tokenizer/list.c\
+	tokenizer/p_tok_loop_helper.c\
 	tokenizer/parse_pipes.c\
 	tokenizer/parse_tok_loop.c\
 	tokenizer/parse_token.c\

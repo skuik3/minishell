@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/24 14:22:40 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:36:01 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,14 @@ typedef struct s_exp_data
 	bool		expand;
 }	t_exp_data;
 
+typedef struct s_exp_vars
+{
+	char	*var_name;
+	char	*var_value;
+	char	*after;
+	int		is_special_var;
+}	t_exp_vars;
+
 // ANEZKAS_PART
 void free_big(t_biggie *bigs);
 void clean_big(t_biggie *bigs);
@@ -263,7 +271,7 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 void	ft_putstr_fd(char *s, int fd);
 int	ft_isalnum(int c);
-int	ft_isalpha(int c);
+int	sisalpha(int c);
 void free_pipes(t_pipe *pipe);
 
 // SISIS_PART
@@ -308,12 +316,11 @@ void print_commands(t_command *cmd);
 int is_exit_input(const char *line, ssize_t n);
 t_command *run_shell_line(char *line, env_t *env);
 
-//t_token *new_token(const char *str, size_t len, t_token_type type, int pos);
 t_redir *new_redir(t_token *tok, t_redir_type type);
 void add_redir_token(t_token *tok, t_cmd_builder *b);
 void list_add_back(t_list **list, void *content);
 bool init_cmd_builder(t_cmd_builder *b, t_command **out);
-//bool process_tokens(t_token *tok, t_cmd_builder *b);
+
 void finalize_cmd_builder(t_cmd_builder *b, t_command **out);
 char *expand_var(const char *input, env_t *env);
 void	free_string_list(t_list *list);
@@ -331,14 +338,14 @@ char	*find_in_env_array(char **env, const char *var_name);
 char	*get_env_var(env_t *env, const char *var_name);
 
 //special_case2.c
-char	*join_expansion_parts(char *before, char *expansion, char *after);
-char	*handle_no_expansion(const char *input);
+char	*join_exp_parts(char *before, char *expansion, char *after);
+char	*handle_no_exp(const char *input);
 char	*handle_empty_var(char *before);
-void	cleanup_expansion_vars(char *var_name, char *after, char *var_value, int is_special);
-char	*build_expansion_result(char *before, char *var_value, char *after);
+void	cleanup_vars(char *var_name, char *after, char *var_value, int is_special);
+char	*build_exp_result(char *before, char *var_value, char *after);
 
 //special_case3.c
-char	*process_var_expansion(char *dollar_pos, char *before, env_t *env);
+char	*process_var(char *dollar_pos, char *before, env_t *env);
 char	*expand_var(const char *input, env_t *env);
 
 //tokenizing.c
@@ -352,5 +359,21 @@ t_token	*tokenize(const char *input, env_t *env);
 
 //handle_and_check.c
 bool	validate_syntax(t_token *tokens);
+
+t_redir_type	get_redir_type_from_token(t_token_type tok_type);
+
+
+//list.c
+void	add_redir_to_list(t_token *tok, t_redir *r, t_cmd_builder *b);
+void	list_add_back(t_list **list, void *content);
+int	list_size(t_list *list);
+char	**list_to_str_array(t_list *list);
+t_redir	**list_to_redir_array(t_list *list);
+
+//p_tok_loop_helper.c
+void	add_redir_token(t_token *tok, t_cmd_builder *b);
+bool	is_invalid_token(t_token *tok);
+bool	init_cmd_builder(t_cmd_builder *b, t_command **out);
+char	*get_token_value(t_token *tok, env_t *env);
 
 #endif
