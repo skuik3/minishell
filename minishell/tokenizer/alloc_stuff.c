@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:20:26 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:05:09 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**alloc_str_array(t_list *list, int count)
 		return (NULL);
 	while (i < count)
 	{
-		arr[i] = strdup((char *)list->content);
+		arr[i] = ft_strdup((char *)list->content);
 		list = list->next;
 		i++;
 	}

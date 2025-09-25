@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   nonbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
 /*   Updated: 2025/09/25 15:22:57 by anezka           ###   ########.fr       */
@@ -75,4 +75,3 @@ int executing(t_command *cmd)
 	}
 	return (returned);
 }
-

@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:40:43 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:04:37 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	lstadd_back(t_list **lst, t_list *new_node)
 static char	*get_filename_from_token(t_token *tok)
 {
 	if (tok->next)
-		return (strdup(tok->next->value));
-	return (strdup(""));
+		return (ft_strdup(tok->next->value));
+	return (ft_strdup(""));
 }
 
 static void	handle_redir_token(t_token *tok, t_cmd_builder *b)
@@ -69,7 +69,7 @@ static void	handle_redir_token(t_token *tok, t_cmd_builder *b)
 	else
 		lstadd_back(&b->redir_out, lstnew(redir));
 	if (tok->type == T_REDIR_HEREDOC && tok->next)
-		b->cmd->command = strdup(tok->next->value);
+		b->cmd->command = ft_strdup(tok->next->value);
 }
 
 void	handle_token(t_token *tok, t_cmd_builder *b)
@@ -77,8 +77,8 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 	if (tok->type == T_WORD)
 	{
 		if (!b->cmd->command)
-			b->cmd->command = strdup(tok->value);
-		lstadd_back(&b->args, lstnew(strdup(tok->value)));
+			b->cmd->command = ft_strdup(tok->value);
+		lstadd_back(&b->args, lstnew(ft_strdup(tok->value)));
 	}
 	else if (tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
 		handle_redir_token(tok, b);

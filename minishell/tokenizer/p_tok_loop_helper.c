@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:38:07 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:12:25 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	init_cmd_builder(t_cmd_builder *b, t_command **out)
 	b->cmd = malloc(sizeof(t_command));
 	if (!b->cmd)
 		return (false);
-	memset(b->cmd, 0, sizeof(t_command));
+	ft_memset(b->cmd, 0, sizeof(t_command));
 	b->args = NULL;
 	b->redir_in = NULL;
 	b->redir_out = NULL;
@@ -64,6 +64,6 @@ char	*get_token_value(t_token *tok, env_t *env)
 {
 	(void)env;
 	if (!tok || !tok->value)
-		return (strdup(""));
-	return (strdup(tok->value));
+		return (ft_strdup(""));
+	return (ft_strdup(tok->value));
 }
