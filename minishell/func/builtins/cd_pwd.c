@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 15:20:53 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:44:23 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	run_cd(char **path, env_t *env)
 	char	*temp;
 	int		status;	
 
+	status = 0;
 	if (path == NULL || (path != NULL && ft_strcmp(path[0], "~") == 0))
 	{
 		temp = find_path(env, "HOME");

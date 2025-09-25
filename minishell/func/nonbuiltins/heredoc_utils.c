@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:58:53 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:55:05 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char *get_line_heredoc(t_redir *last)
 		if (line == NULL)
 		{
 			free(cmp_line);
+			free(returned);
 			return (NULL);
 		}
 		if (ft_strcmp(line, cmp_line) == 0)
