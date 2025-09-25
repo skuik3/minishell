@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/22 09:53:51 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 12:45:37 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int other_multiple(t_biggie *bigs)
 int last_multiple(t_biggie *bigs)
 {
     int pid;
-    int status;
+    int status = 0; //= 0
     
     pid = fork();
     if (pid < -1)

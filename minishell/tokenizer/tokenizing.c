@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:06:58 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:41:42 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,24 @@ void	print_tokens(t_token *head)
 	}
 }
 
-t_token	*tokenize(const char *input)
+void	append_seg_w_expans(char **result, t_exp_data data, env_t *env)
 {
-	t_token	*tokens;
-	size_t	i;
+	char	*segment;
+	char	*expanded;
 
-	tokens = NULL;
-	i = 0;
-	while (input[i])
+	segment = ft_substr(data.input, data.start, data.end - data.start);
+	if (data.expand && env)
 	{
-		i = skip_spaces(input, i);
-		if (!input[i])
-			break ;
-		if (input[i] == '"' || input[i] == '\'')
-			i = parse_quoted(input, i, &tokens);
-		else if (is_operator_start(input[i]))
-			i = parse_operator(input, i, &tokens);
+		expanded = expand_var(segment, env);
+		if (expanded)
+		{
+			*result = ft_strjoin(*result, expanded);
+			free(expanded);
+		}
 		else
-			i = parse_word(input, i, &tokens);
+			*result = ft_strjoin(*result, segment);
 	}
-	return (tokens);
+	else
+		*result = ft_strjoin(*result, segment);
+	free(segment);
 }

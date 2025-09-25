@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   special_case_2.c                                   :+:      :+:    :+:   */
+/*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:53:15 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:26:49 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 14:54:09 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ char	*find_in_env_array(char **env, const char *var_name)
 	i = 0;
 	if (!env || !var_name)
 		return (NULL);
-	name_len = ft_strlen(var_name);
+	name_len = strlen(var_name);
 	while (env[i])
 	{
-		eq_pos = ft_strchr(env[i], '=');
+		eq_pos = strchr(env[i], '=');
 		if (eq_pos && (eq_pos - env[i]) == name_len)
 		{
-			if (ft_strncmp(env[i], var_name, name_len) == 0)
+			if (strncmp(env[i], var_name, name_len) == 0)
 				return (eq_pos + 1);
 		}
 		i++;
@@ -85,8 +85,8 @@ char	*get_env_var(env_t *env, const char *var_name)
 
 	if (!env || !var_name)
 		return (NULL);
-	if (ft_strcmp(var_name, "?") == 0)
-		return (ft_itoa(g_last_exit_status));
+	if (strcmp(var_name, "?") == 0)
+		return (ft_itoa(env->exit_status));
 	value = find_in_env_array(env->mod, var_name);
 	if (value)
 		return (value);

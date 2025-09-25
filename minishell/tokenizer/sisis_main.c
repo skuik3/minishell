@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:07:32 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 14:21:41 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	print_list(char **arr, const char *label)
 	printf("\n");
 }
 
-//only for seeing it now
 // void	print_redirs(t_redir **redirs, int count, const char *label)
 // {
 // 	int	i;
@@ -49,7 +48,6 @@ void	print_list(char **arr, const char *label)
 // 	}
 // }
 
-//only for seeing now
 // void	print_command(t_command *cmd, int index)
 // {
 // 	printf("Command %d: %s\n", index, cmd->command ? cmd->command : "(null)");
@@ -58,7 +56,6 @@ void	print_list(char **arr, const char *label)
 // 	print_redirs(cmd->redir_out, cmd->redir_out_count, "Output Redirections");
 // }
 
-//also only seeing now
 // void	print_cmd(t_command *cmd)
 // {
 // 	int i;
@@ -93,11 +90,16 @@ t_command	*run_shell_line(char *line, env_t *env)
 
 	cmd_list = NULL;
 	//printf("Input line: [%s]\n", line);
-	tokens = tokenize(line);
+	tokens = tokenize(line, env);
 	//printf("Tokens:\n");
 	if (!tokens)
 	{
 		fprintf(stderr, "Tokenization failed.\n");
+		return (NULL);
+	}
+	if (!validate_syntax(tokens))
+	{
+		free_tokens(tokens);
 		return (NULL);
 	}
 	if (!init_commands(&cmd_list, tokens, env))

@@ -6,13 +6,13 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:24:13 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 17:46:09 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:40:43 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*lstnew(void *content)
 {
 	t_list	*node;
 
@@ -24,7 +24,7 @@ t_list	*ft_lstnew(void *content)
 	return (node);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new_node)
+void	lstadd_back(t_list **lst, t_list *new_node)
 {
 	t_list	*current;
 
@@ -65,9 +65,9 @@ static void	handle_redir_token(t_token *tok, t_cmd_builder *b)
 	else if (tok->type == T_REDIR_HEREDOC)
 		redir->type = REDIR_HEREDOC;
 	if (tok->type == T_REDIR_IN || tok->type == T_REDIR_HEREDOC)
-		ft_lstadd_back(&b->redir_in, ft_lstnew(redir));
+		lstadd_back(&b->redir_in, lstnew(redir));
 	else
-		ft_lstadd_back(&b->redir_out, ft_lstnew(redir));
+		lstadd_back(&b->redir_out, lstnew(redir));
 	if (tok->type == T_REDIR_HEREDOC && tok->next)
 		b->cmd->command = strdup(tok->next->value);
 }
@@ -78,10 +78,8 @@ void	handle_token(t_token *tok, t_cmd_builder *b)
 	{
 		if (!b->cmd->command)
 			b->cmd->command = strdup(tok->value);
-		ft_lstadd_back(&b->args, ft_lstnew(strdup(tok->value)));
+		lstadd_back(&b->args, lstnew(strdup(tok->value)));
 	}
 	else if (tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
-	{
 		handle_redir_token(tok, b);
-	}
 }

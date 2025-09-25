@@ -6,13 +6,13 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:53:15 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/20 12:02:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/24 17:11:00 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*join_expansion_parts(char *before, char *expansion, char *after)
+char	*join_exp_parts(char *before, char *expansion, char *after)
 {
 	char	*temp;
 	char	*result;
@@ -24,11 +24,11 @@ char	*join_expansion_parts(char *before, char *expansion, char *after)
 	return (result);
 }
 
-char	*handle_no_expansion(const char *input)
+char	*handle_no_exp(const char *input)
 {
 	if (!input)
-		return (ft_strdup(""));
-	return (ft_strdup(input));
+		return (strdup(""));
+	return (strdup(input));
 }
 
 char	*handle_empty_var(char *before)
@@ -39,7 +39,7 @@ char	*handle_empty_var(char *before)
 	return (result);
 }
 
-void	cleanup_expansion_vars(char *var_name, char *after, char *var_value,
+void	cleanup_vars(char *var_name, char *after, char *var_value,
 	int is_special)
 {
 	if (var_name)
@@ -50,13 +50,13 @@ void	cleanup_expansion_vars(char *var_name, char *after, char *var_value,
 		free(var_value);
 }
 
-char	*build_expansion_result(char *before, char *var_value, char *after)
+char	*build_exp_result(char *before, char *var_value, char *after)
 {
 	char	*result;
 
 	if (var_value)
-		result = join_expansion_parts(before, var_value, after);
+		result = join_exp_parts(before, var_value, after);
 	else
-		result = join_expansion_parts(before, "", after);
+		result = join_exp_parts(before, "", after);
 	return (result);
 }
