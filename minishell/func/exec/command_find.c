@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/20 15:25:55 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 10:59:26 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,13 @@ int check_before_multiple(t_biggie *bigs)
         return (130);
     return (0);
 }
-//check the exiting and statuses
-//if exit status != 0, should maybe not continue and update exit status
-//find pattern
-//kcnkscs | cat >> return 0 ..works
-// cat | kjcnkdc >> return 127 (after ctrl+c, because cat working normally)
-//          ..this does not work in minishell
-int multiple_commands(t_biggie *bigs)
+
+int multiple_cnt(t_biggie *bigs)
 {
     int pid;
-    int orig_stdout;
-    int orig_stdin;
     int status;
 
-    orig_stdout = dup(STDOUT_FILENO);
-    orig_stdin = dup(STDIN_FILENO);
-    if (orig_stdout == -1 || orig_stdin == -1)
-    {
-        perror("");
-        return (1);
-    }
-    bigs->exit_status = check_before_multiple(bigs);
-    if (bigs->exit_status != 0)
-        return (bigs->exit_status);
+    status = 0;
     while (bigs->cmd->next != NULL && g_signal != SIGINT)
     {
         signal(SIGINT, handle_signal_child);
@@ -85,6 +69,25 @@ int multiple_commands(t_biggie *bigs)
             close_herepipe(bigs->cmd);
         bigs->cmd = bigs->cmd->next;
     }
+    return (status);
+}
+
+int multiple_commands(t_biggie *bigs)
+{
+    int orig_stdout;
+    int orig_stdin;
+
+    orig_stdout = dup(STDOUT_FILENO);
+    orig_stdin = dup(STDIN_FILENO);
+    if (orig_stdout == -1 || orig_stdin == -1)
+    {
+        perror("");
+        return (1);
+    }
+    bigs->exit_status = check_before_multiple(bigs);
+    if (bigs->exit_status != 0)
+        return (bigs->exit_status);
+    bigs->exit_status = multiple_cnt(bigs); //check status check later, quick fix for norm
     if (g_signal != SIGINT)
         bigs->exit_status = last_multiple(bigs);
     if (bigs->cmd->redir_in != NULL)
