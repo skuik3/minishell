@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 14:21:12 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 14:23:25 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int just_nb(char *nb)
 int run_exit(t_biggie *bigs)
 {
     if (bigs->cmd->arguments == NULL){
-       printf("EXIT>%d", bigs->exit_bef); //sisichanged it // exit prev command
+       printf("EXIT>%d", bigs->exit_bef);// exit prev command
         exit(bigs->exit_status);
     }
     else
@@ -59,6 +59,6 @@ int run_exit(t_biggie *bigs)
         else
             bigs->exit_status = number_exit(bigs->cmd->arguments[0]);
     }
-    printf("EXIT>%d", bigs->exit_status); //sisichanged it
+    printf("EXIT>%d", bigs->exit_status);
     exit (bigs->exit_status);
 }
