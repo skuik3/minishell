@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:25:21 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:12:40 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,30 @@ char	*find_path(env_t *env, char *find_var)
 	return (dest_var);
 }
 
+int cd_cnt(char **path)
+{
+	if (path[1] != NULL)
+	{
+		ft_putstr_fd("minishel: cd: too many arguments\n", 1);
+		return (1);
+	}
+	else
+	{
+		if (chdir(path[0]) != 0)
+		{
+			perror("");
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	run_cd(char **path, env_t *env)
 {
-	char *temp;
+	char	*temp;
+	int		status;	
 
-	if (path == NULL || ft_strcmp(path[0], "~") == 0)
+	if (path == NULL || (path != NULL && ft_strcmp(path[0], "~") == 0))
 	{
 		temp = find_path(env, "HOME");
 		if (temp == NULL)
@@ -55,14 +74,8 @@ int	run_cd(char **path, env_t *env)
 		free(temp);
 	}
 	else
-	{
-		if (chdir(path[0]) != 0)
-		{
-			perror("");
-			return (1);
-		}
-	}
-	return (0);
+		status = cd_cnt(path);
+	return (status);
 }
 
 int	run_pwd(void)
