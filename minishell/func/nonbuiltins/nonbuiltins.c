@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/22 14:32:37 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 16:24:39 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int executing(t_command *cmd)
 
             write(1, "That's a directory\n", 20);
             free_arguments(cmdw_args);
-            return (126); // check with bash what to return
+            return (126);
         }
         if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
         {

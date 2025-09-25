@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/22 15:23:07 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/22 15:26:55 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,44 +58,44 @@ int heredoc_present(t_redir **redir)
     return (0);
 }
 
-int last_heredoc_multiple(t_biggie *bigs, int i)
-{
-    int pid;
-    char *promt;
-    int status;
-    t_redir *last;
+// int last_heredoc_multiple(t_biggie *bigs, int i)
+// {
+//     int pid;
+//     char *promt;
+//     int status;
+//     t_redir *last;
 
-    last = bigs->cmd->redir_in[i];
-    last->pipe_forhdc = malloc(sizeof(int) * 2);
-    if (last->pipe_forhdc == NULL)
-        return (1);
-    if (pipe(last->pipe_forhdc) == -1)
-        return (1);
-    signal(SIGINT, handle_signal_child);
-    pid = fork();
-    if (pid < -1)
-        return (1);
-    else if (pid == 0)
-    {
-        signal(SIGINT, SIG_DFL);
-        close(last->pipe_forhdc[0]);
-        promt = get_line_heredoc(last);
-        write(last->pipe_forhdc[1], promt, ft_strlen(promt));
-        close(last->pipe_forhdc[1]);
-        free(promt);
-        free_big(bigs);
-        exit(0);
-    }
-    waitpid(pid, &status, 0);
-    close(last->pipe_forhdc[1]);
-    if (g_signal == SIGINT) 
-    {
-        close(last->pipe_forhdc[0]);
-        free_big(bigs);
-        return (SIGINT);
-    }
-    return (0);
-}
+//     last = bigs->cmd->redir_in[i];
+//     last->pipe_forhdc = malloc(sizeof(int) * 2);
+//     if (last->pipe_forhdc == NULL)
+//         return (1);
+//     if (pipe(last->pipe_forhdc) == -1)
+//         return (1);
+//     signal(SIGINT, handle_signal_child);
+//     pid = fork();
+//     if (pid < -1)
+//         return (1);
+//     else if (pid == 0)
+//     {
+//         signal(SIGINT, SIG_DFL);
+//         close(last->pipe_forhdc[0]);
+//         promt = get_line_heredoc(last);
+//         write(last->pipe_forhdc[1], promt, ft_strlen(promt));
+//         close(last->pipe_forhdc[1]);
+//         free(promt);
+//         free_big(bigs);
+//         exit(0);
+//     }
+//     waitpid(pid, &status, 0);
+//     close(last->pipe_forhdc[1]);
+//     if (g_signal == SIGINT) 
+//     {
+//         close(last->pipe_forhdc[0]);
+//         free_big(bigs);
+//         return (SIGINT);
+//     }
+//     return (0);
+// }
 
 int do_heredoc_multiple(t_biggie *bigs)
 {
