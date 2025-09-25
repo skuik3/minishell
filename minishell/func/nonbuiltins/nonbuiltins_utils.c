@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 10:05:16 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 10:06:21 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:19:25 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char *command_path(t_command *cmd)
 
 	i = 0;
 	env_path = find_path(cmd->envar, "PATH");
+	if (env_path == NULL)
+		return (NULL);
 	arr_path = ft_split(env_path, ':');
 	while (arr_path[i] != NULL)
 	{
