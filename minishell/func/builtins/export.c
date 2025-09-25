@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/18 19:52:42 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:29:22 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char *adding_variable(char *argument)
 {
-	int i;
-	int len;
-	char *new_arg;
+	int		i;
+	int		len;
+	char	*new_arg;
 
 	i = 0;
 	len = ft_strlen(argument);
@@ -55,7 +55,7 @@ int inner_check(char *envp[], int i)
 
 int unset_value(env_t *envp, char *argument)
 {
-	char **unset;
+	char	**unset;
 
 	if (value_present(argument) == 0)
 	{
@@ -70,18 +70,19 @@ int unset_value(env_t *envp, char *argument)
 
 int export_argument(env_t *envp, char *argument)
 {
-	char *add_variable;
-	char *var;
-	int	present;
+	char	*add_variable;
+	char	*var;
+	int		present;
 
 	present = 0;
 	add_variable = adding_variable(argument);
 	var = find_variable(add_variable);
 	if (check_variable(add_variable) == 1)
 	{
-		write(1, "not a valid identifier\n", 24);
+		ft_putstr_fd(var, 1);
+		write(1, ": not a valid identifier\n", 26);
 		free(var);
-		if (value_present(argument) != 0)
+		if (value_present(argument) != 0 || ft_strcmp(argument, "=") == 0)
 			free(add_variable);
 		return (1);
 	}
@@ -89,10 +90,7 @@ int export_argument(env_t *envp, char *argument)
 		present = unset_value(envp, argument);
 	free(var);
 	if (present == -2)
-	{
-		free(add_variable);
-		return (0);
-	}
+		return (free(add_variable), 0);
 	envp->mod = put_envp(envp->mod, add_variable);
 	if (value_present(argument) != 0)
 		free(add_variable);
@@ -101,26 +99,26 @@ int export_argument(env_t *envp, char *argument)
 
 int run_export(t_biggie *bigs)
 {
-	env_t *envp;
-	char **arguments;
-    int   i;
+	env_t	*envp;
+	char	**arguments;
+	int		i;
 
-    i = 0;
+	i = 0;
 	envp = bigs->cmd->envar;
 	arguments = bigs->cmd->arguments;
-    if (arguments == NULL)
-    {
-        get_order(envp->mod);
-        run_env(bigs);
-        return (0);
-    }
+	if (arguments == NULL)
+	{
+		get_order(envp->mod);
+		run_env(bigs);
+		return (0);
+	}
 	while (arguments[i] != NULL)
 	{
-		export_argument(envp, arguments[i]);
+		bigs->exit_status = export_argument(envp, arguments[i]);
 		i++;
 	}
 	// just fo easy check, delete later
-    // get_order(envp->mod);
-    // run_env(envp->mod);
-    return (0);
+	// get_order(envp->mod);
+	// run_env(envp->mod);
+	return (bigs->exit_status);
 }

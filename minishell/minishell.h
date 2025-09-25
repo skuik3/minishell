@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 13:05:57 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 10:30:05 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,10 @@ typedef struct s_exp_vars
 void free_big(t_biggie *bigs);
 void clean_big(t_biggie *bigs);
 void free_arguments(char **arguments);
+void free_env(env_t *env);
+void free_redir(t_redir **redir);
+void free_commands(t_command *cmd);
+void free_pipes(t_pipe *pipe);
 //main_execution
 int what_builtin(t_biggie *bigs);
 env_t *adding_env(t_command *cmd, char **envp);
@@ -233,6 +237,7 @@ int find_unset(char *arguments, env_t *envp);
 int unset_position(char *envp, char *variable, int i);
 int export_argument(env_t *envp, char *argument);
 int inner_check(char *envp[], int i);
+int counting_envlen(char **envp);
 //pipes
 int counting_pipes(t_command *cmd);
 t_pipe *prepare_pipes(t_command *cmd);
@@ -257,6 +262,7 @@ int setting_pipe_hdc(t_biggie *bigs);
 int where_last_heredoc(t_command *cmd, int redi);
 int last_heredoc_multiple(t_biggie *bigs, int i);
 int do_heredoc_multiple(t_biggie *bigs);
+int	child_heredoc(t_biggie *bigs, int i);
 //nonbuiltins
 int executing(t_command *cmd);
 //nonbuiltins utils

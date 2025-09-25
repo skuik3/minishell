@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:49:21 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/18 20:25:38 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 13:36:04 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ void handle_signal_child(int signal)
 void handle_signal_heredoc(int signal)
 {
     if (signal == SIGINT)
-    {
         g_signal = SIGINT;
-        ioctl(0, TIOCSTI, "\n");
-        rl_redisplay();
-    }
 }
 

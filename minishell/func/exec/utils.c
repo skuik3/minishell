@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 09:47:51 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/03 11:30:12 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/25 10:13:18 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s1)
 	if (temp == NULL)
 	{
 		perror("");
-        return (NULL);
+		return (NULL);
 	}
 	i = 0;
 	while (i < ft_strlen(s1))

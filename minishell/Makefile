@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skuik <skuik@student.42.fr>                +#+  +:+       +#+         #
+#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/24 17:36:32 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/25 10:30:48 by anezka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = main.c\
 	func/exec/env_variables.c\
 	func/exec/forks.c\
 	func/exec/free.c\
+	func/exec/free_pt2.c\
 	func/exec/libft_utils.c\
 	func/exec/signals.c\
 	func/exec/utils.c\
@@ -34,6 +35,7 @@ SRC = main.c\
 	func/nonbuiltins/heredoc_utils.c\
 	func/nonbuiltins/heredoc.c\
 	func/nonbuiltins/nonbuiltins.c\
+	func/nonbuiltins/nonbuiltins_utils.c\
 	func/nonbuiltins/pipes.c\
 	func/nonbuiltins/redirect_in.c\
 	func/nonbuiltins/redirect_out.c\

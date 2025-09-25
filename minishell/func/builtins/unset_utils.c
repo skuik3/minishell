@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 14:58:46 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/17 15:40:48 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 09:35:15 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int get_order(char **envp)
 {
-	int i;
-	char *temp;
-	int swapped;
+	int		i;
+	char	*temp;
+	int		swapped;
 
 	i = 0;
 	while (envp[i] != NULL && envp[i + 1] != NULL)
@@ -39,9 +39,9 @@ int get_order(char **envp)
 
 char  **put_envp(char **old_envp, char *new_arg)
 {
-	char **new_envp;
-	int len;
-	int i;
+	char	**new_envp;
+	int		len;
+	int		i;
 
 	i = 0;
 	len = counting_envlen(old_envp);
@@ -64,9 +64,9 @@ char  **put_envp(char **old_envp, char *new_arg)
 
 char *find_variable(char *arguments)
 {
-    char *variable;
-    int i;
-    int len;
+    char	*variable;
+    int		i;
+    int		len;
 
     len = 0;
     while (arguments[len] != '\0' && arguments[len] != '=')
