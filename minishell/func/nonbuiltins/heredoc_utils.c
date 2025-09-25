@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:31:44 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/25 19:27:39 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ char	*get_line_heredoc(t_redir *last)
 		free(line);
 	}
 	free(cmp_line);
-	free(line);
-	return (returned);
+	return (free(line), returned);
 }
 
 int	heredoc_present(t_redir **redir)
