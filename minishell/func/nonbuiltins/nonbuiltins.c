@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 11:30:08 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 13:42:10 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int executing_without_path(t_command *cmd, char **cmdw_args)
 	path = command_path(cmd);
 	if (path == NULL)
 	{
-		write(1, "Command not found\n", 19);
+		ft_putstr_fd(cmd->command, 1);
+		write(1, ": Command not found\n", 21);
 		free_arguments(cmdw_args);
 		return (127);
 	}
