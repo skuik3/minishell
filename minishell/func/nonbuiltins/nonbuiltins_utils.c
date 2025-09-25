@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   nonbuiltins_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 10:05:16 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 15:19:25 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:29:24 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int is_path(char *command)
+int	is_path(char *command)
 {
 	int	i;
 	int	len;
@@ -30,7 +30,7 @@ int is_path(char *command)
 	return (0);
 }
 
-char *command_path(t_command *cmd)
+char	*command_path(t_command *cmd)
 {
 	char	*env_path;
 	char	**arr_path;
@@ -56,7 +56,7 @@ char *command_path(t_command *cmd)
 	return (NULL);
 }
 
-char **adding_command(t_command *cmd)
+char	**adding_command(t_command *cmd)
 {
 	char	**cmdw_args;
 	int		arr_len;
@@ -79,5 +79,5 @@ char **adding_command(t_command *cmd)
 		i++;
 	}
 	cmdw_args[i] = NULL;
-	return(cmdw_args);
+	return (cmdw_args);
 }

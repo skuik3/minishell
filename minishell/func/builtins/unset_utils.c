@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 14:58:46 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 09:35:15 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:45:51 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int get_order(char **envp)
+int	get_order(char **envp)
 {
 	int		i;
 	char	*temp;
@@ -37,7 +37,7 @@ int get_order(char **envp)
 	return (0);
 }
 
-char  **put_envp(char **old_envp, char *new_arg)
+char	**put_envp(char **old_envp, char *new_arg)
 {
 	char	**new_envp;
 	int		len;
@@ -56,33 +56,33 @@ char  **put_envp(char **old_envp, char *new_arg)
 		new_envp[i] = old_envp[i];
 		i++;
 	}
-    new_envp[i] = ft_strdup(new_arg);
+	new_envp[i] = ft_strdup(new_arg);
 	new_envp[i + 1] = NULL;
 	free (old_envp);
 	return (new_envp);
 }
 
-char *find_variable(char *arguments)
+char	*find_variable(char *arguments)
 {
-    char	*variable;
-    int		i;
-    int		len;
+	char	*variable;
+	int		i;
+	int		len;
 
-    len = 0;
-    while (arguments[len] != '\0' && arguments[len] != '=')
-        len++;
-    variable = malloc(sizeof(char) * (len + 1));
-    if (variable == NULL)
-    {
-        perror("");
-        return (NULL);
-    }
-    i = 0;
-    while (arguments[i] != '\0' && arguments[i] != '=')
-    {
-        variable[i] = arguments[i];
-        i++;
-    }
-    variable[i] = '\0';
-    return(variable);
+	len = 0;
+	while (arguments[len] != '\0' && arguments[len] != '=')
+		len++;
+	variable = malloc(sizeof(char) * (len + 1));
+	if (variable == NULL)
+	{
+		perror("");
+		return (NULL);
+	}
+	i = 0;
+	while (arguments[i] != '\0' && arguments[i] != '=')
+	{
+		variable[i] = arguments[i];
+		i++;
+	}
+	variable[i] = '\0';
+	return (variable);
 }

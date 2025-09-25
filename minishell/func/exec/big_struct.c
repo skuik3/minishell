@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   big_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 11:44:46 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:37:03 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:44:48 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_biggie *setting_big(void)
+t_biggie	*setting_big(void)
 {
 	t_biggie	*new;
 
@@ -28,19 +28,16 @@ t_biggie *setting_big(void)
 	new->exit_status = 0;
 	new->pipe_cmd = NULL;
 	new->pipe_head = NULL;
-	// new->final_bef = 0;
-	// new->pipes = NULL;
-	// new->type = NULL;
-	return(new);
+	return (new);
 }
 
-void clean_big(t_biggie *bigs)
+void	clean_big(t_biggie *bigs)
 {
 	t_command	*current;
 	t_pipe		*temp;
 
 	if (bigs == NULL)
-		return;
+		return ;
 	bigs->cmd = bigs->cmd_head;
 	while (bigs->cmd != NULL)
 	{

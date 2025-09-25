@@ -3,123 +3,125 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:56:25 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/22 12:45:37 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 18:40:23 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int first_multiple(t_biggie *bigs) //in child process
+int	first_multiple(t_biggie *bigs) //in child process
 {
-    if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
-    {
-        if (check_redirect(bigs->cmd) == 1)
-        {
-            perror("");
-            free_big(bigs);
-            exit(1);
-        }
-    }
-    if (bigs->cmd->redir_out == NULL)
-    {
-        if (dup2(bigs->pipe_cmd->pipe[1], STDOUT_FILENO) == -1)   
-        {
-            perror("");
-            return (1);
-        }
-    }
-    close(bigs->pipe_cmd->pipe[0]);
-    close(bigs->pipe_cmd->pipe[1]);
-    if (is_builtint(bigs->cmd->command) == 0)
-        bigs->exit_status = what_builtin(bigs);
-    else if (is_builtint(bigs->cmd->command) == 1)
-        bigs->exit_status = executing(bigs->cmd);
-    return (bigs->exit_status);
+	if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
+	{
+		if (check_redirect(bigs->cmd) == 1)
+		{
+			perror("");
+			free_big(bigs);
+			exit(1);
+		}
+	}
+	if (bigs->cmd->redir_out == NULL)
+	{
+		if (dup2(bigs->pipe_cmd->pipe[1], STDOUT_FILENO) == -1)
+		{
+			perror("");
+			return (1);
+		}
+	}
+	close(bigs->pipe_cmd->pipe[0]);
+	close(bigs->pipe_cmd->pipe[1]);
+	if (is_builtint(bigs->cmd->command) == 0)
+		bigs->exit_status = what_builtin(bigs);
+	else if (is_builtint(bigs->cmd->command) == 1)
+		bigs->exit_status = executing(bigs->cmd);
+	return (bigs->exit_status);
 }
 
-int other_multiple(t_biggie *bigs)
+int	other_multiple(t_biggie *bigs)
 {
-    if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
-    {
-        if (check_redirect(bigs->cmd) == 1)
-        {
-            perror("");
-            free_big(bigs);
-            exit(1);
-        }
-    }
-    if (bigs->cmd->redir_in == NULL)
-    {
-        if (dup2(bigs->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
-        {
-            perror("");
-            return (1);
-        }
-    }
-    close(bigs->pipe_cmd->pipe[0]); 
-    if (bigs->cmd->redir_out == NULL)
-    {
-        if (dup2(bigs->pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
-        {
-            perror("");
-            return (1);
-        }
-    }
-    close(bigs->pipe_cmd->next->pipe[0]);
-    close(bigs->pipe_cmd->next->pipe[1]);
-    if (is_builtint(bigs->cmd->command) == 0)
-        bigs->exit_status = what_builtin(bigs);
-    else if (is_builtint(bigs->cmd->command) == 1)
-        bigs->exit_status = executing(bigs->cmd);
-    return (bigs->exit_status);  
+	if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
+	{
+		if (check_redirect(bigs->cmd) == 1)
+		{
+			perror("");
+			free_big(bigs);
+			exit(1);
+		}
+	}
+	if (bigs->cmd->redir_in == NULL)
+	{
+		if (dup2(bigs->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
+		{
+			perror("");
+			return (1);
+		}
+	}
+	close(bigs->pipe_cmd->pipe[0]);
+	if (bigs->cmd->redir_out == NULL)
+	{
+		if (dup2(bigs->pipe_cmd->next->pipe[1], STDOUT_FILENO) == -1)
+		{
+			perror("");
+			return (1);
+		}
+	}
+	close(bigs->pipe_cmd->next->pipe[0]);
+	close(bigs->pipe_cmd->next->pipe[1]);
+	if (is_builtint(bigs->cmd->command) == 0)
+		bigs->exit_status = what_builtin(bigs);
+	else if (is_builtint(bigs->cmd->command) == 1)
+		bigs->exit_status = executing(bigs->cmd);
+	return (bigs->exit_status);
 }
 
-int last_multiple(t_biggie *bigs)
+int	last_multiple(t_biggie *bigs)
 {
-    int pid;
-    int status = 0; //= 0
-    
-    pid = fork();
-    if (pid < -1)
-    {
-        perror("");
-        return (1);
-    }
-    else if (pid == 0)
-    {
-        if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
-        {
-            if (check_redirect(bigs->cmd) == 1)
-            {
-                perror("");
-                free_big(bigs);
-                exit(1);
-            }
-        }
-        if (bigs->cmd->redir_in == NULL)
-        {
-            if (dup2(bigs->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
-            {
-                perror("");
-                exit (1);
-            }
-        }
-        close(bigs->pipe_cmd->pipe[0]);
-        if (is_builtint(bigs->cmd->command) == 0)
-            status = what_builtin(bigs);
-        else if (is_builtint(bigs->cmd->command) == 1)
-            status = executing(bigs->cmd);
-        free_big(bigs);
-        exit(status);
-    }
-    close(bigs->pipe_cmd->pipe[0]);
-    while (wait(&bigs->exit_status) != -1)
-        ;
-    bigs->exit_status = WEXITSTATUS(bigs->exit_status);
-    if (bigs->exit_status == 2)
-        bigs->exit_status = 130;
-    return (bigs->exit_status);
+	int	pid;
+	int	status;
+
+	status = 0;
+	pid = fork();
+	if (pid < -1)
+	{
+		perror("");
+		return (1);
+	}
+	else if (pid == 0)
+	{
+		if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
+		{
+			if (check_redirect(bigs->cmd) == 1)
+			{
+				perror("");
+				free_big(bigs);
+				exit(1);
+			}
+		}
+		if (bigs->cmd->redir_in == NULL)
+		{
+			if (dup2(bigs->pipe_cmd->pipe[0], STDIN_FILENO) == -1)
+			{
+				perror("");
+				exit (1);
+			}
+		}
+		close(bigs->pipe_cmd->pipe[0]);
+		if (is_builtint(bigs->cmd->command) == 0)
+			status = what_builtin(bigs);
+		else if (is_builtint(bigs->cmd->command) == 1)
+			status = executing(bigs->cmd);
+		free_big(bigs);
+		exit(status);
+	}
+	close(bigs->pipe_cmd->pipe[0]);
+	// while (wait(&bigs->exit_status) != -1) //was here changed to get status of last command look more later
+	//     ;
+	waitpid(pid, &bigs->exit_status, 0);
+	bigs->exit_status = WEXITSTATUS(bigs->exit_status);
+	if (bigs->exit_status == 2)
+		bigs->exit_status = 130;
+	return (bigs->exit_status);
 }

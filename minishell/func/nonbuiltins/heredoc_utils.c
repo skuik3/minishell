@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 17:55:05 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/25 18:31:44 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	child_heredoc(t_biggie *bigs, int i)
 	char	*promt;
 	char	*postpromt;
 
-	last = bigs->cmd->redir_in[i];	
+	last = bigs->cmd->redir_in[i];
 	signal(SIGINT, SIG_DFL);
 	close(last->pipe_forhdc[0]);
 	promt = get_line_heredoc(last);
@@ -34,7 +34,7 @@ int	child_heredoc(t_biggie *bigs, int i)
 	exit(0);
 }
 
-char *get_line_heredoc(t_redir *last)
+char	*get_line_heredoc(t_redir *last)
 {
 	char	*line;
 	char	*returned;
@@ -57,14 +57,14 @@ char *get_line_heredoc(t_redir *last)
 		if (ft_strcmp(line, cmp_line) == 0)
 			break ;
 		returned = ft_strjoin(returned, line);
-		free(line);    
+		free(line);
 	}
 	free(cmp_line);
 	free(line);
 	return (returned);
 }
 
-int heredoc_present(t_redir **redir)
+int	heredoc_present(t_redir **redir)
 {
 	int	i;
 
@@ -80,46 +80,7 @@ int heredoc_present(t_redir **redir)
 	return (0);
 }
 
-// int last_heredoc_multiple(t_biggie *bigs, int i)
-// {
-//     int pid;
-//     char *promt;
-//     int status;
-//     t_redir *last;
-
-//     last = bigs->cmd->redir_in[i];
-//     last->pipe_forhdc = malloc(sizeof(int) * 2);
-//     if (last->pipe_forhdc == NULL)
-//         return (1);
-//     if (pipe(last->pipe_forhdc) == -1)
-//         return (1);
-//     signal(SIGINT, handle_signal_child);
-//     pid = fork();
-//     if (pid < -1)
-//         return (1);
-//     else if (pid == 0)
-//     {
-//         signal(SIGINT, SIG_DFL);
-//         close(last->pipe_forhdc[0]);
-//         promt = get_line_heredoc(last);
-//         write(last->pipe_forhdc[1], promt, ft_strlen(promt));
-//         close(last->pipe_forhdc[1]);
-//         free(promt);
-//         free_big(bigs);
-//         exit(0);
-//     }
-//     waitpid(pid, &status, 0);
-//     close(last->pipe_forhdc[1]);
-//     if (g_signal == SIGINT) 
-//     {
-//         close(last->pipe_forhdc[0]);
-//         free_big(bigs);
-//         return (SIGINT);
-//     }
-//     return (0);
-// }
-
-int do_heredoc_multiple(t_biggie *bigs)
+int	do_heredoc_multiple(t_biggie *bigs)
 {
 	int	i;
 	int	returned;
@@ -132,10 +93,10 @@ int do_heredoc_multiple(t_biggie *bigs)
 		if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
 			returned = redirecting_heredoc(bigs, i);
 		if (returned == SIGINT)
-			return(returned);
+			return (returned);
 		i++;
 	}
 	if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
-	   returned = last_heredoc(bigs, i);
+		returned = last_heredoc(bigs, i);
 	return (returned);
 }

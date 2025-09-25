@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:20 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/10 14:45:09 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/09/25 18:38:21 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	unsigned int	i;
 
 	i = 0;
-
 	while ((s1[i] != '\0') && (s2[i] != '\0'))
 	{
 		if (s1[i] != s2[i])
@@ -149,4 +148,3 @@ int	ft_isalpha(int c)
 	}
 	return (0);
 }
-

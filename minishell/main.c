@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/24 14:53:28 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 19:11:49 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ env_t *adding_env(t_command *cmd, char **envp)
 {
     env_t *env;
 
-    (void)cmd; // unused parameter
+    (void)cmd;
     env = malloc(sizeof(env_t));
     if (env == NULL)
         return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);

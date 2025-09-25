@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:26:27 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 19:04:17 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int write_echo(char *argument)
+int	write_echo(char *argument)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (argument[i]!= '\0')
+	while (argument[i] != '\0')
 	{
-		write(STDOUT_FILENO, &argument[i], 1);
+		write (STDOUT_FILENO, &argument[i], 1);
 		i++;
 	}
 	return (0);
 }
 
-int run_echo(char **arguments)
+int	run_echo(char **arguments)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (arguments == NULL)

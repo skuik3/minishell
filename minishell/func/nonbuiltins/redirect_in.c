@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 10:12:17 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:27:17 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int where_last_heredoc(t_command *cmd, int rdhc)
+int	where_last_heredoc(t_command *cmd, int rdhc)
 {
 	int	i;
 	int	heredoc;
@@ -21,7 +21,7 @@ int where_last_heredoc(t_command *cmd, int rdhc)
 	i = 0;
 	redir = -1;
 	heredoc = -1;
-	while(cmd->redir_in[i] != NULL)
+	while (cmd->redir_in[i] != NULL)
 	{
 		if (cmd->redir_in[i]->type == REDIR_IN)
 			redir = i;
@@ -36,37 +36,38 @@ int where_last_heredoc(t_command *cmd, int rdhc)
 	return (-1);
 }
 
-int redirecting_in(t_redir *redirin)
+int	redirecting_in(t_redir *redirin)
 {
 	if (access(redirin->filename, R_OK) == -1)
 		return (1);
-	return (0);   
+	return (0);
 }
 
 //check if permission to write denied bahaviour
-int last_redirect_in(t_redir *last)
+int	last_redirect_in(t_redir *last)
 {
-	int fd;
-	int returned;
+	int	fd;
+	int	returned;
 
 	returned = 0;
 	if (access(last->filename, R_OK) == -1)
 		return (1);
 	fd = open(last->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return(1);
+		return (1);
 	close (fd);
 	return (returned);
 }
 
-int redirect_in(t_command *cmd)
+int	redirect_in(t_command *cmd)
 {
 	int	i;
 	int	returned;
 
 	i = 0;
 	returned = 0;
-	while (cmd->redir_in[i + 1] != NULL){
+	while (cmd->redir_in[i + 1] != NULL)
+	{
 		if (cmd->redir_in[i]->type == REDIR_IN)
 			returned = redirecting_in(cmd->redir_in[i]);
 		i++;
@@ -79,7 +80,7 @@ int redirect_in(t_command *cmd)
 			if (cmd->redir_in[i]->pipe_forhdc != NULL)
 			{
 				if (dup2(cmd->redir_in[i]->pipe_forhdc[0], STDIN_FILENO) == -1)
-					return(1);
+					return (1);
 			}
 			returned = 0;
 		}

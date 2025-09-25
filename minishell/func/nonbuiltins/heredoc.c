@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:59:00 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:33:09 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int last_heredoc(t_biggie *bigs, int i)
+int	last_heredoc(t_biggie *bigs, int i)
 {
 	int		pid;
 	t_redir	*last;
@@ -41,7 +41,7 @@ int last_heredoc(t_biggie *bigs, int i)
 	return (bigs->exit_status);
 }
 
-int redirecting_heredoc(t_biggie *bigs, int i)
+int	redirecting_heredoc(t_biggie *bigs, int i)
 {
 	char	*promt;
 	int		pid;
@@ -54,7 +54,7 @@ int redirecting_heredoc(t_biggie *bigs, int i)
 	if (pid < -1)
 		return (1);
 	else if (pid == 0)
-	{        
+	{
 		signal(SIGINT, SIG_DFL);
 		promt = get_line_heredoc(heredoc);
 		(void)promt;
@@ -68,7 +68,7 @@ int redirecting_heredoc(t_biggie *bigs, int i)
 	return (status);
 }
 
-int setting_pipe_hdc(t_biggie *bigs)
+int	setting_pipe_hdc(t_biggie *bigs)
 {
 	int	i;
 
@@ -82,7 +82,7 @@ int setting_pipe_hdc(t_biggie *bigs)
 	return (0);
 }
 
-int do_heredoc(t_biggie *bigs)
+int	do_heredoc(t_biggie *bigs)
 {
 	int	i;
 	int	returned;
@@ -95,7 +95,7 @@ int do_heredoc(t_biggie *bigs)
 		if (bigs->cmd->redir_in[i]->type == REDIR_HEREDOC)
 			returned = redirecting_heredoc(bigs, i);
 		if (returned == SIGINT)
-			return(returned);
+			return (returned);
 		i++;
 	}
 	while (bigs->cmd->redir_in[i] != NULL)
@@ -107,7 +107,7 @@ int do_heredoc(t_biggie *bigs)
 	return (returned);
 }
 
-int check_heredoc(t_biggie *bigs)
+int	check_heredoc(t_biggie *bigs)
 {
 	int			returned;
 	t_command	*head;
@@ -125,7 +125,7 @@ int check_heredoc(t_biggie *bigs)
 		if (heredoc_present(bigs->cmd->redir_in) == 1)
 			returned = do_heredoc_multiple(bigs);
 		if (returned == SIGINT)
-			return(returned);
+			return (returned);
 		bigs->cmd = bigs->cmd->next;
 	}
 	bigs->cmd = head;

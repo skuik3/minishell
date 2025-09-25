@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:35:08 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:51:43 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int variable_present(char *variable, env_t *envp)
+int	variable_present(char *variable, env_t *envp)
 {
 	int		i;
 	char	*present;
@@ -32,8 +32,7 @@ int variable_present(char *variable, env_t *envp)
 	return (1);
 }
 
-
-char **prepare_unset(char *argument)
+char	**prepare_unset(char *argument)
 {
 	char	**unset;
 	char	*variable;
@@ -51,7 +50,7 @@ char **prepare_unset(char *argument)
 	return (unset);
 }
 
-int value_present(char *argument)
+int	value_present(char *argument)
 {
 	int	i;
 	int	len;
@@ -61,7 +60,7 @@ int value_present(char *argument)
 	while (argument[i] != '\0')
 	{
 		if (argument[i] == '=')
-			break;
+			break ;
 		i++;
 	}
 	if (i == len || (i == (len + 1) && argument[len] == '='))
@@ -69,7 +68,7 @@ int value_present(char *argument)
 	return (0);
 }
 
-int check_variable(char *variable)
+int	check_variable(char *variable)
 {
 	int		i;
 	char	*just_variable;
