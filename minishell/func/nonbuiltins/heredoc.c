@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:33:09 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/25 23:42:59 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ int	last_heredoc(t_biggie *bigs, int i)
 
 int	redirecting_heredoc(t_biggie *bigs, int i)
 {
-	char	*promt;
-	int		pid;
-	int		status;
-	t_redir	*heredoc;
+	char	*			promt;
+	int					pid;
+	int					status;
+	t_redir				*heredoc;
+	struct sigaction	sa;
 
 	heredoc = bigs->cmd->redir_in[i];
 	signal(SIGINT, handle_signal_child);
@@ -55,9 +56,11 @@ int	redirecting_heredoc(t_biggie *bigs, int i)
 		return (1);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = 0;
+		sa.sa_handler = handle_signal_heredoc;
+		sigaction(SIGINT, &sa, NULL);
 		promt = get_line_heredoc(heredoc);
-		(void)promt;
 		free(promt);
 		free_big(bigs);
 		exit(0);
