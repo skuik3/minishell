@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 23:35:12 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/26 01:48:08 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ int is_builtint(char *command);
 void handle_signal_main(int signal);
 void handle_signal_child(int signal);
 void handle_signal_heredoc(int signal);
+void set_ctrl(struct sigaction sa);
 //builtin fce
 int run_pwd(void);
 int run_echo(char **string);

@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 23:42:59 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/26 01:48:19 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	last_heredoc(t_biggie *bigs, int i)
 		child_heredoc(bigs, i);
 	close(last->pipe_forhdc[1]);
 	waitpid(pid, &status, 0);
-	// bigs->exit_status = WEXITSTATUS(status);
+	bigs->exit_status = WEXITSTATUS(status);
 	if (g_signal == SIGINT)
 	{
 		close(last->pipe_forhdc[0]);
@@ -43,7 +43,7 @@ int	last_heredoc(t_biggie *bigs, int i)
 
 int	redirecting_heredoc(t_biggie *bigs, int i)
 {
-	char	*			promt;
+	char				*promt;
 	int					pid;
 	int					status;
 	t_redir				*heredoc;
@@ -56,10 +56,7 @@ int	redirecting_heredoc(t_biggie *bigs, int i)
 		return (1);
 	else if (pid == 0)
 	{
-		sigemptyset(&sa.sa_mask);
-		sa.sa_flags = 0;
-		sa.sa_handler = handle_signal_heredoc;
-		sigaction(SIGINT, &sa, NULL);
+		set_ctrl(sa);
 		promt = get_line_heredoc(heredoc);
 		free(promt);
 		free_big(bigs);

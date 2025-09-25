@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:27:17 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 01:47:06 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	redirecting_in(t_redir *redirin)
 	return (0);
 }
 
-//check if permission to write denied bahaviour
 int	last_redirect_in(t_redir *last)
 {
 	int	fd;
@@ -59,7 +58,7 @@ int	last_redirect_in(t_redir *last)
 	return (returned);
 }
 
-int	redirect_in(t_command *cmd)
+int redirectin_cnt(t_command *cmd)
 {
 	int	i;
 	int	returned;
@@ -72,6 +71,18 @@ int	redirect_in(t_command *cmd)
 			returned = redirecting_in(cmd->redir_in[i]);
 		i++;
 	}
+	return (returned);
+}
+
+int	redirect_in(t_command *cmd)
+{
+	int	i;
+	int	returned;
+
+	i = 0;
+	returned = redirectin_cnt(cmd);
+	while(cmd->redir_in[i + 1] != NULL)
+		i++;
 	while (cmd->redir_in[i] != NULL)
 	{
 		if (cmd->redir_in[i]->type == REDIR_IN)

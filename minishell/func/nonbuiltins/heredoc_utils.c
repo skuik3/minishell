@@ -6,11 +6,19 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 23:55:00 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/26 01:48:12 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	set_ctrl(struct sigaction sa)
+{
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = handle_signal_heredoc;
+	sigaction(SIGINT, &sa, NULL);
+}
 
 int	child_heredoc(t_biggie *bigs, int i)
 {
