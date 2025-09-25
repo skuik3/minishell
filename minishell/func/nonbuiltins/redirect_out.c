@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 10:12:43 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:25:19 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int check_redirect(t_command *cmd)
+int	check_redirect(t_command *cmd)
 {
 	int	returned;
 
@@ -22,7 +22,6 @@ int check_redirect(t_command *cmd)
 		returned = redirect_in(cmd);
 		if (returned == 1)
 			return (1);
-
 	}
 	if (cmd->redir_out != NULL)
 	{
@@ -33,7 +32,7 @@ int check_redirect(t_command *cmd)
 	return (returned);
 }
 
-int redirecting_out(t_redir *redirout)
+int	redirecting_out(t_redir *redirout)
 {
 	int	fd;
 
@@ -49,12 +48,12 @@ int redirecting_out(t_redir *redirout)
 	return (0);
 }
 
-int appending(t_redir *append)
+int	appending(t_redir *append)
 {
-	int fd;
+	int	fd;
 
 	if (access(append->filename, W_OK) == 0)
-		return(0);
+		return (0);
 	fd = open(append->filename, O_RDWR | O_CREAT, SHELL_DEFAULT);
 	if (fd == -1)
 		return (1);
@@ -62,7 +61,7 @@ int appending(t_redir *append)
 	return (0);
 }
 
-int last_redirect_out(t_redir *last)
+int	last_redirect_out(t_redir *last)
 {
 	int	fd;
 
@@ -83,7 +82,7 @@ int last_redirect_out(t_redir *last)
 	return (0);
 }
 
-int redirect_out(t_command *cmd)
+int	redirect_out(t_command *cmd)
 {
 	int	i;
 	int	returned;
@@ -94,7 +93,7 @@ int redirect_out(t_command *cmd)
 	{
 		if (cmd->redir_out[i]->type == REDIR_OUT)
 			returned = redirecting_out(cmd->redir_out[i]);
-		else if (cmd->redir_out[i]->type ==  REDIR_APPEND)
+		else if (cmd->redir_out[i]->type == REDIR_APPEND)
 			returned = appending(cmd->redir_out[i]);
 		i++;
 	}

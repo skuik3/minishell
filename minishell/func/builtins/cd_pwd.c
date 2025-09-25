@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 15:20:53 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 19:12:05 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+//chech if ok, after norm
 char	*find_path(env_t *env, char *find_var)
 {
 	int		i;
-	int		len;
 	char	*variable;
 	char	*dest_var;
 
 	i = 0;
-	len = ft_strlen(find_var);
 	dest_var = NULL;
 	while (env->mod[i] != NULL)
 	{
@@ -29,8 +28,12 @@ char	*find_path(env_t *env, char *find_var)
 		{
 			dest_var = malloc(sizeof(char) * (ft_strlen(env->mod[i] + 2)));
 			if (dest_var == NULL)
-				return (free(variable),ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-			ft_strlcpy(dest_var, &env->mod[i][len + 1], ft_strlen(env->mod[i]) - len);
+			{
+				free(variable);
+				return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+			}
+			ft_strlcpy(dest_var, &env->mod[i][ft_strlen(find_var) + 1],
+				ft_strlen(env->mod[i]) - ft_strlen(find_var));
 		}
 		i++;
 		free(variable);
@@ -38,11 +41,11 @@ char	*find_path(env_t *env, char *find_var)
 	return (dest_var);
 }
 
-int cd_cnt(char **path)
+int	cd_cnt(char **path)
 {
 	if (path[1] != NULL)
 	{
-		ft_putstr_fd("minishel: cd: too many arguments\n", 1);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 1);
 		return (1);
 	}
 	else
@@ -61,6 +64,7 @@ int	run_cd(char **path, env_t *env)
 	char	*temp;
 	int		status;	
 
+	status = 0;
 	if (path == NULL || (path != NULL && ft_strcmp(path[0], "~") == 0))
 	{
 		temp = find_path(env, "HOME");

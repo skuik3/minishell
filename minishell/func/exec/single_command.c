@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:45:02 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 10:13:58 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:36:21 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int check_before_single(t_biggie *bigs)
+int	check_before_single(t_biggie *bigs)
 {
 	bigs->exit_status = check_heredoc(bigs);
 	if (bigs->exit_status == 1)
@@ -27,13 +27,13 @@ int check_before_single(t_biggie *bigs)
 		if (check_redirect(bigs->cmd) == 1)
 		{
 			perror("");
-			return (1); 
+			return (1);
 		}
 	}
 	return (0);
 }
 
-int single_nonbuiltin(t_biggie *bigs)
+int	single_nonbuiltin(t_biggie *bigs)
 {
 	int	pid;
 	int	status;
@@ -59,32 +59,34 @@ int single_nonbuiltin(t_biggie *bigs)
 	return (bigs->exit_status);
 }
 
-void close_herepipe(t_command *cmd) 
+void	close_herepipe(t_command *cmd)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (cmd->redir_in[i + 1] != NULL)
 		i++;
 	if (cmd->redir_in[i]->type == REDIR_HEREDOC)
-		close(cmd->redir_in[i]->pipe_forhdc[0]);    
+		close(cmd->redir_in[i]->pipe_forhdc[0]);
 }
 
-int restore_fd(int stdout_orig, int stdin_orig)
+int	restore_fd(int stdout_orig, int stdin_orig)
 {
-	if (dup2(stdout_orig, STDOUT_FILENO) == -1 
+	if (dup2(stdout_orig, STDOUT_FILENO) == -1
 		|| dup2(stdin_orig, STDIN_FILENO) == -1)
-		{
-			perror("");
-			return (1);
-		}
+	{
+		perror("");
+		return (1);
+	}
 	close(stdout_orig);
 	close(stdin_orig);
 	return (0);
 }
 
-int single_command(t_biggie *bigs)
+int	single_command(t_biggie *bigs)
 {
-	int stdout_orig;
-	int stdin_orig;
+	int	stdout_orig;
+	int	stdin_orig;
 
 	stdout_orig = dup(STDOUT_FILENO);
 	stdin_orig = dup(STDIN_FILENO);
@@ -101,7 +103,6 @@ int single_command(t_biggie *bigs)
 		// restore_fd(stdout_orig, stdin_orig);// shouldnt i also put it here?? check later
 		return (bigs->exit_status);
 	}
-
 	if (is_builtint(bigs->cmd->command) == 0)
 		bigs->exit_status = what_builtin(bigs);
 	else

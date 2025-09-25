@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:57:39 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 10:10:31 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:28:38 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int counting_pipes(t_command *cmd)
+int	counting_pipes(t_command *cmd)
 {
 	int	count;
 
@@ -25,7 +25,7 @@ int counting_pipes(t_command *cmd)
 	return (count);
 }
 
-t_pipe *adding_pipe(t_pipe *pipe_cmd)
+t_pipe	*adding_pipe(t_pipe *pipe_cmd)
 {
 	t_pipe	*new;
 
@@ -45,10 +45,10 @@ t_pipe *adding_pipe(t_pipe *pipe_cmd)
 	while (pipe_cmd->next != NULL)
 		pipe_cmd = pipe_cmd->next;
 	pipe_cmd->next = new;
-	return(pipe_cmd);
+	return (pipe_cmd);
 }
 
-t_pipe *creating_first_pipe(void)
+t_pipe	*creating_first_pipe(void)
 {
 	t_pipe	*pipe_cmd;
 
@@ -68,7 +68,7 @@ t_pipe *creating_first_pipe(void)
 	return (pipe_cmd);
 }
 
-t_pipe *prepare_pipes(t_command *cmd)
+t_pipe	*prepare_pipes(t_command *cmd)
 {
 	int		pipe_count;
 	t_pipe	*pipe_cmd;
@@ -94,5 +94,5 @@ t_pipe *prepare_pipes(t_command *cmd)
 		}
 		pipe_cmd = pipe_cmd->next;
 	}
-	return(head);
+	return (head);
 }

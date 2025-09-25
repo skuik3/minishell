@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:36:23 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:47:33 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char **put_unset(char **old_env, int unset)
+char	**put_unset(char **old_env, int unset)
 {
 	int		i;
 	int		len;
@@ -25,21 +25,21 @@ char **put_unset(char **old_env, int unset)
 		return (perror(""), NULL);
 	while (i < unset)
 	{
-	   new_envp[i] = old_env[i];
-	   i++; 
+		new_envp[i] = old_env[i];
+		i++;
 	}
 	free(old_env[i]);
 	while (old_env[i + 1] != NULL)
 	{
 		new_envp[i] = old_env[i + 1];
-		i++; 
+		i++;
 	}
 	new_envp[i] = NULL;
 	free(old_env);
 	return (new_envp);
 }
 
-int unset_position(char *envp, char *variable, int i)
+int	unset_position(char *envp, char *variable, int i)
 {
 	int	j;
 	int	len;
@@ -57,7 +57,7 @@ int unset_position(char *envp, char *variable, int i)
 	return (-2);
 }
 
-int find_unset(char *arguments, env_t *envp)
+int	find_unset(char *arguments, env_t *envp)
 {
 	char	*variable;
 	int		i;
@@ -74,7 +74,7 @@ int find_unset(char *arguments, env_t *envp)
 		{
 			unset = unset_position(envp->mod[i], variable, i);
 			if (unset != -2)
-				break;
+				break ;
 		}
 		i++;
 	}
@@ -82,7 +82,7 @@ int find_unset(char *arguments, env_t *envp)
 	return (unset);
 }
 
-int unseting(env_t *envp, char *arguments)
+int	unseting(env_t *envp, char *arguments)
 {
 	int	unset;
 
@@ -96,7 +96,7 @@ int unseting(env_t *envp, char *arguments)
 	return (0);
 }
 
-int run_unset(env_t *envp, char **arguments)
+int	run_unset(env_t *envp, char **arguments)
 {
 	int	i;
 	int	returned;
@@ -110,8 +110,5 @@ int run_unset(env_t *envp, char **arguments)
 		returned = unseting(envp, arguments[i]);
 		i++;
 	}
-	//for check
-	// get_order(envp->mod);
-	// run_env(envp->mod);
 	return (returned);
 }

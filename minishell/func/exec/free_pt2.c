@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_pt2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 10:21:21 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 10:31:53 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:22:08 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void free_arguments(char **arguments) 
+void	free_arguments(char **arguments)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ void free_arguments(char **arguments)
 	arguments = NULL;
 }
 
-void free_redir(t_redir **redir)
+void	free_redir(t_redir **redir)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ void free_redir(t_redir **redir)
 	free(redir);
 }
 
-void free_env(env_t *env)
+void	free_env(env_t *env)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ void free_env(env_t *env)
 	free(env);
 }
 
-void free_commands(t_command *cmd)
+void	free_commands(t_command *cmd)
 {
 	free(cmd->command);
 	cmd->command = NULL;
@@ -82,12 +82,9 @@ void free_commands(t_command *cmd)
 	if (cmd->redir_out != NULL)
 		free_redir(cmd->redir_out);
 	cmd->redir_out = NULL;
-	// if (cmd->envar != NULL)
-	//     free_env(cmd->envar);
-	// cmd->envar = NULL;
 }
 
-void free_pipes(t_pipe *pipe)
+void	free_pipes(t_pipe *pipe)
 {
 	free(pipe->pipe);
 	pipe->pipe = NULL;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_commands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:23:05 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 09:37:21 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:44:19 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int what_builtin(t_biggie *bigs)
+int	what_builtin(t_biggie *bigs)
 {
 	int	returned;
 
@@ -36,8 +36,7 @@ int what_builtin(t_biggie *bigs)
 	return (returned);
 }
 
-
-int is_builtint(char *command)
+int	is_builtint(char *command)
 {
 	if (ft_strcmp(command, "echo") == 0)
 		return (0);

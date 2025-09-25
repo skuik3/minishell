@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 14:29:22 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:52:31 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char *adding_variable(char *argument)
+char	*adding_variable(char *argument)
 {
 	int		i;
 	int		len;
@@ -23,7 +23,7 @@ char *adding_variable(char *argument)
 	while ((argument[i] != '\0'))
 	{
 		if (argument[i] == '=')
-			break;
+			break ;
 		i++;
 	}
 	if (i != len && argument[i + 1] != '\0')
@@ -35,9 +35,9 @@ char *adding_variable(char *argument)
 	return (new_arg);
 }
 
-int inner_check(char *envp[], int i)
+int	inner_check(char *envp[], int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (envp[i][j] != '\0' && envp[i + 1][j] != '\0')
@@ -53,7 +53,7 @@ int inner_check(char *envp[], int i)
 	return (0);
 }
 
-int unset_value(env_t *envp, char *argument)
+int	unset_value(env_t *envp, char *argument)
 {
 	char	**unset;
 
@@ -68,7 +68,7 @@ int unset_value(env_t *envp, char *argument)
 	return (-2);
 }
 
-int export_argument(env_t *envp, char *argument)
+int	export_argument(env_t *envp, char *argument)
 {
 	char	*add_variable;
 	char	*var;
@@ -97,7 +97,7 @@ int export_argument(env_t *envp, char *argument)
 	return (0);
 }
 
-int run_export(t_biggie *bigs)
+int	run_export(t_biggie *bigs)
 {
 	env_t	*envp;
 	char	**arguments;
@@ -117,8 +117,5 @@ int run_export(t_biggie *bigs)
 		bigs->exit_status = export_argument(envp, arguments[i]);
 		i++;
 	}
-	// just fo easy check, delete later
-	// get_order(envp->mod);
-	// run_env(envp->mod);
 	return (bigs->exit_status);
 }

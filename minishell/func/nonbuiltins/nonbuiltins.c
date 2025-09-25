@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   nonbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 15:22:57 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:29:57 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int executing_without_path(t_command *cmd, char **cmdw_args)
+int	executing_without_path(t_command *cmd, char **cmdw_args)
 {
 	char		*path;
 
@@ -27,6 +27,7 @@ int executing_without_path(t_command *cmd, char **cmdw_args)
 	if (execve(path, cmdw_args, cmd->envar->mod) == -1)
 	{
 		perror("");
+		free_arguments(cmdw_args);
 		return (1);
 	}
 	return (0);
@@ -38,7 +39,6 @@ int	executing_with_path(t_command *cmd, char **cmdw_args)
 
 	if (stat(cmd->command, &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
-
 		write(1, "That's a directory\n", 20);
 		free_arguments(cmdw_args);
 		return (126);
@@ -46,12 +46,13 @@ int	executing_with_path(t_command *cmd, char **cmdw_args)
 	if (execve(cmd->command, cmdw_args, cmd->envar->mod) == -1)
 	{
 		perror("");
+		free_arguments(cmdw_args);
 		return (1);
 	}
 	return (0);
 }
 
-int executing(t_command *cmd)
+int	executing(t_command *cmd)
 {
 	char		**cmdw_args;
 	int			returned;

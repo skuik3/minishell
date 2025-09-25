@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 22:29:02 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 10:45:11 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:20:51 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int copy_string(char **env, char *orig_env)
+int	copy_string(char **env, char *orig_env)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ int copy_string(char **env, char *orig_env)
 	return (0);
 }
 
-int saving_env(char ***env, char *envp[])
+int	saving_env(char ***env, char *envp[])
 {
 	int	i;
 

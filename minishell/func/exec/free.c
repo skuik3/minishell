@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 10:04:01 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 11:10:00 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:20:37 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void free_single_cmd(t_command *cmd)
+void	free_single_cmd(t_command *cmd)
 {
 	t_command	*current;
 
@@ -25,12 +25,12 @@ void free_single_cmd(t_command *cmd)
 	}
 }
 
-void free_big(t_biggie *bigs)
+void	free_big(t_biggie *bigs)
 {
-	t_pipe 	*temp;
-	
+	t_pipe	*temp;
+
 	if (bigs == NULL)
-		return;
+		return ;
 	bigs->cmd = bigs->cmd_head;
 	if (bigs->cmd != NULL)
 		free_single_cmd(bigs->cmd);
