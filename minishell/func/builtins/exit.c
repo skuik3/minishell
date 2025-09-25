@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:35:04 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:08:04 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,32 @@ int just_nb(char *nb)
 
 int run_exit(t_biggie *bigs)
 {
-	if (bigs->cmd->arguments == NULL){
-	   printf("EXIT>%d", bigs->exit_bef); // exit prev command
-		exit(bigs->exit_status);
+	int status;
+
+	status = bigs->exit_status;
+	if (bigs->cmd->arguments == NULL)
+	{
+		free_big(bigs);
+		exit(status);
 	}
 	else
 	{
-		if (bigs->cmd->arguments[1] != NULL)
+		if (just_nb(bigs->cmd->arguments[0]) != 0)
+		{
+			bigs->exit_status = 2;
+			ft_putstr_fd("exit\nminishel: exit: ", 1);
+			ft_putstr_fd(bigs->cmd->arguments[0], 1);
+			ft_putstr_fd(": numeric argument required\n", 1);
+		}
+		else if (bigs->cmd->arguments[1] != NULL)
+		{
 			bigs->exit_status = 1;
-		else if (just_nb(bigs->cmd->arguments[0]) != 0)
-			bigs->exit_status = 255;
+			ft_putstr_fd("exit\nminishel: exit: too many arguments\n", 1);
+		}
 		else
 			bigs->exit_status = number_exit(bigs->cmd->arguments[0]);
 	}
-	printf("EXIT>%d", bigs->exit_status);
-	exit (bigs->exit_status);
+	status = bigs->exit_status;
+	free_big(bigs);
+	exit (status);
 }
