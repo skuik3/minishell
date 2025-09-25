@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:59:57 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:23:43 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:05:26 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_redir	*new_redir(t_token *tok, t_redir_type type)
 	r = malloc(sizeof(t_redir));
 	if (!r)
 		return (NULL);
-	r->filename = strdup(tok->value);
+	r->filename = ft_strdup(tok->value);
 	if (!r->filename)
 	{
 		free(r);
@@ -66,13 +66,13 @@ t_redir_type	get_redir_type_from_token(t_token_type tok_type)
 
 t_redir_type	get_redir_type(const char *str, size_t len)
 {
-	if (strncmp(str, ">", len) == 0)
+	if (ft_strncmp(str, ">", len) == 0)
 		return (REDIR_OUT);
-	if (strncmp(str, ">>", len) == 0)
+	if (ft_strncmp(str, ">>", len) == 0)
 		return (REDIR_APPEND);
-	if (strncmp(str, "<", len) == 0)
+	if (ft_strncmp(str, "<", len) == 0)
 		return (REDIR_IN);
-	if (strncmp(str, "<<", len) == 0)
+	if (ft_strncmp(str, "<<", len) == 0)
 		return (REDIR_HEREDOC);
 	return (0);
 }
@@ -81,13 +81,13 @@ t_token_type	get_token_type_len(const char *str, size_t len)
 {
 	if (len == 2)
 	{
-		if (strncmp(str, "||", 2) == 0)
+		if (ft_strncmp(str, "||", 2) == 0)
 			return (T_OR);
-		if (strncmp(str, "&&", 2) == 0)
+		if (ft_strncmp(str, "&&", 2) == 0)
 			return (T_AND);
-		if (strncmp(str, ">>", 2) == 0)
+		if (ft_strncmp(str, ">>", 2) == 0)
 			return (T_REDIR_APPEND);
-		if (strncmp(str, "<<", 2) == 0)
+		if (ft_strncmp(str, "<<", 2) == 0)
 			return (T_REDIR_HEREDOC);
 	}
 	else if (len == 1)

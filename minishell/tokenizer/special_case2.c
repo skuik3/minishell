@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:53:15 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:11:00 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:05:02 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char	*join_exp_parts(char *before, char *expansion, char *after)
 char	*handle_no_exp(const char *input)
 {
 	if (!input)
-		return (strdup(""));
-	return (strdup(input));
+		return (ft_strdup(""));
+	return (ft_strdup(input));
 }
 
 char	*handle_empty_var(char *before)

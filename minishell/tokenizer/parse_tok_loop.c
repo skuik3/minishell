@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:37:45 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:08:11 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	process_tokens(t_token *tok, t_cmd_builder *b, env_t *env)
 void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 {
 	if (!b->cmd->command)
-		b->cmd->command = strdup("");
+		b->cmd->command = ft_strdup("");
 	b->cmd->arguments = list_to_str_array(b->args);
 	b->cmd->redir_in = list_to_redir_array(b->redir_in);
 	b->cmd->redir_in_count = list_size(b->redir_in);

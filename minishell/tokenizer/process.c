@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:28:08 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 17:57:05 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 11:05:16 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_token	*argv_to_token_list(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		len = strlen(argv[i]);
+		len = ft_strlen(argv[i]);
 		rtype = get_redir_type(argv[i], len);
 		tp = get_t_type_from_redir(rtype, argv[i], len);
 		append_token(&head, new_token(argv[i], len, tp));

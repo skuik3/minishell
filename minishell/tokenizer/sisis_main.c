@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 14:21:41 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/25 12:23:12 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	is_exit_input(const char *line, ssize_t n)
 		return (1);
 	if (n == 2 && line[0] == '\x11')
 		return (1);
-	if (!strncmp(line, "exit", 4))
+	if (!ft_strncmp(line, "exit", 4))
 		return (1);
 	return (0);
 }
@@ -94,7 +94,7 @@ t_command	*run_shell_line(char *line, env_t *env)
 	//printf("Tokens:\n");
 	if (!tokens)
 	{
-		fprintf(stderr, "Tokenization failed.\n");
+		//printf("Tokenization failed.\n");
 		return (NULL);
 	}
 	if (!validate_syntax(tokens))
@@ -104,7 +104,7 @@ t_command	*run_shell_line(char *line, env_t *env)
 	}
 	if (!init_commands(&cmd_list, tokens, env))
 	{
-		fprintf(stderr, "Parsing failed.\n");
+		//printf("Parsing failed.\n");
 		free_tokens(tokens);
 		return (NULL);
 	}
