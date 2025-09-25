@@ -6,7 +6,7 @@
 /*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 09:35:12 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:29:22 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ int export_argument(env_t *envp, char *argument)
 	var = find_variable(add_variable);
 	if (check_variable(add_variable) == 1)
 	{
-		write(1, "not a valid identifier\n", 24);
+		ft_putstr_fd(var, 1);
+		write(1, ": not a valid identifier\n", 26);
 		free(var);
-		if (value_present(argument) != 0)
+		if (value_present(argument) != 0 || ft_strcmp(argument, "=") == 0)
 			free(add_variable);
 		return (1);
 	}
@@ -113,11 +114,11 @@ int run_export(t_biggie *bigs)
 	}
 	while (arguments[i] != NULL)
 	{
-		export_argument(envp, arguments[i]);
+		bigs->exit_status = export_argument(envp, arguments[i]);
 		i++;
 	}
 	// just fo easy check, delete later
 	// get_order(envp->mod);
 	// run_env(envp->mod);
-	return (0);
+	return (bigs->exit_status);
 }
