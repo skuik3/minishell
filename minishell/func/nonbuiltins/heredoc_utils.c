@@ -3,23 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:52:13 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 19:27:39 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 01:48:12 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+void	set_ctrl(struct sigaction sa)
+{
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = handle_signal_heredoc;
+	sigaction(SIGINT, &sa, NULL);
+}
+
 int	child_heredoc(t_biggie *bigs, int i)
 {
-	t_redir	*last;
-	char	*promt;
-	char	*postpromt;
+	t_redir				*last;
+	char				*promt;
+	char				*postpromt;
+	struct sigaction	sa;
 
 	last = bigs->cmd->redir_in[i];
-	signal(SIGINT, SIG_DFL);
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = handle_signal_heredoc;
+	sigaction(SIGINT, &sa, NULL);
 	close(last->pipe_forhdc[0]);
 	promt = get_line_heredoc(last);
 	if (promt != NULL)
@@ -39,11 +51,10 @@ char	*get_line_heredoc(t_redir *last)
 	char	*line;
 	char	*returned;
 	char	*cmp_line;
-	char	*hrd_line;
 
 	returned = NULL;
-	hrd_line = ft_strdup(last->filename);
-	cmp_line = ft_strjoin(hrd_line, "\n");
+	line = NULL;
+	cmp_line = ft_strjoin(ft_strdup(last->filename), "\n");
 	while (1 && g_signal != SIGINT)
 	{
 		write (STDOUT_FILENO, "> ", 3);
@@ -60,7 +71,8 @@ char	*get_line_heredoc(t_redir *last)
 		free(line);
 	}
 	free(cmp_line);
-	return (free(line), returned);
+	free(line);
+	return (returned);
 }
 
 int	heredoc_present(t_redir **redir)

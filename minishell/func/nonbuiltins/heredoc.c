@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:33:09 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 01:48:19 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	last_heredoc(t_biggie *bigs, int i)
 		child_heredoc(bigs, i);
 	close(last->pipe_forhdc[1]);
 	waitpid(pid, &status, 0);
-	// bigs->exit_status = WEXITSTATUS(status);
+	bigs->exit_status = WEXITSTATUS(status);
 	if (g_signal == SIGINT)
 	{
 		close(last->pipe_forhdc[0]);
@@ -43,10 +43,11 @@ int	last_heredoc(t_biggie *bigs, int i)
 
 int	redirecting_heredoc(t_biggie *bigs, int i)
 {
-	char	*promt;
-	int		pid;
-	int		status;
-	t_redir	*heredoc;
+	char				*promt;
+	int					pid;
+	int					status;
+	t_redir				*heredoc;
+	struct sigaction	sa;
 
 	heredoc = bigs->cmd->redir_in[i];
 	signal(SIGINT, handle_signal_child);
@@ -55,9 +56,8 @@ int	redirecting_heredoc(t_biggie *bigs, int i)
 		return (1);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		set_ctrl(sa);
 		promt = get_line_heredoc(heredoc);
-		(void)promt;
 		free(promt);
 		free_big(bigs);
 		exit(0);

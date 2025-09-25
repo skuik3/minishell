@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:45:02 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 18:36:21 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 01:33:50 by anezka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,7 @@ int	single_command(t_biggie *bigs)
 	}
 	bigs->exit_status = check_before_single(bigs);
 	if (bigs->exit_status != 0)
-	{
-		// if (bigs->cmd->redir_in != NULL)
-		//     close_herepipe(bigs->cmd);
-		// restore_fd(stdout_orig, stdin_orig);// shouldnt i also put it here?? check later
 		return (bigs->exit_status);
-	}
 	if (is_builtint(bigs->cmd->command) == 0)
 		bigs->exit_status = what_builtin(bigs);
 	else
