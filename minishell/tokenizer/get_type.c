@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_type.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:59:57 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/25 11:05:26 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 11:58:52 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*new_token(const char *str, size_t len, t_token_type type)
 	tok = malloc(sizeof(t_token));
 	if (!tok)
 		return (NULL);
-	tok->value = strndup(str, len);
+	tok->value = ft_strndup(str, len);
 	if (!tok->value)
 	{
 		free(tok);
@@ -47,7 +47,6 @@ t_redir	*new_redir(t_token *tok, t_redir_type type)
 	}
 	r->type = type;
 	r->pipe_forhdc = NULL;
-	r->position = 0;
 	return (r);
 }
 

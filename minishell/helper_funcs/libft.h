@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 16:24:03 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 15:02:39 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 11:47:26 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ void		polish_list(t_list_gnl **s_list_gnl);
 char		*get_next_line(int fd);
 void		dealloc(t_list_gnl **list_gnl, t_list_gnl *clean_node, char *buf);
 void		make_list(t_list_gnl **list_gnl, int fd);
+char		*ft_strndup(const char *s, size_t n);
 
 #endif

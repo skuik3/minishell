@@ -6,7 +6,7 @@
 #    By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/26 10:50:07 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/26 11:51:27 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRC = main.c\
 	tokenizer/special_case3.c\
 	tokenizer/tokenizing.c\
 	tokenizer/tokenizing2.c\
-	tokenizer/sisis_main.c\
+	tokenizer/run_shell.c\
 	helper_funcs/ft_atoi.c\
 	helper_funcs/ft_bzero.c\
 	helper_funcs/ft_calloc.c\
@@ -85,6 +85,7 @@ SRC = main.c\
 	helper_funcs/ft_strtrim.c\
 	helper_funcs/ft_substr.c\
 	helper_funcs/ft_strncmp.c\
+	helper_funcs/ft_strndup.c\
 	helper_funcs/get_next_line_utils.c\
 	helper_funcs/get_next_line.c\
 	

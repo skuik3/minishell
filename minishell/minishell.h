@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 10:48:09 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 12:02:06 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-// #include "get_next_line/get_next_line.h"
 #include <sys/ioctl.h>
 
 extern int g_signal;
@@ -37,7 +36,6 @@ extern int g_signal;
 #define _GNU_SOURCE
 #define MAX_TOKENS 256
 
-//for readability
 #define SHELL_DEFAULT 00644
 #define ERR_MALLOC  "Malloc failure\n"
 #define ERR_ARG     "Not enough arguments\n"
@@ -53,7 +51,6 @@ extern int g_signal;
 #define INVALID_PAR "Invalid parameter name\n"
 
 
-//structs
 typedef struct environment_variables
 {
     char **start;
@@ -67,18 +64,17 @@ typedef struct pipe
     struct pipe *next;
 }   t_pipe;
 
-
 typedef enum e_token_type {
-    T_WORD,       //hello
-    T_PIPE,       // |
-    T_REDIR_IN,   // <
-    T_REDIR_OUT,  // >
-    T_REDIR_APPEND,     // >>
-    T_REDIR_HEREDOC,    // <<
-    T_END,         // end of str
-    T_OR,        // ||
-    T_AND,       // &&
-    T_BG,        // &
+    T_WORD,
+    T_PIPE,
+    T_REDIR_IN,
+    T_REDIR_OUT,
+    T_REDIR_APPEND,
+    T_REDIR_HEREDOC,
+    T_END,
+    T_OR,
+    T_AND,
+    T_BG,
 }   t_token_type;
 
 typedef struct s_token {
@@ -87,54 +83,31 @@ typedef struct s_token {
     struct s_token *next;
 } t_token;
 
-// typedef struct s_command {
-//     char *command;
-//     int is_first;
-//     char **arguments;
-//     char **redir_in;
-//     char **redir_out;
-//     char *heredoc;
-//     char *append;
-//     struct s_command *next;
-//     env_t *envar;  // add aneskas env
-// } t_command;
 
-
-//TEST VERSION
 typedef enum e_redir_type {
-    REDIR_IN,     // <
-    REDIR_OUT,    // >
-    REDIR_APPEND, // >>
-    REDIR_HEREDOC // <<
+    REDIR_IN,
+    REDIR_OUT,
+    REDIR_APPEND,
+    REDIR_HEREDOC
 } t_redir_type;
 
 typedef struct s_redir {
     char *filename;
     t_redir_type type; 
     int *pipe_forhdc;
-    int position; // position in the original command
 } t_redir;
 
 typedef struct s_command {
     char *command;
     int is_first;
     char **arguments;
-    t_redir **redir_in;      // array of pointers to input redirections (< and <<)
+    t_redir **redir_in;
     int redir_in_count;
-    t_redir **redir_out;     // array of pointers to output redirections (> and >>)
+    t_redir **redir_out;
     int redir_out_count;
-    // char *heredoc;
-    // char *append;
     struct s_command *next;
-    env_t *envar;  // add aneskas env
-} t_command;
-//END OF TEST VERSION   
-
-typedef struct s_pipeline {
-    t_command           *cmd;
-    struct s_pipeline   *next;
-} t_pipeline;
-
+    env_t *envar;
+} t_command; 
 
 typedef struct s_cmd_builder {
     t_command   *cmd;
