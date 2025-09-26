@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:53:15 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:09:31 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 06:17:52 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,18 @@ char	*process_var(char *dollar_pos, char *before, env_t *env)
 	t_exp_vars		vars;
 
 	get_var_data(dollar_pos, &var_name, &var_len, &is_special_var);
-	if (var_len == 0)
-		return (handle_empty_var(before));
+	if (var_len == 0) //return (handle_empty_var(before));
+	{
+		char	*after;
+		char	*result;
+
+		after = expand_var(dollar_pos + 1, env);
+		result = join_exp_parts(before, "$", after);
+		if (after)
+			free(after);
+		return(result);
+			
+	}
 	vars.var_name = var_name;
 	vars.var_value = get_env_var(env, var_name);
 	vars.after = expand_var(dollar_pos + 1 + var_len, env);
