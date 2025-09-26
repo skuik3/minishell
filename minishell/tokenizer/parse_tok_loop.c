@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tok_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/25 11:08:11 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 10:52:11 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	parse_token_loop(t_token *tok, t_cmd_builder *b)
-{
-	while (tok && tok->type != T_PIPE)
-	{
-		handle_token(tok, b);
-		if ((tok->type >= T_REDIR_IN && tok->type <= T_REDIR_HEREDOC)
-			&& tok->next)
-			tok = tok->next;
-		tok = tok->next;
-	}
-}
 
 static void	process_word_token(t_token *tok, t_cmd_builder *b, env_t *env,
 	bool *is_first)

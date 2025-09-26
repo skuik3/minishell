@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 01:48:08 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/26 10:48:09 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,6 @@ void free_pipes(t_pipe *pipe);
 void append_token(t_token **head, t_token *new_tok);
 bool is_operator_start(char c);
 size_t skip_spaces(const char *input, size_t i);
-void print_tokens(t_token *head);
 t_token *tokenize(const char *input, env_t *env);
 //parser_handle_token.c
 void handle_token(t_token *tok, t_cmd_builder *b);
@@ -302,7 +301,6 @@ void free_argv(char **argv);
 t_token *new_token(const char *start, size_t len, t_token_type type);
 t_redir_type get_redir_type(const char *str, size_t len);
 t_token_type get_token_type_len(const char *str, size_t len);
-size_t parse_quoted(const char *input, size_t i, t_token **tokens);
 size_t parse_complete_word(const char *input, size_t i, t_token **tokens);
 size_t parse_operator(const char *input, size_t i, t_token **tokens);
 size_t parse_word(const char *input, size_t i, t_token **tokens);
@@ -314,13 +312,11 @@ char **list_to_array(t_list *list);
 void find_segment_end(t_token **end, t_token *tokens);
 bool    init_commands(t_command **head, t_token *tokens, env_t *env);
 //process.c
-const char *token_type_to_string(t_token_type type);
+const char *ing(t_token_type type);
 t_token *argv_to_token_list(int argc, char **argv);
 
-void print_list(char **arr, const char *label);
 void print_command(t_command *cmd, int index);
 void print_commands(t_command *cmd);
-int is_exit_input(const char *line, ssize_t n);
 t_command *run_shell_line(char *line, env_t *env);
 
 t_redir *new_redir(t_token *tok, t_redir_type type);

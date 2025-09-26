@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anezka <anezka@student.42.fr>              +#+  +:+       +#+         #
+#    By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/25 10:30:48 by anezka           ###   ########.fr        #
+#    Updated: 2025/09/26 10:50:07 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SRC = main.c\
 	tokenizer/parse_tok_loop.c\
 	tokenizer/parse_token.c\
 	tokenizer/parser_handle_token.c\
-	tokenizer/process.c\
 	tokenizer/special_case.c\
 	tokenizer/special_case2.c\
 	tokenizer/special_case3.c\

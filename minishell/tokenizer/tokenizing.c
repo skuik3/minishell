@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 17:41:42 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 10:45:13 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@ size_t	skip_spaces(const char *input, size_t i)
 	while (input[i] && isspace(input[i]))
 		i++;
 	return (i);
-}
-
-void	print_tokens(t_token *head)
-{
-	int	i;
-
-	i = 0;
-	while (head)
-	{
-		printf("Token[%d]: %-10s\t(Type: %d)\n", i++, head->value, head->type);
-		head = head->next;
-	}
 }
 
 void	append_seg_w_expans(char **result, t_exp_data data, env_t *env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:59:57 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 18:22:45 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 10:38:13 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,20 @@ size_t	parse_operator(const char *input, size_t i, t_token **tokens)
 	return (handle_single_op(input, i, tokens));
 }
 
-size_t	parse_quoted(const char *input, size_t i, t_token **tokens)
-{
-	char	quote;
-	size_t	start;
+// size_t	parse_quoted(const char *input, size_t i, t_token **tokens)
+// {
+// 	char	quote;
+// 	size_t	start;
 
-	quote = input[i++];
-	start = i;
-	while (input[i] && input[i] != quote)
-		i++;
-	append_token(tokens, new_token(&input[start], i - start, T_WORD));
-	if (input[i] == quote)
-		return (i + 1);
-	return (i);
-}
+// 	quote = input[i++];
+// 	start = i;
+// 	while (input[i] && input[i] != quote)
+// 		i++;
+// 	append_token(tokens, new_token(&input[start], i - start, T_WORD));
+// 	if (input[i] == quote)
+// 		return (i + 1);
+// 	return (i);
+// }
 
 size_t	parse_word(const char *input, size_t i, t_token **tokens)
 {
