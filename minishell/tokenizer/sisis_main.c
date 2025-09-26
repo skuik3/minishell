@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sisis_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:42:31 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/25 12:23:12 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 07:06:44 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,50 +28,6 @@ void	print_list(char **arr, const char *label)
 	printf("\n");
 }
 
-// void	print_redirs(t_redir **redirs, int count, const char *label)
-// {
-// 	int	i;
-
-// 	if (!redirs || count == 0)
-// 		return ;
-// 	printf("  %s:\n", label);
-// 	for (i = 0; i < count; i++)
-// 	{
-// 		if (redirs[i]->type == REDIR_IN)
-// 			printf("    Input: [%s]\n", redirs[i]->filename);
-// 		else if (redirs[i]->type == REDIR_OUT)
-// 			printf("    Output: [%s]\n", redirs[i]->filename);
-// 		else if (redirs[i]->type == REDIR_APPEND)
-// 			printf("    Append: [%s]\n", redirs[i]->filename);
-// 		else if (redirs[i]->type == REDIR_HEREDOC)
-// 			printf("    Heredoc: [%s]\n", redirs[i]->filename);
-// 	}
-// }
-
-// void	print_command(t_command *cmd, int index)
-// {
-// 	printf("Command %d: %s\n", index, cmd->command ? cmd->command : "(null)");
-// 	print_list(cmd->arguments, "Args");
-// 	print_redirs(cmd->redir_in, cmd->redir_in_count, "Input Redirections");
-// 	print_redirs(cmd->redir_out, cmd->redir_out_count, "Output Redirections");
-// }
-
-// void	print_cmd(t_command *cmd)
-// {
-// 	int i;
-
-// 	i = 1;
-// 	while (cmd)
-// 	{
-// 		print_command(cmd, i);
-// 		i++;
-// 		cmd = cmd->next;
-// 	}
-// 	printf("\n");
-// 	printf("%d commands in pipeline.\n", i - 1);
-// 	printf("\n");
-// }
-
 int	is_exit_input(const char *line, ssize_t n)
 {
 	if (n == -1)
@@ -89,12 +45,9 @@ t_command	*run_shell_line(char *line, env_t *env)
 	t_command	*cmd_list;
 
 	cmd_list = NULL;
-	//printf("Input line: [%s]\n", line);
 	tokens = tokenize(line, env);
-	//printf("Tokens:\n");
 	if (!tokens)
 	{
-		//printf("Tokenization failed.\n");
 		return (NULL);
 	}
 	if (!validate_syntax(tokens))
@@ -104,11 +57,9 @@ t_command	*run_shell_line(char *line, env_t *env)
 	}
 	if (!init_commands(&cmd_list, tokens, env))
 	{
-		//printf("Parsing failed.\n");
 		free_tokens(tokens);
 		return (NULL);
 	}
-	//print_cmd(cmd_list);
 	free_tokens(tokens);
 	return (cmd_list);
 }
