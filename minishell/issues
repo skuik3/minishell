@@ -1,0 +1,11 @@
+// if command not found in more cases, printed only the last one
+// exit ""
+// '<<' lim echo 1 >>/dev/null
+
+//to test, also check echo $?
+
+// export =
+// export ''=''
+// export ""=""
+// export =============123
+// export NEW=42

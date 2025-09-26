@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:14:42 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:51:43 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:31:36 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int	check_variable(char *variable)
 
 	i = 1;
 	just_variable = find_variable(variable);
-	if (ft_isalpha(just_variable[0]) != 1)
+	if (ft_isalpha(just_variable[0]) != 1 && just_variable[0] != '_')
 	{
 		free(just_variable);
 		return (1);
 	}
 	while (just_variable[i] != '\0')
 	{
-		if (ft_isalnum(just_variable[i]) != 1)
+		if (ft_isalnum(just_variable[i]) != 1 && just_variable[i] != '_')
 		{
 			free(just_variable);
 			return (1);

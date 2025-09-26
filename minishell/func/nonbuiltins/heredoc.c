@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 01:48:19 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/26 15:10:35 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	redirecting_heredoc(t_biggie *bigs, int i)
 	t_redir				*heredoc;
 	struct sigaction	sa;
 
+	ft_memset(&sa, 0, sizeof(sa));
 	heredoc = bigs->cmd->redir_in[i];
 	signal(SIGINT, handle_signal_child);
 	pid = fork();
