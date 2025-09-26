@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+         #
+#    By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/26 11:51:27 by skuik            ###   ########.fr        #
+#    Updated: 2025/09/26 21:06:33 by ahavrank         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,10 @@ SRC = main.c\
 	func/exec/big_struct.c\
 	func/exec/command_find.c\
 	func/exec/single_command.c\
+	func/exec/multiple_commands.c\
 	func/exec/env_variables.c\
 	func/exec/forks.c\
+	func/exec/forks_pt2.c\
 	func/exec/free.c\
 	func/exec/free_pt2.c\
 	func/exec/libft_utils.c\
@@ -111,7 +113,7 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) -c $< -o $@
 
 val:
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp  ./minishell
 
 clean:
 	rm -f $(OBJ)

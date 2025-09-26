@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:52:31 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:49:46 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	unset_value(env_t *envp, char *argument)
 	return (-2);
 }
 
-int	export_argument(env_t *envp, char *argument)
+int	export_argument(env_t *envp, char *argument, t_command *cmd)
 {
 	char	*add_variable;
 	char	*var;
@@ -79,8 +79,8 @@ int	export_argument(env_t *envp, char *argument)
 	var = find_variable(add_variable);
 	if (check_variable(add_variable) == 1)
 	{
-		ft_putstr_fd(var, 1);
-		write(1, ": not a valid identifier\n", 26);
+		ft_putstr_fd(var, cmd->orig_stdout);
+		write(cmd->orig_stdout, ": not a valid identifier\n", 26);
 		free(var);
 		if (value_present(argument) != 0 || ft_strcmp(argument, "=") == 0)
 			free(add_variable);
@@ -114,7 +114,7 @@ int	run_export(t_biggie *bigs)
 	}
 	while (arguments[i] != NULL)
 	{
-		bigs->exit_status = export_argument(envp, arguments[i]);
+		bigs->exit_status = export_argument(envp, arguments[i], bigs->cmd);
 		i++;
 	}
 	return (bigs->exit_status);

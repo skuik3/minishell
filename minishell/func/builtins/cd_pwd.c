@@ -6,13 +6,12 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 19:12:05 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:32:11 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-//chech if ok, after norm
 char	*find_path(env_t *env, char *find_var)
 {
 	int		i;

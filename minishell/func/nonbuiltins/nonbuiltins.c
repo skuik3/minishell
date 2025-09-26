@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:27:14 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:29:57 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:31:12 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	executing_without_path(t_command *cmd, char **cmdw_args)
 	path = command_path(cmd);
 	if (path == NULL)
 	{
-		ft_putstr_fd(cmd->command, 1);
-		write(1, ": Command not found\n", 21);
+		ft_putstr_fd(cmd->command, cmd->orig_stdout);
+		write(cmd->orig_stdout, ": command not found\n", 21);
 		free_arguments(cmdw_args);
 		return (127);
 	}
@@ -39,7 +39,8 @@ int	executing_with_path(t_command *cmd, char **cmdw_args)
 
 	if (stat(cmd->command, &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
-		write(1, "That's a directory\n", 20);
+		ft_putstr_fd(cmd->command, cmd->orig_stdout);
+		write(cmd->orig_stdout, ": that's a directory\n", 22);
 		free_arguments(cmdw_args);
 		return (126);
 	}

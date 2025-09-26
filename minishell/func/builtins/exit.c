@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 19:01:58 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:53:19 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,21 @@ int	exit_cnt(t_biggie *bigs)
 	if (just_nb(bigs->cmd->arguments[0]) != 0)
 	{
 		bigs->exit_status = 2;
-		ft_putstr_fd("exit\nminishel: exit: ", 1);
-		ft_putstr_fd(bigs->cmd->arguments[0], 1);
-		ft_putstr_fd(": numeric argument required\n", 1);
+		ft_putstr_fd("minishel: exit: ", bigs->cmd->orig_stdout);
+		ft_putstr_fd(bigs->cmd->arguments[0], bigs->cmd->orig_stdout);
+		ft_putstr_fd(": numeric argument required\n", bigs->cmd->orig_stdout);
 	}
 	else if (bigs->cmd->arguments[1] != NULL)
 	{
 		bigs->exit_status = 1;
-		ft_putstr_fd("exit\nminishel: exit: too many arguments\n", 1);
+		ft_putstr_fd("minishel: exit: too many arguments\n",
+			bigs->cmd->orig_stdout);
 	}
 	else
+	{
+		ft_putstr_fd("exit\n", bigs->cmd->orig_stdout);
 		bigs->exit_status = number_exit(bigs->cmd->arguments[0]);
+	}
 	status = bigs->exit_status;
 	free_big(bigs);
 	exit (status);
@@ -76,6 +80,7 @@ int	run_exit(t_biggie *bigs)
 	status = bigs->exit_status;
 	if (bigs->cmd->arguments == NULL)
 	{
+		ft_putstr_fd("exit\n", bigs->cmd->orig_stdout);
 		free_big(bigs);
 		exit(status);
 	}

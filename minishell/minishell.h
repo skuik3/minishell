@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 12:02:06 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/26 21:05:17 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_command {
     int redir_out_count;
     struct s_command *next;
     env_t *envar;
+    int orig_stdin;
+    int orig_stdout;
 } t_command; 
 
 typedef struct s_cmd_builder {
@@ -166,9 +168,11 @@ int multiple_commands(t_biggie *bigs);
 int last_multiple(t_biggie *bigs);
 int other_multiple(t_biggie *bigs);
 int first_multiple(t_biggie *bigs);
+void	put_orig(t_biggie *bigs, int orig_stdin, int orig_stdout);
 t_biggie *setting_big(void);
 void close_herepipe(t_command *cmd);
 int check_before_single(t_biggie *bigs);
+void	close_pipes(t_biggie *bigs);
 //utils for main_execution
 int saving_env(char ***env, char *envp[]);
 int is_builtint(char *command);
@@ -209,7 +213,7 @@ int check_variable(char *variable);
 int unseting(env_t *envp, char *arguments);
 int find_unset(char *arguments, env_t *envp);
 int unset_position(char *envp, char *variable, int i);
-int export_argument(env_t *envp, char *argument);
+int	export_argument(env_t *envp, char *argument, t_command *cmd);
 int inner_check(char *envp[], int i);
 int counting_envlen(char **envp);
 //pipes

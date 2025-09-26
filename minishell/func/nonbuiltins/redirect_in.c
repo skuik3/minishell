@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 01:47:06 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/26 20:55:14 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	last_redirect_in(t_redir *last)
 	return (returned);
 }
 
-int redirectin_cnt(t_command *cmd)
+int	redirectin_cnt(t_command *cmd)
 {
 	int	i;
 	int	returned;
@@ -81,13 +81,14 @@ int	redirect_in(t_command *cmd)
 
 	i = 0;
 	returned = redirectin_cnt(cmd);
-	while(cmd->redir_in[i + 1] != NULL)
+	while (cmd->redir_in[i + 1] != NULL)
 		i++;
 	while (cmd->redir_in[i] != NULL)
 	{
 		if (cmd->redir_in[i]->type == REDIR_IN)
 			returned = last_redirect_in(cmd->redir_in[i]);
-		else {
+		else
+		{
 			if (cmd->redir_in[i]->pipe_forhdc != NULL)
 			{
 				if (dup2(cmd->redir_in[i]->pipe_forhdc[0], STDIN_FILENO) == -1)
