@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:53:15 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/22 14:30:09 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*find_in_env_array(char **env, const char *var_name)
 	return (NULL);
 }
 
-char	*get_env_var(env_t *env, const char *var_name)
+char	*get_env_var(t_env *env, const char *var_name)
 {
 	char	*value;
 

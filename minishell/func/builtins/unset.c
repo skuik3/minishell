@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 18:47:33 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	unset_position(char *envp, char *variable, int i)
 	return (-2);
 }
 
-int	find_unset(char *arguments, env_t *envp)
+int	find_unset(char *arguments, t_env *envp)
 {
 	char	*variable;
 	int		i;
@@ -82,7 +82,7 @@ int	find_unset(char *arguments, env_t *envp)
 	return (unset);
 }
 
-int	unseting(env_t *envp, char *arguments)
+int	unseting(t_env *envp, char *arguments)
 {
 	int	unset;
 
@@ -96,7 +96,7 @@ int	unseting(env_t *envp, char *arguments)
 	return (0);
 }
 
-int	run_unset(env_t *envp, char **arguments)
+int	run_unset(t_env *envp, char **arguments)
 {
 	int	i;
 	int	returned;

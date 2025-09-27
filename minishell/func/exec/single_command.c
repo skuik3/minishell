@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezka <anezka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:45:02 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/26 01:33:50 by anezka           ###   ########.fr       */
+/*   Updated: 2025/09/27 13:45:05 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 
 int	check_before_single(t_biggie *bigs)
 {
-	bigs->exit_status = check_heredoc(bigs);
-	if (bigs->exit_status == 1)
+	int	heredoc_result;
+
+	heredoc_result = check_heredoc(bigs);
+	if (heredoc_result == 1)
 	{
+		bigs->exit_status = 1;
 		perror("");
 		return (1);
 	}
-	if (bigs->exit_status == SIGINT)
+	if (heredoc_result == SIGINT)
+	{
+		bigs->exit_status = 130;
 		return (130);
+	}
 	if (bigs->cmd->redir_in != NULL || bigs->cmd->redir_out != NULL)
 	{
 		if (check_redirect(bigs->cmd) == 1)
 		{
+			bigs->exit_status = 1;
 			perror("");
 			return (1);
 		}

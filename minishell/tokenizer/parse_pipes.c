@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:59:49 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/19 17:26:24 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	find_segment_end(t_token **end, t_token *tokens)
 	}
 }
 
-static bool	process_token_segment(t_token **tokens, t_command **cmd, env_t *env)
+static bool	process_token_segment(t_token **tokens, t_command **cmd, t_env *env)
 {
 	t_token	*segment;
 	t_token	*end;
@@ -51,7 +51,7 @@ static bool	process_token_segment(t_token **tokens, t_command **cmd, env_t *env)
 	return (true);
 }
 
-bool	init_commands(t_command **head, t_token *tokens, env_t *env)
+bool	init_commands(t_command **head, t_token *tokens, t_env *env)
 {
 	t_command	*tail;
 	t_command	*cmd;

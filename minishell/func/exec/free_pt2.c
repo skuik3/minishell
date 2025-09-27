@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_pt2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 10:21:21 by anezka            #+#    #+#             */
-/*   Updated: 2025/09/25 18:22:08 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	free_redir(t_redir **redir)
 	free(redir);
 }
 
-void	free_env(env_t *env)
+void	free_env(t_env *env)
 {
 	int	i;
 

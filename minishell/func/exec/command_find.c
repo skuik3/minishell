@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_find.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 21:00:33 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 13:25:09 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	command_execution(t_biggie *bigs)
 {
 	t_command	*head;
 
-	g_signal = 0;
 	bigs->cmd->is_first = 1;
 	if (bigs->cmd->next == NULL)
 	{

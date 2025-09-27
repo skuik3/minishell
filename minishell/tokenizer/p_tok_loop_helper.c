@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_tok_loop_helper.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/25 11:12:25 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	init_cmd_builder(t_cmd_builder *b, t_command **out)
 	return (true);
 }
 
-char	*get_token_value(t_token *tok, env_t *env)
+char	*get_token_value(t_token *tok, t_env *env)
 {
 	(void)env;
 	if (!tok || !tok->value)

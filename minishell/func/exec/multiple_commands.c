@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   multiple_command.c                                 :+:      :+:    :+:   */
+/*   multiple_commands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 20:57:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/09/26 20:58:39 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 13:44:51 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 int	check_before_multiple(t_biggie *bigs)
 {
-	bigs->exit_status = check_heredoc(bigs);
-	if (bigs->exit_status == 1)
+	int	heredoc_result;
+
+	heredoc_result = check_heredoc(bigs);
+	if (heredoc_result == 1)
 	{
+		bigs->exit_status = 1;
 		perror("");
 		return (1);
 	}
-	if (bigs->exit_status == SIGINT)
+	if (heredoc_result == SIGINT)
+	{
+		bigs->exit_status = 130;
 		return (130);
+	}
 	return (0);
 }
 

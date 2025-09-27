@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/26 10:45:13 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ size_t	skip_spaces(const char *input, size_t i)
 	return (i);
 }
 
-void	append_seg_w_expans(char **result, t_exp_data data, env_t *env)
+void	append_seg_w_expans(char **result, t_exp_data data, t_env *env)
 {
 	char	*segment;
 	char	*expanded;

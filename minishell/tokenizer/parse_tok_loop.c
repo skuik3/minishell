@@ -6,13 +6,13 @@
 /*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 22:27:01 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/26 10:52:11 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	process_word_token(t_token *tok, t_cmd_builder *b, env_t *env,
+static void	process_word_token(t_token *tok, t_cmd_builder *b, t_env *env,
 	bool *is_first)
 {
 	char	*value;
@@ -31,7 +31,7 @@ static void	process_word_token(t_token *tok, t_cmd_builder *b, env_t *env,
 		list_add_back(&b->args, value);
 }
 
-bool	process_tokens(t_token *tok, t_cmd_builder *b, env_t *env)
+bool	process_tokens(t_token *tok, t_cmd_builder *b, t_env *env)
 {
 	bool	is_first_token;
 
@@ -68,7 +68,7 @@ void	finalize_cmd_builder(t_cmd_builder *b, t_command **out)
 	*out = b->cmd;
 }
 
-bool	parse_tokens(t_token *tok, t_command **out, env_t *env)
+bool	parse_tokens(t_token *tok, t_command **out, t_env *env)
 {
 	t_cmd_builder	b;
 

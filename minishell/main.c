@@ -3,66 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/25 19:11:49 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_signal = 0;
+int	g_signal = 0;
 
-env_t *adding_env(t_command *cmd, char **envp)
+t_env	*adding_env(t_command *cmd, char **envp)
 {
-    env_t *env;
+	t_env	*env;
 
-    (void)cmd;
-    env = malloc(sizeof(env_t));
-    if (env == NULL)
-        return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
-    saving_env(&env->start, envp);
-    saving_env(&env->mod, envp);
-    env->exit_status = 0;
-    return (env);
+	(void)cmd;
+	env = malloc(sizeof(t_env));
+	if (env == NULL)
+		return (ft_putstr_fd(ERR_MALLOC, STDERR_FILENO), NULL);
+	saving_env(&env->start, envp);
+	saving_env(&env->mod, envp);
+	env->exit_status = 0;
+	return (env);
 }
 
-
-int main(int argc, char *argv[], char *envp[])
+void	process_command(char *promt, t_biggie *bigs)
 {
-    char        *promt;
-    t_command   *cmd;
-    t_biggie    *bigs;
+	t_command	*cmd;
 
-    (void)argc;
-    (void)argv;    
-    bigs = setting_big();
-    bigs->env = adding_env(NULL, envp);
-    while (1)
-    {
-        signal(SIGINT, handle_signal_main);
-        signal(EOF, SIG_IGN);
-        signal(SIGQUIT, SIG_IGN);
-        promt = readline("minishell> ");
-        if (promt == NULL)
-            break;
-        cmd = run_shell_line(promt, bigs->env);
-        if (cmd == NULL)
-        {
-            free(promt);
-            continue ;
-        }
-        cmd->envar = bigs->env;
-        g_signal = 0;
-        bigs->cmd = cmd;
-        bigs->cmd_head = cmd;
-        bigs->exit_bef = command_execution(bigs);
-        bigs->env->exit_status = bigs->exit_bef;
-        add_history(promt);
-        clean_big(bigs);
-        free(promt);
-    }
-    free_big(bigs);
-    return (0);
+	if (g_signal == SIGINT)
+	{
+		bigs->env->exit_status = 130;
+		g_signal = 0;
+	}
+	cmd = run_shell_line(promt, bigs->env);
+	if (cmd == NULL)
+	{
+		free(promt);
+		return ;
+	}
+	cmd->envar = bigs->env;
+	bigs->cmd = cmd;
+	bigs->cmd_head = cmd;
+	bigs->exit_bef = command_execution(bigs);
+	if (g_signal != SIGINT)
+		bigs->env->exit_status = bigs->exit_bef;
+	add_history(promt);
+	clean_big(bigs);
+	free(promt);
+}
+
+void	minishell_loop(t_biggie *bigs)
+{
+	char	*promt;
+
+	while (1)
+	{
+		signal(SIGINT, handle_signal_main);
+		signal(EOF, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		promt = readline("minishell> ");
+		if (promt == NULL)
+			break ;
+		process_command(promt, bigs);
+	}
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	t_biggie	*bigs;
+
+	(void)argc;
+	(void)argv;
+	bigs = setting_big();
+	bigs->env = adding_env(NULL, envp);
+	minishell_loop(bigs);
+	free_big(bigs);
+	return (0);
 }

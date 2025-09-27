@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:08 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 20:49:46 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	inner_check(char *envp[], int i)
 	return (0);
 }
 
-int	unset_value(env_t *envp, char *argument)
+int	unset_value(t_env *envp, char *argument)
 {
 	char	**unset;
 
@@ -68,7 +68,7 @@ int	unset_value(env_t *envp, char *argument)
 	return (-2);
 }
 
-int	export_argument(env_t *envp, char *argument, t_command *cmd)
+int	export_argument(t_env *envp, char *argument, t_command *cmd)
 {
 	char	*add_variable;
 	char	*var;
@@ -99,7 +99,7 @@ int	export_argument(env_t *envp, char *argument, t_command *cmd)
 
 int	run_export(t_biggie *bigs)
 {
-	env_t	*envp;
+	t_env	*envp;
 	char	**arguments;
 	int		i;
 

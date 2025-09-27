@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:53:24 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 20:32:11 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*find_path(env_t *env, char *find_var)
+char	*find_path(t_env *env, char *find_var)
 {
 	int		i;
 	char	*variable;
@@ -58,7 +58,7 @@ int	cd_cnt(char **path)
 	return (0);
 }
 
-int	run_cd(char **path, env_t *env)
+int	run_cd(char **path, t_env *env)
 {
 	char	*temp;
 	int		status;	

@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:53:15 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/26 07:05:36 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*build_and_clean(char *before, t_exp_vars vars)
 	return (result);
 }
 
-static char	*process_empty_var(char *before, char *dollar_pos, env_t *env)
+static char	*process_empty_var(char *before, char *dollar_pos, t_env *env)
 {
 	char	*after;
 	char	*result;
@@ -50,7 +50,7 @@ static char	*process_empty_var(char *before, char *dollar_pos, env_t *env)
 	return (result);
 }
 
-char	*process_var(char *dollar_pos, char *before, env_t *env)
+char	*process_var(char *dollar_pos, char *before, t_env *env)
 {
 	char		*var_name;
 	int			var_len;
@@ -67,7 +67,7 @@ char	*process_var(char *dollar_pos, char *before, env_t *env)
 	return (build_and_clean(before, vars));
 }
 
-char	*expand_var(const char *input, env_t *env)
+char	*expand_var(const char *input, t_env *env)
 {
 	char	*dollar_pos;
 	char	*before;

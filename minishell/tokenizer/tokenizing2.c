@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuik <skuik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:42:30 by skuik             #+#    #+#             */
-/*   Updated: 2025/09/24 18:01:17 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-size_t	pr_quoted_part(const char *input, size_t i, char **result, env_t *env)
+size_t	pr_quoted_part(const char *input, size_t i, char **result, t_env *env)
 {
 	size_t		start;
 	char		quote;
@@ -38,7 +38,7 @@ size_t	pr_quoted_part(const char *input, size_t i, char **result, env_t *env)
 	return (i);
 }
 
-size_t	pr_unquoted_part(const char *input, size_t i, char **result, env_t *env)
+size_t	pr_unquoted_part(const char *input, size_t i, char **result, t_env *env)
 {
 	size_t		start;
 	t_exp_data	data;
@@ -53,7 +53,7 @@ size_t	pr_unquoted_part(const char *input, size_t i, char **result, env_t *env)
 }
 
 size_t	parse_word_w_env(const char *input, size_t i, t_token **tokens,
-	env_t *env)
+	t_env *env)
 {
 	char	*result;
 	size_t	new_i;
@@ -79,7 +79,7 @@ size_t	parse_word_w_env(const char *input, size_t i, t_token **tokens,
 	return (i);
 }
 
-t_token	*tokenize(const char *input, env_t *env)
+t_token	*tokenize(const char *input, t_env *env)
 {
 	t_token	*tokens;
 	size_t	i;
