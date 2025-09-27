@@ -1,5 +1,0 @@
- cat << eof | wc -l
-> alma
-> kakas
-if i do this and than control d  also if control c but less
-it has leaks
