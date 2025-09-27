@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:38:30 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/27 14:48:14 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 18:35:05 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,16 @@ typedef struct s_exp_vars
 	int		is_special_var;
 }	t_exp_vars;
 
+typedef struct s_parse_params
+{
+    const char  *input;
+    size_t      i;
+    t_token     **tokens;
+    char        **result;
+    t_env       *env;
+    t_biggie    *bigs;
+}   t_parse_params;
+
 // ANEZKAS_PART
 void	free_big(t_biggie *bigs);
 void	clean_big(t_biggie *bigs);
@@ -300,7 +310,7 @@ size_t	parse_operator(const char *input, size_t i, t_token **tokens);
 //parser_handle_token.c
 void	handle_token(t_token *tok, t_cmd_builder *b);
 //run_shell.c
-t_command	*run_shell_line(char *line, t_env *env);
+t_command	*run_shell_line(char *line, t_env *env, t_biggie *bigs);
 //secial_case.c
 int		is_valid_var_char(char c, int is_first);
 int		get_var_name_len(const char *str);
@@ -323,12 +333,8 @@ bool	is_operator_start(char c);
 size_t	skip_spaces(const char *input, size_t i);
 void	append_seg_w_expans(char **result, t_exp_data data, t_env *env);
 //tokenizing2.c
-size_t	pr_quoted_part(const char *input, size_t i, char **result,
-			t_env *env);
-size_t	pr_unquoted_part(const char *input, size_t i, char **result,
-			t_env *env);
-size_t	parse_word_w_env(const char *input, size_t i, t_token **tokens,
-			t_env *env);
-t_token	*tokenize(const char *input, t_env *env);
+size_t	parse_word_w_env(t_parse_params *params);
+//tokenizing3.c
+t_token *tokenize(const char *input, t_env *env, t_biggie *bigs);
 
 #endif

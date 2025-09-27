@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+         #
+#    By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 12:00:13 by skuik             #+#    #+#              #
-#    Updated: 2025/09/26 21:06:33 by ahavrank         ###   ########.fr        #
+#    Updated: 2025/09/27 18:33:07 by skuik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC = main.c\
 	tokenizer/special_case3.c\
 	tokenizer/tokenizing.c\
 	tokenizer/tokenizing2.c\
+	tokenizer/tokenizing3.c\
 	tokenizer/run_shell.c\
 	helper_funcs/ft_atoi.c\
 	helper_funcs/ft_bzero.c\

@@ -6,7 +6,7 @@
 /*   By: skuik <skuik@student.42prague.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:15:23 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/27 14:05:32 by skuik            ###   ########.fr       */
+/*   Updated: 2025/09/27 17:54:52 by skuik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	process_command(char *promt, t_biggie *bigs)
 		bigs->env->exit_status = 130;
 		g_signal = 0;
 	}
-	cmd = run_shell_line(promt, bigs->env);
+	cmd = run_shell_line(promt, bigs->env, bigs);
 	if (cmd == NULL)
 	{
+		bigs->env->exit_status = bigs->exit_status;
 		free(promt);
 		return ;
 	}
