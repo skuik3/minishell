@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/28 14:43:37 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/28 14:52:46 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	redirecting_out(t_redir *redirout)
 		if (unlink(redirout->filename) == -1)
 			return (1);
 	}
-	else if ((access(redirout->filename, W_OK) != 0) 
+	else if ((access(redirout->filename, W_OK) != 0)
 		&& (access(redirout->filename, F_OK) == 0))
 	{
 		ft_putstr_fd(redirout->filename, STDERR_FILENO);
@@ -61,7 +61,7 @@ int	appending(t_redir *append)
 
 	if (access(append->filename, W_OK) == 0)
 		return (0);
-	else if ((access(append->filename, W_OK) != 0) 
+	else if ((access(append->filename, W_OK) != 0)
 		&& (access(append->filename, F_OK) == 0))
 	{
 		ft_putstr_fd(append->filename, STDERR_FILENO);
