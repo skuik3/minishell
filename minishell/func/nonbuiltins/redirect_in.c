@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 09:03:31 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/09/26 20:55:14 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/09/28 14:48:48 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,20 @@ int	where_last_heredoc(t_command *cmd, int rdhc)
 
 int	redirecting_in(t_redir *redirin)
 {
-	if (access(redirin->filename, R_OK) == -1)
+	if (access(redirin->filename, R_OK) == -1 
+		&& access(redirin->filename, F_OK) == 0)
+	{
+		ft_putstr_fd(redirin->filename, STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		return (1);
+	}
+	else if (access(redirin->filename, R_OK) == -1
+		&& access(redirin->filename, F_OK) != 0)
+	{
+		ft_putstr_fd(redirin->filename, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
+	}
 	return (0);
 }
 
